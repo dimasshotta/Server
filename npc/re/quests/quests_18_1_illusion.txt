@@ -1,0 +1,1084 @@
+//===== rAthena Script ======================================= 
+//= Illusion Of Twins(Based on kRO)
+//===== By: ================================================== 
+//= [ ROmaniac ]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//===== Additional Comments: ================================= 
+// - roughly translated from KRO.
+//============================================================
+
+anthell02,172,189,5	script	Yolanda	CLEAR_NPC,{
+	if (isbegin_quest(8719) == 0 && Baselevel > 159) {
+		mes .nm$;
+		mes "Are you really in?";
+		next;
+		mes .mk$;
+		mes "So there was a lot of people who saw it. He said he was a ranger who injured his left arm, so there is no way that he is another man there were only dogs besides him.";
+		next;
+		mes .nm$;
+		mes "What should we do? The search is so painful...";
+		next;
+		mes .mk$;
+		mes "Ohh wait! Wait a minute, adventurer over there!";
+		next;
+		select("me?");
+		mes .mk$;
+		mes "Have you been here for a long time? That's good. Here, we recently found a way to go deeper.";
+		next;
+		setquest 8719;
+		mes .nm$;
+		mes "Hi what if I tell you something like that? It's not my research, It's yours!";
+		next;
+		select("Talk and Sleep");
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Are you telling me to stop saying things to people I've never seen before?";
+		next;
+		npctalk "Yolanda : You know how to do it right?";
+		npctalk "Mirko : Then I should go with the adventurer who just appeared. Do you want to go with us?","Mirko";
+		mes .nm$;
+		mes "That's right! Adventurer, I'm sorry, wait a minute";
+		end;
+	}
+OnEmotion:
+	emotion 19;
+	end;
+OnInit:
+	.nm$ = "[ Yolanda ]";
+	.mk$ = "[ Mirko ]";
+	setunitdata getnpcid(0),UNPC_CLASS,12;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,9;
+	setunitdata getnpcid(0),UNPC_HEADBOTTOM,1501;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8719) == 0 && Baselevel > 159";
+}
+	
+anthell02,176,190,3	script	Mirko	4_m_sage_a,{
+	if (isbegin_quest(8719) == 0 && Baselevel > 159) {
+		mes .nm$;
+		mes "Are you really in?";
+		next;
+		mes .mk$;
+		mes "So there was a lot of people who saw it. He said he was a ranger who injured his left arm, so there is no way that he is another man there were only dogs besides him.";
+		next;
+		mes .nm$;
+		mes "What should we do? The search is so painful...";
+		next;
+		mes .mk$;
+		mes "Ohh wait! Wait a minute, adventurer over there!";
+		next;
+		select("me?");
+		mes .mk$;
+		mes "Have you been here for a long time? That's good. Here, we recently found a way to go deeper.";
+		next;
+		setquest 8719;
+		mes .nm$;
+		mes "Hi what if I tell you something like that? It's not my research, It's yours!";
+		next;
+		select("Talk and Sleep");
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Are you telling me to stop saying things to people I've never seen before?";
+		next;
+		npctalk "Yolanda : You know how to do it right?","Yolanda";
+		npctalk "Mirko : Then I should go with the adventurer who just appeared. Do you want to go with us?";
+		mes .nm$;
+		mes "That's right! Adventurer, I'm sorry, wait a minute";
+		end;
+	}
+	if (isbegin_quest(8719) == 1){
+		mes .mk$;
+		mes "So anyway, I'm going to hire more people right now. It's not even a relic, but what if I run wild?";
+		emotion 19;
+		next;
+		mes .nm$;
+		mes "Stop buying things like that and the leave everything to me!";
+		donpcevent "Yolanda::OnEmotion";
+		next;
+		mes .mk$;
+		mes "Adventur-sama is waiting for you. Let's continoue it later. Huh? So what is your name again?, "+strcharinfo(0)+"?";
+		next;
+		mes .mk$;
+		mes "Okay! "+strcharinfo(0)+", I'll start to the point.";
+		next;
+		mes .mk$;
+		mes "So my name is Mirko, and she is Yolanda. There is a ranger who is seriously injured, went to the newly discovered anthell that I was talking about earlier. Now the purpose it not to explore but to rescue him dan his comrades.";
+		next;
+		mes .mk$;
+		mes "His name is Briashen.. And his comrade's name is Kahris, they are looked the same, or you can call them twins.";
+		next;
+		mes .mk$;
+		mes "If you found either one of them, just bring them out from there as soon as possible. A corpse is fine, please. Come back talk to me when you are ready!";
+		completequest 8719;
+		setquest 8720;
+		end;
+	}
+	if (isbegin_quest(8720) == 1){
+		mes .mk$;
+		mes "Find Briashen and his comrade. If you find one of them, please take them out with you.","Are you ready?";
+		next;
+		if(select("Okay","Later") - 1){
+			mes .mk$;
+			mes "Talk to me when you are ready";
+			end;
+		}
+		mes .mk$;
+		mes "Yeah... Great. What happened that time... It was by a chance, we accidentally broke a wall... So powerful that even we can feel it.",
+			"The power is vague and I can feel it through the wall.";
+		next;
+		mes .mk$;
+		mes "What can I do? As an adventurer, this isn't a historic site, and if there are no traces of people... I'll have to look arounf! So I pulled my hair out a bit and looked into it.";
+		next;
+		select("Brave");
+		mes .nm$;
+		mes "Yeah, really, this bastard was brave back then. I'm glad that I didn't die.";
+		next;
+		mes .mk$;
+		mes "I'm still alive! Anyway, this is the second level of the anthell, and the way to the first floor is over there right? But... that's not the way!";
+		next;
+		mes .mk$;
+		mes "Something is just not right. The atmosphere was kind of hazy, like walking in a dream?";
+		next;
+		mes .nm$;
+		mes "Yeah, feels like I'm writing Asura's Emperor Fist.";
+		next;
+		mes .mk$;
+		mes "Hey, why the hell you are expressing that way! People won't undestand.";
+		next;
+		select("It's allright, I got it.");
+		mes .nm$;
+		mes "LOL.";
+		next;
+		mes .mk$;
+		mes "Am I dull..? Anyway, It's strangely dark, but the perception that place is peeling away from the body...";
+		next;
+		mes .nm$;
+		mes "Strangely confused. Don't worry, it's not serious, I think it's a feeling of being in vain... I guess I'm fine with it. It looks diffefrent for each person.";
+		next;
+		mes .nm$;
+		mes "When you get out of from here, you can tell it's in vain, you can't fell it unless you're inside that place, even if you are consious, you are already in different dimension.";
+		next;
+		mes .mk$;
+		mes "Yes! Even though it was the same path. It felt like something had crossed the border. And again, the ants were so powerful.";
+		next;
+		mes .mk$;
+		mes "I wonder how they will survive... Fortunately, the ants there didn't seem to come over this way, and after that, I just stopped this geological expedition for a while and tried to organoze a new expedition.";
+		next;
+		mes .mk$;
+		mes "Briashen, the strongest of us, went on a reconnaissance visit, it seems that adventurers are not at the level to form an expedition. So we went together but then he is disappeared, but one day he said that he saw someone who looked just like him,";
+		next;
+		mes .nm$;
+		mes "As I said before, depends on the person who didn't listen, you can see it's in vain... But when it comes out you know it's in vain? Briashen came out and said that he did feel that... Because it must've been real, we never saw him again.";
+		next;
+		mes .nmw$;
+		mes "After that, the exploration was successful, so we went outside. We were waiting for him to come out I saw Briashen and the other being chased by the ants and I saw them injured.";
+		next;
+		mes .nm$;
+		mes "But even though I said I had to rest for a while after getting hurt like this, I guess I went into the ant burrow at will. Which is life or death..";
+		next;
+		mes .nm$;
+		mes "When you get out of from here, you can tell it's in vain, you can't fell it unless you're inside that place, even if you are consious, you are already in different dimension.";
+		next;
+		mes .mk$;
+		mes "I guess nobody can get in there except us. No one has the ability to do that, so please! Save Briashen and the other adventurers.";
+		next;
+		mes .nm$;
+		mes "When you get out of from here, you can tell it's in vain, you can't fell it unless you're inside that place, even if you are consious, you are already in different dimension.";
+		next;
+		mes .mk$;
+		mes "So then this way.";
+		warp "ant_d02_i",172,185;
+		completequest 8720;
+		setquest 8721;
+		illusion_twins = 1;
+		end;
+	}
+	if(isbegin_quest(8722) == 1) {
+		mes .mk$;
+		mes "Did you see Briashen? Is she alive? Thank God.";
+		next;
+		mes .nm$;
+		mes "But why don't you come with her?";
+		next;
+		mes "== You tell them Briashen message roughly. ==";
+		next;
+		mes .mk$;
+		mes "...I can't help it.","I don't know if I can take them out again...","No, if that was the case in the first place, I wouldn't ask you a favor.";
+		next;
+		mes .mk$;
+		mes "Then, would you go there again to help her found her Twins?";
+		next;
+		if(select("Yes","Later") == 2){
+			mes .mk$;
+			mes "Well, I wish you can help us soon.";
+			end;
+		}
+		mes .mk$;
+		mes "Okay...";
+		cloakoffnpc "Briashen",getcharid(0);
+		warp "ant_d02_i",172,185;
+		completequest 8722;
+		setquest 8723;
+		end;
+	}
+	if(isbegin_quest(8728) == 1 && illusion_twins == 5) {
+		mes .mk$;
+		mes "It's a surprise! Where did you come from?";
+		next;
+		select("I was warped.");
+		mes .nm$;
+		mes "What?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "There were three people who look like Kahris...";
+		next;
+		mes "== I explained everything what I was going through to them. ==";
+		next;
+		mes .mk$;
+		mes "All three of them disappeared during the conversation. Besides that last person I met... Was it Vitata?";
+		next;
+		mes .nm$;
+		mes "Maybe... maybe. Is there any one of them, who doesn't look like Kahris?";
+		next;
+		mes .mk$;
+		mes "What?","You saw "+strcharinfo(0)+" alone over there, it could have been a hallucination, right?";
+		next;
+		mes .nm$;
+		mes "Braishen said so, and those ants didn't attack when she was with Kahris.";
+		next;
+		mes .mk$;
+		mes "But in the end Maya...";
+		next;
+		mes .nm$;
+		mes "What if it is just like that?";
+		next;
+		mes .nm$;
+		mes "This is a hypothesis.","Kahris... Maybe a Vitata in disguise. Of course other ants won't attack.","Ants are colonies, aren't they?";
+		next;
+		mes .nm$;
+		mes "But Maya is the ruler of this dungeon.";
+		next;
+		mes .mk$;
+		mes "Hm...";
+		next;
+		mes .nm$;
+		mes "I assume they harm themself...";
+		next;
+		mes .mk$;
+		mes "Maybe they do...";
+		next;
+		mes .nm$;
+		mes "I wonder if Vitata's act like that was a threat to her status..";
+		next;
+		mes .mk$;
+		mes "!!","So what's really dangerous right now...";
+		next;
+		mes .mk$;
+		mes strcharinfo(0)+", can you go see Briashen, I guess Briashen is in dangerous situation.";
+		next;
+		if(select("Okay I'll go.","I need time to prepare.") == 2){
+			mes .mk$;
+			mes "Well, let me know when you are ready.";
+			end;
+		}
+		mes .mk$;
+		mes "Please!";
+		illusion_twins = 6;
+		cloakoffnpc "Briashen#1",getcharid(0);
+		cloakonnpc "Briashen",getcharid(0);
+		warp "ant_d02_i",172,185;
+		completequest 8727;
+		completequest 8728;
+		setquest 8729;
+		end;
+	}
+	if (isbegin_quest(8730) == 1 && illusion_twins == 7) {
+		mes .mk$;
+		mes "...";
+		next;
+		npctalk "Thank God...","Yolanda";
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "...";
+		next;
+		mes .br$;
+		mes "I'm fine now.","Tell me.";
+		next;
+		mes .mk$;
+		mes "...","It's only a speculation, but compare to the adventurer, Briashen halucinate more than the others?";
+		next;
+		npctalk "Everyone, don't keep reminding me!","Gona";
+		npctalk "I can't stand it, so I keep coming and going. What did you see?";
+		mes .mk$;
+		mes "Just like him over there.";
+		next;
+		mes .mk$;
+		mes "Strong enough to be possessed and unable to return....","You said she just looked like you?";
+		next;
+		mes .br$;
+		mes "I don't remember.";
+		next;
+		mes .mk$;
+		mes "What?";
+		next;
+		mes .br$;
+		mes "I can't remember what Kahris looked like...";
+		next;
+		mes .gn$;
+		mes "It's the worst I've ever seen.";
+		next;
+		mes .mk$;
+		mes "How about you "+strcharinfo(0)+", how was it? Was it difficult to take it out?";
+		next;
+		select("I saw it too.");
+		mes .mk$;
+		mes "Ah... That's why.","Last time I went in, there were fakes.","Did you say you saw it?";
+		next;
+		mes .mk$;
+		mes "Did you see the real thing this time? So what did it look like? Was it like Briashen said?";
+		next;
+		mes "== Kahris that Briashen was looking for, it only looked like an ant. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "...";
+		next;
+		mes .nm$;
+		mes "Was it different face?";
+		next;
+		select("She just looked like Briashen.");
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "She just looked like Briashen. It was so real, I almost feel for the blink of an eye. They look like twins.";
+		next;
+		mes .br$;
+		mes "Really?";
+		next;
+		mes .mk$;
+		mes "I can't really remember now. It's weird left and right, over there. Can you keep exploring?";
+		next;
+		mes .gn$;
+		mes "You don't have to worry about that. The adventurer's sense... Wow!";
+		next;
+		mes .mk$;
+		mes "Hey, You really need some rest!";
+		next;
+		npctalk "Take Gona too.","Briashen#2";
+		mes .br$;
+		mes "... "+strcharinfo(0)+", thank you for saving me.";
+		next;
+		npctalk "Uh? Then how do I do research there?";
+		npctalk "I don't like it there Mirko, I'm not going.","Gona";
+		mes .br$;
+		mes "I'm not... I'm not going there no more.","But, about Kahris you mentioned, I will not forget.";
+		next;
+		npctalk "Hy, Adventurer! Then accept my request! Will you?";
+		mes .br$;
+		mes "Kahris... I will not forget you.";
+		getitem 25271, 5;
+		getexp 124692000,92730500;
+		completequest 8730;
+		illusion_twins = 8;
+		end;	
+	}
+	if (illusion_twins == 1) {
+		mes .mk$;
+		mes "So then this way.";
+		warp "ant_d02_i",172,185;
+		end;
+	}
+	if (illusion_twins == 2) {
+		mes .mk$;
+		mes "Would you go there again to help her found her Twins?";
+		next;
+		if(select("Yes","Later") == 2){
+			mes .mk$;
+			mes "Well, I wish you can help us soon.";
+			end;
+		}
+		mes .mk$;
+		mes "Okay...";
+		warp "ant_d02_i",172,185;
+		end;
+	}
+	if (illusion_twins == 6) {
+		mes .mk$;
+		mes strcharinfo(0)+", can you go see Briashen, I guess Briashen is in dangerous situation.";
+		next;
+		if(select("Okay I'll go.","I need time to prepare.") == 2){
+			mes .mk$;
+			mes "Well, let me know when you are ready.";
+			end;
+		}
+		mes .mk$;
+		mes "Please!";
+		warp "ant_d02_i",172,185;
+		end;
+	}
+	if ( illusion_twins == 8 ){
+		mes .mk$;
+		mes "Shall we enter the Garden of Perception?","Or do you have commission to take over?";
+		next;
+		.@q = select("Enter Garden of Perception:Geological Investigation:Source of Power:Same Thing:Shared Memories:Cancel") - 1;
+		if(.@q == 5) {
+			mes .mk$;
+			mes "Alright, tell me when you are ready.";
+			end;
+		} else if ( .@q == 0 ) {
+			mes .mk$;
+			mes "Be careful.";
+			warp "ant_d02_i",172,185;
+			end;
+		}
+		if(checkquest(.ill_twins_dly[.@q],PLAYTIME) == 2){
+			erasequest .ill_twins_dly[.@q];
+		}
+		if(checkquest(.ill_twins_dly[.@q],PLAYTIME) == 0){
+			mes .mk$;
+			mes "You did a great job today.","Then I'll ask you again tomorrow";
+			close2;
+			end;
+		}
+		switch(checkquest(.ill_twins[.@q],HUNTING)) {
+		case -1:
+			switch(.@q) {
+			case 1: //Geological Investigation
+				mes .mk$;
+				mes "If you defeat Gutsy Giearth sometimes you can get ^0000FF"+getitemname(1000504)+"^000000.","Can you get me 20 pieces of it?";
+				break;
+			case 2: //Source of Power
+				mes .mk$;
+				mes "If you defeat Diligent Andre and Diligent Deniro in the Garden of Perception sometimes you can get ^0000FF"+getitemname(1000505)+"^000000.","Can you get me 20 pieces of it?";
+				break;
+			case 3: //Same Thing
+				mes .mk$;
+				mes "As you know, memories and annihilation are disorted in that Garden, and the site seems to have been in good shape, but it seems to be alleviating it just by reducing the number of individuals.";
+				next;
+				mes .mk$;
+				mes "^0000FF10 Deligent Vitatas^000000,","^0000FF10 Deligent Andre Soldiers^000000,","^0000FF10 Deligent Piere^000000,";
+				mes "Come back after kill those monster will you?";
+				break;
+			case 4: //Shared Memories
+				mes .mk$;
+				mes "I picked up some unkown shells a while ago, ants and whatever. I think everymonsters in Garden of Perception has it.","^0000FF"+getitemname(1000506)+"^000000.","Can you get me 20 pieces of it?";
+				break;
+			}
+			next;
+			if(select("Accept:Next") == 2){
+				mes .mk$;
+				mes "Well maybe another mission?";
+				end;
+			}
+			mes .mk$;
+			mes "Okay, I'll wait here.";
+			setquest .ill_twins[.@q];
+			end;
+		case 0:
+		case 1:
+			if (.@q == 3) {
+				mes .mes$[.@q];
+				end;
+			}
+		case 2:
+			switch(.@q) {
+			case 3:
+				mes .mk$;
+				mes "Oh, there was just another adventurer over there. My dizziness was a little less. Human curiosity is inescapable.","Then again, I'll ask you tomorrow.";
+				setquest .ill_twins_dly[.@q];
+				erasequest .ill_twins[.@q];
+				getexp .exp[.@q],.jexp[.@q];
+				getitem 25271, .amount[.@q];
+				end;
+			case 1: //Geological Investigation
+			case 2:
+			case 4:
+				if(countitem(.item[.@q]) > 19){
+					mes .mk$;
+					mes "Good work!","Then I'll ask you again tomorrow";
+					erasequest .ill_twins[.@q];
+					setquest .ill_twins_dly[.@q];
+					delitem .item[.@q], 20;
+					getexp .exp[.@q],.jexp[.@q];
+					getitem 25271, .amount[.@q];
+					end;
+				}
+				mes .mes$[.@q];
+				end;
+			}
+		}
+	}
+OnInit:
+	.nm$ = "[ Yolanda ]";
+	.mk$ = "[ Mirko ]";
+	.br$ = "[ Briashen ]";
+	.gn$ = "[ Gona ]";
+	setarray .mes$[1],"If you defeat Gutsy Giearth sometimes you can get ^0000FF"+getitemname(1000504)+"^000000. Please gather 20 pieces of it.",
+					  "If you defeat Diligent Andre and Diligent Deniro in the Garden of Perception sometimes you can get ^0000FF"+getitemname(1000505)+"^000000. Please gather 20 pieces of it.",
+					  "^0000FF10 Deligent Vitatas, 10 Deligent Andre Soldiers, 10 Deligent Piere^000000. Please kill those monsters.",
+					  "I picked up some unkown shells a while ago, ants and whatever. I think everymonsters in Garden of Perception has it. ^0000FF"+getitemname(1000506)+"^000000, Please get me 20 pieces of it.";
+	setarray .ill_twins[1],8731,8733,8735,8737;
+	setarray .ill_twins_dly[1],8732,8734,8736,8738;
+	setarray .item[1],1000504,1000505,0,1000506;
+	setarray .amount[1],4,3,3,4;
+	setarray .exp[1],61174500,61174500,124692000,59883000;
+	setarray .jexp[1],46241250,46241250,92730500,45135000;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8719) == 0 && Baselevel > 159 || isbegin_quest(8719) == 1 || isbegin_quest(8720) == 1";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8722) == 1 || isbegin_quest(8728) == 1 || isbegin_quest(8730) == 1";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8731) == 1 && countitem(1000504) > 19";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8733) == 1 && countitem(1000505) > 19";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8737) == 1 && countitem(1000506) > 19 || checkquest(8735,HUNTING) == 2";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "illusion_twins == 8 && isbegin_quest(8731) == 0 && checkquest(8732,PLAYTIME) == -1 || checkquest(8732,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "illusion_twins == 8 && isbegin_quest(8733) == 0 && checkquest(8734,PLAYTIME) == -1 || checkquest(8734,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "illusion_twins == 8 && isbegin_quest(8737) == 0 && checkquest(8738,PLAYTIME) == -1 || checkquest(8738,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "illusion_twins == 8 && isbegin_quest(8735) == 0 && checkquest(8736,PLAYTIME) == -1 || checkquest(8736,PLAYTIME) == 2";
+	end;
+}
+
+anthell02,171,182,0	script	anthellctrl	-1,10,10,{
+	end;
+OnTouch:
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == strnpcinfo(4)) {
+		if (isbegin_quest(8730) > 0) {
+			cloakoffnpc "Briashen#2",getcharid(0);
+			cloakoffnpc "Gona",getcharid(0);
+		}
+	}
+	end;
+}
+	
+anthell02,168,186,6	script	Briashen#2	-1,{
+	mes "[ Briashen ]";
+	mes "... "+strcharinfo(0)+", thank you for saving me.";
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	setunitdata getnpcid(0),UNPC_CLASS,4056;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,1;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,7;
+	setunitdata getnpcid(0),UNPC_HEADBOTTOM,1523;
+	end;
+}
+
+anthell02,177,181,3	script	Gona	-1,{
+	mes "[ Gona ]";
+	mes "I'm not going back there again. I swear.";
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	setunitdata getnpcid(0),UNPC_CLASS,4068;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_MALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,13;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,6;
+	end;
+}
+
+ant_d02_i,177,181,5	script	Gona#2	CLEAR_NPC,{
+	mes .gn$;
+	mes "Strange...","Where is the road to Geffen...?","No... Prontera? Where was it? The last place I went was...","Where are you?";
+	end;
+OnInit:
+	.gn$ = "[ Gona ]";
+	setunitdata getnpcid(0),UNPC_CLASS,4068;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_MALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,13;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,6;
+	end;
+}
+
+ant_d02_i,171,179,3	script	Mig	CLEAR_NPC,{
+	mes .gn$;
+	mes "Where am I? Those ants are so anoying, I should go back.";
+	end;
+OnInit:
+	.gn$ = "[ Mig ]";
+	setunitdata getnpcid(0),UNPC_CLASS,4055;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,28;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,5;
+	end;
+}
+
+ant_d02_i,45,258,6	script	Briashen	HIDDEN_WARP_NPC,10,10,{
+	if(isbegin_quest(8721) == 1) {
+		mes .nmb$;
+		mes "Uh, hi, didn't you see the injured ranger?";
+		next;
+		mes .nmb$;
+		mes "Did you come here to find Kahris too?";
+		next;
+		mes .nmb$;
+		mes "Uh, hi, didn't you see the injured ranger?";
+		select("That is not the requested name:That's right");
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Someone asked me to find Briashen...";
+		next;
+		mes .nmb$;
+		mes "What?";
+		next;
+		mes .nmb$;
+		mes "I think it's only me who is injured!","Who asked you?";
+		next;
+		select("Mirko and Yolanda");
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "They asked me to take out Briashen the injured ranger who is lost here.";
+		next;
+		mes .br$;
+		mes "Well it's true that I'm Briashen, but I'm not injured? when?";
+		next;
+		mes "== She don't seem to be lying. ==","== She looks fine, but maybe that's the twins they've been hearing about? ==";
+		next;
+		mes .br$;
+		mes "That's weird. As you can see I'm fine. I'm looking for my ex-boyfriend here, his name is Kahris.. We are looked alike.";
+		next;
+		mes .br$;
+		mes "I can't go back until I find him. Say that to Mirko. Then see you later.";
+		close2;
+		erasequest 8721;
+		setquest 8722;
+		cloakonnpc strnpcinfo(0),getcharid(0);
+		end;
+	}
+	if(isbegin_quest(8723) == 1) {
+		mes .br$;
+		mes "Oh, see you again.","Have you met Mirko?";
+		mes "What?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "They told me to help you.";
+		next;
+		mes .br$;
+		mes "Ah~ You look pretty strong. I'm glad. Still, Mirko was too weak to come in to explore here, so there was no need to worry.";
+		next;
+		select("I don't think you mean that:That's why I am here.");
+		mes .br$;
+		mes "By the way, for humans there are times when there are circumstances. I'm in a hurry now too! I mean Kahris is in danger.";
+		next;
+		mes .br$;
+		mes "Did you hear from Mirko too? He also asked me to help him exploring here.";
+		next;
+		select("If...");
+		mes .br$;
+		mes "Maybe something?";
+		next;
+		select("Is this person called Kahris real?");
+		mes .br$;
+		mes "You are asking the same question really? How many times have we met here, did you fight the ants too?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "?";
+		next;
+		mes .br$;
+		mes "Anyway, we met here before. I was curious to see the resemblence, but a few days ago... When we were together, suddenly a Big Maya showed up.";
+		next;
+		mes .br$;
+		mes "I wasn't seriously injured...","What?","Who is injured then?";
+		next;
+		mes .br$;
+		mes "Am I injured?";
+		next;
+		mes "== This time, as Mirko said, Briashen has a bad complexion. ==","== Her injuries have been healed, but excess movement will couse the wound open. ==";
+		next;
+		mes .br$;
+		mes "== But you see she is physically allright. ==","== You seem confused because preceptions and reality are twisted. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "It's dangerous to be here for so long. You don't look right you need to go out.";
+		next;
+		mes .br$;
+		mes "No no no, I'm fine, It was not me who is injured, It's Kahris.","He is waiting for me... I have to go find him.";
+		next;
+		mes "== Briashen is sitting down. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Let's go outside first.";
+		next;
+		mes .br$;
+		mes "No, I'll stay... The last time with Mirko I saw Maya, and It looks a bit different, we hunt together... But Kahris...";
+		next;
+		mes .br$;
+		mes "Kahris... What are you doing without me..?";
+		next;
+		setquest 8724;
+		illusion_twins = 2;
+		mes .br$;
+		mes "Be safe Kahris. As long as Maya doesn't appear, He is fine..";
+		next;
+		mes "== Briashen is trying to remember where Kahris is, got confused and fell out. ==","== Let's explore the dungeon first. ==";
+		completequest 8723;
+		cloakoffnpc "Kahris",getcharid(0);
+		cloakoffnpc "Rewella",getcharid(0);
+		cloakoffnpc "Kharis#1",getcharid(0);
+		end;
+	}
+	if(isbegin_quest(8724) == 1) {
+		mes .br$;
+		mes "Kahris... What are you doing without me..?";
+		end;
+	}
+OnTouch:
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == strnpcinfo(4)) {
+		if(isbegin_quest(8721) == 1 || isbegin_quest(8723) == 1)
+			cloakoffnpc strnpcinfo(0),getcharid(0);
+		else
+			cloakonnpc strnpcinfo(0),getcharid(0);
+	}
+	end;
+OnInit:
+	.nmb$ = "[ Fine Looking Ranger ]";
+	.br$ = "[ Briashen ]";
+	setunitdata getnpcid(0),UNPC_CLASS,4056;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,1;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,7;
+	setunitdata getnpcid(0),UNPC_HEADBOTTOM,1523;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8721) == 1 || isbegin_quest(8723) == 1";
+	end;
+}
+
+ant_d02_i,86,189,2	script	Rewella	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(8724) == 1 && isbegin_quest(8725) == 0) {
+		mes .nmr$;
+		mes "What? What's your name?","Don't you have to introduce yourself first?","Ah... "+strcharinfo(0)+".","I'm Rewela.";
+		next;
+		mes .nmr$;
+		mes "Have you ever seen someone named Briashen around here?";
+		next;
+		mes "== You tried to remember who Briashen is looking for... ==";
+		next;
+		mes .nmr$;
+		mes "Helo. Are you day dreaming or something?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Do you know someone named Kahris?";
+		next;
+		mes .nmr$;
+		mes "No, I don't know. That's a bit rude, please answer my question. Have you seen someone named Briashen?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Briashen is looking for someone named Kahris.";
+		next;
+		mes .nmr$;
+		mes "...";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "?";
+		next;
+		mes "== You waited for a while but there is no respon from Rewella. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Rewella?";
+		next;
+		mes .nmr$;
+		mes "I don't think that's my name.";
+		next;
+		mes .nmr$;
+		mes "But... I don't know who is Kahris. I think we'll find out if we meet Briashen, so where is she?";
+		next;
+		mes .nmr$;
+		mes "Briashen...";
+		sleep2 1000;
+		specialeffect 252,AREA,strnpcinfo(0);
+		cloakonnpc strnpcinfo(0),getcharid(0);
+		next;
+		mes "...";
+		next;
+		mes "== What...? ==";
+		next;
+		mes "== Where is the real Kahris? ==";
+		illusion_twins = 3;
+		setquest 8725;
+		end;
+	}
+OnTouch:
+	if(isbegin_quest(8724) == 1 && isbegin_quest(8725) == 0)
+		cloakoffnpc strnpcinfo(0),getcharid(0);
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	.nmr$ = "[ Rewella ]";
+	setunitdata getnpcid(0),UNPC_CLASS,4056;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,1;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,7;
+	setunitdata getnpcid(0),UNPC_HEADBOTTOM,1523;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8724) == 1 && isbegin_quest(8725) == 0 && illusion_twins == 2";
+	end;
+}
+
+ant_d02_i,258,42,2	script	Kahris	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(8724) == 1 && isbegin_quest(8726) == 0 && illusion_twins == 3) {
+		mes .kr$;
+		mes "What? What's your name?","Don't you have to introduce yourself first?","Ah... "+strcharinfo(0)+".","I'm Kahris.";
+		next;
+		mes .kr$;
+		mes "Have you ever seen a Ranger named Briashen around here?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "I saw her, I'm looking for you...";
+		next;
+		mes .kr$;
+		mes "Ah. Thank God! Where is she? I came back here to find her... and I was attacked by Maya, and she was taken away.";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "??";
+		next;
+		mes .kr$;
+		mes "Why? Is She safe?";
+		next;
+		mes "== According to Briashen's story, it was Kahris who was taken by Maya. ==","== Is it actually the other way around? ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Ah, she's okay...";
+		next;
+		mes "== But, according to what Mirko had heard, Mirko had never met Kahris before. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Do you know Mirko by any chance?";
+		next;
+		mes .kr$;
+		mes "Ah, he is my fellow adventurer.";
+		next;
+		select("Who are you?");
+		mes .kr$;
+		mes "What do you mean?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Mirko said he's never met you?";
+		next;
+		mes "== Waited for a while but the one who just proclaimed to be Kahris just stand without respond. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Kahris?";
+		next;
+		mes .kr$;
+		mes "Am I... Kahris?";
+		next;
+		mes .kr$;
+		mes "I think, I'll find out after meet Briashen. Where is she?";
+		next;
+		mes .kr$;
+		mes "Briashen...";
+		sleep2 1000;
+		cloakonnpc strnpcinfo(0),getcharid(0);
+		specialeffect 252,AREA,strnpcinfo(0);
+		next;
+		mes "...";
+		next;
+		mes "== What...? ==";
+		next;
+		mes "== Where is the real Kahris? ==";
+		changequest 8725,8726;
+		illusion_twins = 4;
+		end;
+	}
+OnTouch:
+	if(illusion_twins == 3)
+		cloakoffnpc strnpcinfo(0),getcharid(0);
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	.kr$ = "[ Kahris ]";
+	setunitdata getnpcid(0),UNPC_CLASS,4056;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,1;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,7;
+	setunitdata getnpcid(0),UNPC_HEADBOTTOM,1523;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8724) == 1 && isbegin_quest(8726) == 0";
+	end;
+}
+
+ant_d02_i,259,147,7	script	Kharis#1	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(8724) == 1 && isbegin_quest(8727) == 0 && illusion_twins == 4){
+		mes .kr$;
+		mes "What? What's your name?","Don't you have to introduce yourself first?","Ah... "+strcharinfo(0)+".","I'm Kahris.";
+		next;
+		mes "== However, Kharis that Briashen is looking for is not a Gunslinger. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Kahris...";
+		next;
+		mes .kr$;
+		mes "Yeah, I met you all of a sudden in a place like this, and asking your name. You are seemed a nice person, so What is it?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "...No, I just got a request to find Kahris.";
+		next;
+		mes .kr$;
+		mes "What? Who asked you? Is she Briashen? Is she safe?";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Yep, she's okay...";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "...";
+		next;
+		select("Who are you?");
+		mes .kr$;
+		mes "Huh? What are you saying now? I'm Kharis like I said earlier.";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Briashen asked me to find Kahris, she said that Kahris is a Ranger. You are not a Ranger. How came you here?";
+		next;
+		mes "== I waited for an answer for a while, but the self-proclaimed Kahris did not give any respond. ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Kahris?";
+		next;
+		mes .kr$;
+		mes "Am I... Kahris?";
+		next;
+		mes .kr$;
+		mes "I think, I'll find out after meet Briashen. Where is she?";
+		next;
+		mes "== Kahris lifted his forearm with great force. She grabbed my both hands ==","== It hurts to the point of screaming! ==";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Aww! It hurts!";
+		next;
+		mes .kr$;
+		mes "Take me to where Briashen is!";
+		next;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Hey Let go of me!";
+		next;
+		mes .kr$;
+		mes "Who am I, Briashen..?","Who am I...?","...Am I... I...!","I thought...";
+		close2;
+		cloakonnpc strnpcinfo(0),getcharid(0);
+		specialeffect 252,AREA,strnpcinfo(0);
+		changequest 8726,8727;
+		changequest 8724,8728;
+		warp "anthell02",172,185;
+		illusion_twins = 5;
+		end;
+	}
+OnTouch:
+	if(illusion_twins == 4)
+		cloakoffnpc strnpcinfo(0),getcharid(0);
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	.kr$ = "[ Kahris ]";
+	setunitdata getnpcid(0),UNPC_CLASS,24;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,1;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,7;
+	setunitdata getnpcid(0),UNPC_HEADBOTTOM,1523;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8724) == 1 && isbegin_quest(8727) == 0";
+	end;
+}
+
+ant_d02_i,126,73,6	script	#Vitata	HIDDEN_WARP_NPC,10,10,{
+	end;
+OnTouch:
+	if(isbegin_quest(8729) == 1  && illusion_twins == 6)
+		classchange 21394,"#Vitata",bc_self;
+	end;
+}
+
+ant_d02_i,130,73,6	script	#Maya	HIDDEN_WARP_NPC,{
+	end;
+}
+
+ant_d02_i,131,73,2	script	Briashen#1	HIDDEN_WARP_NPC,{
+	if(isbegin_quest(8729) == 1  && illusion_twins == 6){
+		unittalk getcharid(3),strcharinfo(0) + " : !";
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "!";
+		next;
+		select("Is that the real Briashen.");
+		unittalk getcharid(3),strcharinfo(0) + " : ...";
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "...";
+		next;
+		select("That Vitata is Kahris.");
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "...";
+		next;
+		select("How can I now that?.");
+		unittalk getcharid(3),strcharinfo(0) + " : Kahris!";
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Kahris!";
+		next;
+		mes "== Vitata turned this side. ==";
+		next;
+		mes .br$;
+		mes "...";
+		next;
+		mes .br$;
+		mes strcharinfo(0)+"! I, I can't remember what Kahris looked like...";
+		next;
+		specialeffect 1850,AREA,strnpcinfo(0);
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "Briashen, It's dangerous.";
+		next;
+		mes .br$;
+		mes "Wops!";
+		sleep2 1000;
+		classchange HIDDEN_WARP_NPC,"#Vitata",bc_self;
+		classchange 21395,"#Maya",bc_self;
+		specialeffect 133,AREA,"#Maya";
+		next;
+		mes .br$;
+		mes "Kahris...!?";
+		next;
+		mes .kr$;
+		mes "..., ...";
+		next;
+		npctalk "Briashen, I'm sorry, I don't think we can go on adventure together anymore.","#Maya";
+		mes .br$;
+		mes "Waht? No! Kahris!!";
+		next;
+		mes "== Kahris' voice come from afar, as if they were under water... ==";
+		next;
+		npctalk "I can't go out anyway, don't be sad I wish I could be a part of your heart. It was fun.","#Maya";
+		mes .kr$;
+		mes "..., ...";
+		next;
+		mes .br$;
+		mes "Kahris?";
+		next;
+		npctalk "Adventurer, I'm only part of the cognitive fallacy built up when Briashen came in here.","#Maya";
+		mes .kr$;
+		mes "..., ...";
+		next;
+		mes .br$;
+		mes "What are you talking about?";
+		next;
+		npctalk "I would have been disappeared anyway if Briashen didn't come. Thank you for coming to find me.","#Maya";
+		mes .kr$;
+		mes "..... ...";
+		next;
+		mes .kr$;
+		mes "..., .., ...";
+		next;
+		mes "== Kahris' voice is not heard anymore ==","== Maya is listening to the story by moving her antenae. ==";
+		next;
+		classchange HIDDEN_WARP_NPC,"#Maya",bc_self;
+		mes .br$;
+		mes "Kahris!";
+		next;
+		mes "== Kahris and Maya melted into darkness and disappeared. ==";
+		close2;
+		completequest 8729;
+		setquest 8730;
+		illusion_twins = 7;
+		warp "anthell02",172,185;
+		cloakonnpc strnpcinfo(0),getcharid(0);
+		cloakonnpc "Briashen",getcharid(0);
+		end;
+	}
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	.kr$ = "[ Kahris ]";
+	.br$ = "[ Briashen ]";
+	setunitdata getnpcid(0),UNPC_CLASS,4056;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_FEMALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,1;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,7;
+	setunitdata getnpcid(0),UNPC_HEADBOTTOM,1523;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(8729) == 1  && illusion_twins == 6";
+	end;
+}
+
+	

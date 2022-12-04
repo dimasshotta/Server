@@ -1,0 +1,149 @@
+lhz_dun_n,126,261,5	script	Vending Machine#123	2_SLOT_MACHINE,{
+	setarray .item[0],18971,18972,18973,18974,18975,18976,18977,18978,18979,18980,18981,18982,18983,18984;
+		.@ison = 0;
+	.@arm = getequipid(EQI_HEAD_TOP);
+	.@refine = getequiprefinerycnt(EQI_HEAD_TOP);
+	.@card0 = getequipcardid(EQI_HEAD_TOP,0);
+	.@card1 = getequipcardid(EQI_HEAD_TOP,1);
+	.@card2 = getequipcardid(EQI_HEAD_TOP,2);
+	.@card3 = getequipcardid(EQI_HEAD_TOP,3);
+	for(.@i = 0; .@i < 14; .@i++) {
+		if(.item[.@i] == .@arm) {
+		.@ison = 1;
+		} 
+	}
+	if(.@ison == 0) {
+		mes "You need an Old Headgear!";
+		close;
+	}
+	if(!.@card1) {
+		disable_items; 
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "Prepare to enchance the first enhancement";
+		mes "=====[Reinforcement Material]=====";
+		mes "1. 5.000.000,-				                zeny";
+		mes "2. <ITEM>[Grudge Fragment]<INFO> 23016 </INFO> </ITEM>	     200pcs";
+		switch(select("Cancel","Proceed")) {
+		case 1:
+			close;
+		case 2:
+			next;
+			mes "<ITEM>["+getitemname(.item)+"]<INFO> .item </INFO> </ITEM>";
+			mes "Select enchancement";
+			next;
+			setarray .enchant_id[0],29061,29071,29081,29091,29101,29111;
+			for ( set .@e,0; .@e < getarraysize(.enchant_id); set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.enchant_id[.@e])+ ( (.enchant_id[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$) - 1;
+			mes "<ITEM>["+getequipname(.item)+"]<INFO>"+getequipid(EQI_HEAD_TOP)+"</INFO> </ITEM>";
+			mes "Selected Enchantment: "+getitemname(.enchant_id[.@rune]);
+			mes "Proceed?";
+			if(select("- Yes:- No") - 1) close;
+			next;
+			if(Zeny < 5000000) { 
+				mes "^FF0000* Insufficient Zeny!^000000"; 
+				enable_items; 
+				close; 
+			} else if(countitem(23016) < 200) { 
+				mes "^FF0000* You need 200x "+getitemname(23016)+"!^000000";
+				enable_items;
+				close; 
+			} else if (Zeny > 4999999 && countitem(23016) > 199) {
+				set Zeny,Zeny-5000000;
+				delitem 23016,200;
+				delequip EQI_HEAD_TOP;
+				.@card1 = .enchant_id[.@rune];
+				getitem2 .@arm, 1, 1, .@refine,0, .@card0, .@card1, .@card2, .@card3;
+				enable_items;
+				close; 
+			}
+		}	
+	} else if(.@card1) {		
+			 if(inarray(.slot2_1[0],.@card1) > -1) set .@list,1;
+		else if(inarray(.slot2_2[0],.@card1) > -1) set .@list,2;
+		else if(inarray(.slot2_3[0],.@card1) > -1) set .@list,3;
+		else if(inarray(.slot2_4[0],.@card1) > -1) set .@list,4;
+		else if(inarray(.slot2_5[0],.@card1) > -1) set .@list,5;
+		else if(inarray(.slot2_6[0],.@card1) > -1) set .@list,6;
+		else set .@list,99;
+		
+		set .@v,inarray((.@list == 1 ? .slot2_1[0]:(.@list == 2 ? .slot2_2[0]:(.@list == 3 ? .slot2_3[0]:(.@list == 4 ? .slot2_4[0]:(.@list == 5 ? .slot2_5[0]:(.@list == 6 ? .slot2_6[0]:0)))))),.@card1);
+		set .@lv1,(.@v < 1 ? 1:(.@v == 1 ? 2:(.@v == 2 ? 3:(.@v == 3 ? 4:0))));
+		set .@lv2,(.@v < 1 ? 2:(.@v == 1 ? 3:(.@v == 2 ? 4:(.@v == 3 ? 5:0))));
+		set .@custo,(.@v < 1 ? 100:(.@v == 1 ? 200:(.@v == 2 ? 250:(.@v == 3 ? 350:0))));
+		set .@zeny,(.@v < 1 ? 3500000:(.@v == 1 ? 5000000:(.@v == 2 ? 8000000:(.@v == 3 ? 14000000:0))));
+		if(.@v >= 4){ mes "^FF0000* You reach maximum enchant!^000000"; enable_items; close; }					
+		switch(.@list) {
+			case 1: set .@cardx,.slot2_1[(.@v+1)]; break;
+			case 2: set .@cardx,.slot2_2[(.@v+1)]; break;
+			case 3: set .@cardx,.slot2_3[(.@v+1)]; break;
+			case 4: set .@cardx,.slot2_4[(.@v+1)]; break;
+			case 5: set .@cardx,.slot2_5[(.@v+1)]; break;
+			case 6: set .@cardx,.slot2_6[(.@v+1)]; break;
+			case 99: clear; mes "^FF0000* Unknown Enchanment!^000000"; 
+			enable_items; 
+			close;
+		}
+		disable_items; 
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "Prepare to enchance from lv "+.@lv1+"->"+.@lv2+".";
+		mes "=====[Reinforcement Material]=====";
+		mes "1. "+.@zeny+"				                 zeny";
+		mes "2. <ITEM>[Grudge Fragment]<INFO> 23016 </INFO> </ITEM>	     "+.@custo+"pcs";
+		if(select("Cancel:Enchant")==1){ 
+			enable_items; 
+			close; 
+		}
+		next;
+		if(countitem(23016) < .@custo) { 
+			mes "^FF0000* You need "+.@custo+"x "+getitemname(23016)+"!^000000"; 
+			enable_items; 
+			close; 
+		}
+		if(Zeny < .@zeny) { 
+			mes "^FF0000*Insuficient zeny!^000000"; 
+			enable_items; 
+			close; 
+		}		
+		set Zeny,Zeny-.@zeny;
+		delitem 23016,.@custo;
+		delequip EQI_HEAD_TOP;
+		getitem2 .@arm,1,1,.@refine,0,.@card0,.@cardx,.@card2,.@card3;
+		mes "Done.";
+		enable_items;
+		close;
+	}
+OnInit:
+	setunittitle getnpcid(0),"[WFL2020]";
+	//Positions
+	setarray .indices[1],EQI_HEAD_TOP,EQI_ARMOR,EQI_HAND_L,EQI_HAND_R,EQI_GARMENT,EQI_SHOES,EQI_ACC_L,EQI_ACC_R,EQI_HEAD_MID,EQI_HEAD_LOW;
+	
+	//Enchanment slot 4º
+	setarray .slot4[0],4710,4711,4712,4713,4700,4701,4702,4703,4740,4741,4742,4743,4750,4751,4752,4753;
+	
+	//Enchanment slot 3_1º
+	setarray .slot3_1[0],4710,4711,4712,4713,4700,4701,4702,4703,4740,4741,4742,4743,4750,4751,4752,4753,29672,29673,296734,29675,29676,29677,29678,29679,29680,29681,29682,29683,29684,29685,29686,29687,29688,29689;
+	
+	//Enchanment slot 3_2º
+	setarray .slot3_2[0],29672,29673,296734,29675,29676,29677,29678,29679,29680,29681,29682,29683,29684,29685,29686,29687,29688,29689;
+	
+	//Enchanment slot 2_1º
+	setarray .slot2_1[0],29061,29062,29063,29064,29065,29066,29067,29068,29069,29070;
+	
+	//Enchanment slot 2_2º
+	setarray .slot2_2[0],29071,29072,29073,29074,29075,29076,29077,29078,29079,29080;
+	
+	//Enchanment slot 2_3º
+	setarray .slot2_3[0],29081,29082,29083,29084,29085,29086,29087,29088,29089,29090;
+	
+	//Enchanment slot 2_4º
+	setarray .slot2_4[0],29091,29092,29093,29094,29095,29096,29097,29098,29099,29100;
+	
+	//Enchanment slot 2_5º
+	setarray .slot2_5[0],29101,29102,29103,29104,29105,29106,29107,29108,29109,29110;
+	
+	//Enchanment slot 2_6º
+	setarray .slot2_6[0],29111,29112,29113,29114,29115,29116,29117,29118,29119,29120;
+
+end;
+}

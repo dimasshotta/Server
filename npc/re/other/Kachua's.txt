@@ -1,0 +1,85 @@
+//===== rAthena Script =======================================
+//= Dynamic NPC: Kachua's Secret Box
+//===== Description: =========================================
+//- [Official conversion]
+//= Kachua's Secret Box is a Gachapon NPC.
+//= It lets the player exchange a Kachua's Secret Key for a random item.
+//= It also gives a Kachua's Mileage Coupon for each pull.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [ROManiac]
+// ==============================================
+
+function	script	F_Kachua_Key	{
+	calldynamic("Kachua's SecretBox","Kachua's SecretBox","-"+getcharid(0));
+	end;
+}
+
+prontera,0,0,0	script	Kachua's SecretBox	4_TREASURE_BOX,3,3,{
+	mes "A secret box where no one know what's inside!",
+		"^4863A0> You can consume this box by consuming^000000",
+		"[<ITEM>Kachua's Secret Key<INFO>23919</INFO></ITEM>]";
+	next;
+	if (countitem(23919) < 1)
+		.@color$[0] = "^666666";
+	if (countitem(23919) < 10)
+		.@color$[1] = "^666666";
+	switch(select(.@color$[0]+"Open the box 1 time(1 Kachua's Secret Key)",.@color$[1]+"Open the box 10 time(10 Kachua's Secret Key)")){
+	case 1:	
+		.@s = 1;
+		mes "^FF0000[Notice]^000000";
+		mes "^FF0000Exchange one random item with one Kachua's Secret Key^000000";
+		mes "^FF0000The item exchanged above cannot be withdrawn nor can it be exchanged to Kachua's Secret Key^000000";
+		break;
+	case 2:
+		mes "^FF0000[Notice]^000000";
+		mes "^FF0000Exchange ten random item with ten Kachua's Secret Key^000000";
+		mes "^FF0000The item exchanged above cannot be withdrawn nor can it be exchanged to Kachua's Secret Key^000000";
+		break;
+	}
+	next;
+	switch(select("Keep going:Stop Conversations")){
+	case 1:		
+		if(.@s == 1) {				
+			if (checkweight(1201,1) == 0 || ((MaxWeight - Weight) * 100 / MaxWeight) < 10) {
+				mes "^4d4dffPlease make sure you have enough space in your inventory.^000000";
+				close;
+			}
+			if (countitem(23919) < 1){
+				mes "Not enough <ITEM>[Kachua Secret Key]<INFO>23919</INFO></ITEM>.";
+				close;
+			}
+			.@s = 0;
+			delitem 23919,1;
+			getitem 1000274,1;
+			getitem 12411,1;
+			specialeffect2 509,SELF;
+			getgroupitem(IG_KACHUA_KEY);
+			end;
+		}		
+		if (countitem(23919) < 10){
+			mes "Not enough <ITEM>[Kachua Secret Key]<INFO>23919</INFO></ITEM>.";
+			close;
+		}
+		for(.@i = 1; .@i < 11; .@i++){
+			progressbar "00FF00",2;
+			if (checkweight(1201,1) == 0 || ((MaxWeight - Weight) * 100 / MaxWeight) < 10) {
+				mes "^4d4dffPlease make sure you have enough space in your inventory.^000000";
+				close;
+			}
+			if (countitem(23919) < 1) { // Custom check, just in case
+				close;
+			}
+			delitem 23919,1;
+			getitem 1000274,1;
+			getitem 12411,1;
+			getgroupitem(IG_KACHUA_KEY);
+			dispbottom "Kachua's Secret Box opened " + .@i + " times. It's kept opening.",0xFFFFFF;
+			specialeffect2 509,SELF;
+		}
+		mes "Kachua's Secret Box is opened 10 times!";
+		mes "Were you lucky?";
+		end;
+	case 2:
+		end;
+	}
+}

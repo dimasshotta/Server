@@ -1,0 +1,75 @@
+prontera,255,55,5	script	Premium Changer	456,{
+	mes "^0055FF[ Premium Exchanger ]^000000";
+	mes "Good day, Im Riza and I can make you a premium user";
+	mes "For a premium ticket";
+	next;
+	mes "^0055FF[ Premium Exchanger ]^000000";
+	mes "A premium user will be able to use the premium buffs of the healer and other boosts";
+	mes "It includes Imposition Manus/Assumptio/+10 Food Buffs/Soul Link Buffs";
+	mes "and a boost of drop rate by 50%";
+	next;
+	mes "^0055FF[ Premium Exchanger ]^000000";
+	mes "Do you want to be a premium user?";
+	next;
+	switch(select("Yes!:No Im just looking around.")) {
+		Case 1:
+			goto Ontalk;
+			close;
+			
+		Case 2:
+			mes "^0055FF[ Premium Exchanger ]^000000";
+			mes "Okay, Have a nice day!";
+			close;
+		}
+	
+OnTalk:
+	.@npc$ = "^0055FF[ Premium Exchanger ]^000000";
+	if ( vip_status(VIP_STATUS_ACTIVE) ) {
+		mes .@npc$;
+		mes "You're already a [Premium User]";
+		next;
+		mes .@npc$;
+		mes "Come back when your Premium already expired!";
+		close;
+	} else {
+		.@i = select(
+		.vip_day[0] + "Days",
+		.vip_day[1] + "Days",
+		.vip_day[2] + "Days" ) - 1;
+		
+		mes .@npc$;
+		mes "Your account will be premium for "+.vip_day[.@i]+" Days";
+		//mes "You will need a "+getitemname(.vip_item[.@i])+" for that.";
+		next;
+		switch(select("Yes i want to exchange my ticket:No Im just looking around.")) {
+		case 1:
+			//if (countitem(.vip_item[.@i]) < 1){
+			//	mes .@npc$;
+			//	mes "Sorry you don't have the requirement.";
+			//	end;
+			//}		
+			//delitem .vip_item[.@i],1;
+			vip_time ( .vip_day[.@i] * 1440 );
+			mes .@npc$;
+			mes "You are now a Premium User for "+.vip_day[.@i]+" Days!";
+			end;
+		
+		case 2:
+			mes .@npc$;
+			mes "Okay, Have a nice day!";
+			close;
+		}
+	}
+				
+OnCheck:
+	if (vip_status(VIP_STATUS_ACTIVE)) {
+		dispbottom "Expire Time : "+vip_status(3);
+	}
+	end;
+			
+OnInit:
+	setarray .vip_day,7,14,31;
+	//setarray .vip_item,33110,33111,33112; //Set The VIP Item here
+	bindatcmd("vipstatus", strnpcinfo(3)+"::OnCheck");
+	end;
+}

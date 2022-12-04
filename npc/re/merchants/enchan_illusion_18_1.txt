@@ -1,0 +1,38 @@
+//===== rAthena Script =======================================
+//= Episode 18.1 - Illusion Enchants
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Illusion series related merchants and enchanters
+//===== Changelog: ===========================================
+//= 1.0 Initial release of Illusion of Twins [ROManiac]
+//============================================================
+
+ant_d02_i,174,186,3	script	Peurom	CLEAR_NPC,{
+	mes .n$;
+	mes "I can upgrade your equipment";
+	mes "Choose which one you one to upgrade";
+	mes "Here are the list";
+	next;
+	switch(select("Weapon:Armor:Accessory:Cancel")){
+	case 1:
+		callshop "tweap";
+		end;
+	case 2:
+		callshop "twarm";
+		end;
+	case 3:
+		callshop "twacc";
+		end;
+	case 4:
+		mes .n$;
+		mes "Okay see you!";
+		end;
+	}
+OnInit:
+	.n$ = "[ Peurom ]";
+	setunitdata getnpcid(0),UNPC_CLASS,4058;
+	setunitdata getnpcid(0),UNPC_SEX,SEX_MALE;
+	setunitdata getnpcid(0),UNPC_HAIRSTYLE,11;
+	setunitdata getnpcid(0),UNPC_HAIRCOLOR,7;
+	end;
+}

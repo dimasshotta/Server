@@ -1,0 +1,37 @@
+//===== rAthena Script =======================================
+//= Niflheim Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= [ROManiac] (1.0)
+//===== Current Version: =====================================
+//= 1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.2 Niflheim Dungeon 1 & 2
+//============================================================
+
+
+//==================================================
+// nif_dun01 
+//==================================================
+nif_dun01,0,0	monster	Ghost Cube	20938,60
+nif_dun01,0,0	monster	Lude Gal	20939,60
+nif_dun01,0,0	monster	Gan Cean	20935,60
+nif_dun01,0,0	monster	Brutal Murderer	20937,60
+
+//==================================================
+// nif_dun02
+//==================================================
+nif_dun02,0,0	monster	Blue Moon Loli Ruri	20940,70
+nif_dun02,0,0	monster	Blue Moon Loli Ruri	20940,10,10000
+nif_dun02,0,0	monster	Blue Moon Loli Ruri	20940,10,10000
+nif_dun02,0,0	monster	Disguiser	20936,70
+nif_dun02,0,0	monster	Disguiser	20936,10,10000
+nif_dun02,0,0	monster	Disguiser	20936,10,10000
+nif_dun02,0,0	monster	Grote	20941,65
+nif_dun02,0,0	monster	Grote	20941,10,10000
+nif_dun02,0,0	monster	Grote	20941,10,10000
+nif_dun02,0,0	monster	Pierrotzoist	20942,65
+nif_dun02,0,0	monster	Pierrotzoist	20942,10,10000
+nif_dun02,0,0	monster	Pierrotzoist	20942,10,10000
+nif_dun02,0,0,0,0	boss_monster	Death Witch	20943,1,7200000,600000,1

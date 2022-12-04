@@ -1,0 +1,1290 @@
+//===== rAthena Script ======================================= 
+//= Illusion Dungeon Investigation (kRO Servers)
+//===== By: ================================================== 
+//= [ ROManiac ]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release / Daily quest)
+//===== Additional Comments: ================================= 
+// - Roughly translated from KRO
+//============================================================
+
+prt_in,135,34,3	script	Leader Joel	1_m_orient01,{
+	if(Baselevel < 100){
+		mes .nm$;
+		mes "Hello! I'm Joel, the leader for the Illusion Investigation Team.";
+		next;
+		mes .nm$;
+		mes "No offence but I'm looking for highly skilled adventurers.";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {
+		mes .nm$;
+		mes "If you have time during your adventure, I hope you will stop by the Illusions located in various places and help with the investigation.";
+		next;
+		mes .nm$;
+		mes "The dispatched investigation team, will guide you.";
+		end;
+	}
+	mes .nm$;
+	mes "Hello! I'm Joel, the leader of the Illusion Investigation Team.";
+	next;
+	mes .nm$;
+	mes "Have you ever heard or experienced Illusions?";
+	next;
+	mes .nm$;
+	mes "Until now, Illusions have been discovered all over the world and are known to the public to some extent.";
+	next;
+	mes .nm$;
+	mes "It is easy to obtain rare materials and is also used as a hunting grounf for many adventurers.";
+	next;
+	mes .nm$;
+	mes "Also the monsters in Illusion are new monsters that have not been discovered before, and the monsters in Illusion are multiplying abnormally.";
+	next;
+	mes .nm$;
+	mes "Although many adventurers hunt monsters in Illusion to obtain materilas, the reason for the fact that the number of individuals is rapidly restored could not be revealed.";
+	next;
+	mes .nm$;
+	mes "Our Illusion Investigation Team was organized to reveal the mystery of Illusion, and the first thing we decided to do was to understand the monster ecology inside the Illusion.";
+	next;
+	mes .nm$;
+	mes "I found out that all Illusion were affected by the dimension rift.";
+	next;
+	mes .nm$;
+	mes "I've been specualting for a long time that it might have something to do with the dimensional rift, but this investigation has made it clear.";
+	next;
+	mes .nm$;
+	mes "A lot of adventurers still visit Illusion for a purpose, so fortunately, the monster population is being maintained.";
+	next;
+	mes .nm$;
+	mes "If no one sets foot there, it is very dangerous because monsters can go beyond saturation and invade other areas.";
+	next;
+	mes .nm$;
+	mes "For that reason, the number of individuals is still being investigated, and one investigator is currently assigned to each Illusion.";
+	next;
+	mes .nm$;
+	mes "We are also recruiting members with the ability to control the number of monsters inside Illusion.";
+	next;
+	mes .nm$;
+	mes "And if you are an adventurer, you seem strong enough for the role...";
+	next;
+	mes .nm$;
+	mes "Would you like to join the Welcome Investigation Team and participate in the Illusion Investigation with us?";
+	next;
+	if (select("I will join","Let me think about it") - 1) {	
+		mes .nm$;
+		mes "Okay just talk to me when you are ready.";
+		end;
+	}
+	setquest 3470;
+	mes .nm$;
+	mes "Good! We are glad to Welcome you.";
+	next;
+	mes .nm$;
+	mes "The process is simple. So, please fill out the oath here...";
+	next;
+	mes .nm$;
+	mes "So here.. Please sign...";
+	next;
+	mes .nm$;
+	mes ".";
+	next;
+	mes .nm$;
+	mes "..";
+	next;
+	mes .nm$;
+	mes "...";
+	next;
+	mes .nm$;
+	mes "Yes, that has made you a part of our Investigation Team. Welcome again!";
+	next;
+	mes .nm$;
+	mes "If you have time during your adventure, I hope you will stop by the Illusions located in various places and help with the investigation.";
+	next;
+	mes .nm$;
+	mes "The dispatched investigation team, will guide you.";
+	next;
+	mes .nm$;
+	mes "I hope you have a good day.";
+	completequest 3470;
+	end;
+OnInit:
+	.nm$ = "[ Joel ]";
+	setarray .investigation[0],3470,3446,3449,3452,3455,3458,3461,3464,3467,3507;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "Baselevel >= 100 && isbegin_quest(3470) == 0";
+	end;
+}
+
+prt_in,135,29,3	script	Unit Charge	4_f_khelly,{
+	mes "[Unit Charge]";
+	mes "Hello~~!!";
+	next;
+	mes "[Unit Charge]";
+	mes "The size of Welcoming Investigation Team is growing little by litte";
+	next;
+	mes "[Unit Charge]";
+	mes "The more members we have, the more we can do.","Will it be a lot?";
+	end;
+}
+
+prt_in,124,21,1	script	Unit Yonsei	4_m_dewwoman,{
+	mes "[Unit Yonsei]";
+	mes "Nice to meet you. This is the Welcome Investigation Team.";
+	next;
+	mes "[Unit Yonsei]";
+	mes "Investigation of monsters ecosystem in Illusion...";
+	next;
+	mes "[Unit Yonsei]";
+	mes "I think there is something to do with the dimensional rift. I thought.";
+	next;
+	mes "[Unit Yonsei]";
+	mes "I hope that everyone who is working hard at this time can return home safely without any accidents.";
+	end;
+}
+
+prt_in,121,36,7	script	Unit Xenian	4_f_huwoman,{
+	mes "[Unit Xenian]";
+	mes "Hello, I'm new member here.","My name is Jenian.";
+	next;
+	mes "[Unit Xenian]";
+	mes "I have been paying attention to the dimensional rift phenomenon for a long time. Obviously, despite a lot of subjugation, monsters were constantly appearing.";
+	next;
+	mes "[Unit Xenian]";
+	mes "The facts that the phenomenon is also occurring in Illusion","It was proven, and that's how I decided to join the Investigation Team.";
+	next;
+	mes "[Unit Xenian]";
+	mes "Good luck in the future!!!";
+	end;
+}
+
+//Investigation of Illusion Moonlight
+pay_d03_i,149,34,5	script	Jiroker	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 100) {
+		mes .nm$;
+		mes "What a scary place here...";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {
+		switch(checkquest(3448,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "Now.. Well then.. Hmm. I'll have to wait and see how much monsters spawn for a while.";
+			next;
+			mes .nm$;
+			mes "Leave the rest to me!!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Great~!!";
+			next;
+			mes .nm$;
+			mes "All you have to do is hunting down 100 monster of any type in this place.";
+			next;
+			mes .nm$;
+			mes "Then go carefully!";
+			erasequest 3446;
+			erasequest 3448;
+			erasequest 3447;
+			setquest 3447;
+			end;
+		}
+		switch(checkquest(3447,HUNTING)){		
+		case -1:
+			mes .nm$;
+			mes "Hello";
+			next;
+			mes .nm$;
+			mes "My name is Jiroker one of the members of Illusion Investigation Team.";
+			next;
+			mes .nm$;
+			mes "Ughh.. To come to a place like this...";
+			next;
+			mes .nm$;
+			mes "I usually pretend to be courageous. I guess I do that becuase I have crush on one of the member named Elysia";
+			next;
+			mes .nm$;
+			mes "But in fact I am just a coward...";
+			next;
+			mes .nm$;
+			mes "Anyway... I'm in charge of the Investigation of this place.";
+			next;
+			mes .nm$;
+			mes "Did you hear about the investigation from leader Joel? Adventurer, you must hunt 100 monsters alone.";
+			next;
+			mes .nm$;
+			mes "Would you like to participate in this welcome survey?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Great~!!";
+			next;
+			mes .nm$;
+			mes "All you have to do is hunting down 100 monster of any type in this place.";
+			next;
+			mes .nm$;
+			mes "Then go carefully!";
+			setquest 3447;
+			end;
+		case 0:
+		case 1:
+			mes .nm$;
+			mes "All you have to do is hunting down 100 monster of any type in this place.";
+			next;
+			mes .nm$;
+			mes "Then go carefully!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "You are back safely!";
+			next;
+			mes .nm$;
+			mes "Now.. Well then.. Hmm. I'll have to wait and see how much monsters spawn for a while.";
+			next;
+			mes .nm$;
+			mes "Leave the rest to me!!";
+			mes "Thank you!";
+			getexp 25000000,25000000;
+			completequest 3447;
+			setquest 3446;
+			setquest 3448;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 4_m_orient02,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Jiroker ]";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "Baselevel > 99 && isbegin_quest(3447) == 0 && isbegin_quest(3470) == 2 || checkquest(3448,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3447,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Frozen
+ice_dun02,142,18,5	script	Elysia	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 120) {
+		mes .nm$;
+		mes "Hello~";
+		next;
+		mes .nm$;
+		mes "I'm Elysia from Illusion Investigation Team~";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3451,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "I'll do the rest of this research~";
+			next;
+			mes .nm$;
+			mes "You did a really good job, I wish to see you again!!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Great! Thank you!!";
+			next;
+			mes .nm$;
+			mes "After entering the illusion, all you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Looking forward to your hunting skills~~";
+			erasequest 3449;
+			erasequest 3450;
+			erasequest 3451;
+			setquest 3450;
+			end;
+		}
+		switch(checkquest(3450,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello~";
+			next;
+			mes .nm$;
+			mes "I'm Elysia from Illusion Investigation Team~";
+			next;
+			mes .nm$;
+			mes "It's really cold here...";
+			next;
+			mes .nm$;
+			mes "I thought I would be sent alone to a dangerous place like this... And I am correct afterall, I wanted to come with Jiroker...";
+			next;
+			mes .nm$;
+			mes "Wll, Even he is here, It would have been me who is going to protect him. He is a coward afterall.";
+			next;
+			mes .nm$;
+			mes "He is pretending to be courageous... but I notice it already.";
+			next;
+			mes .nm$;
+			mes "Is he safe in the abandoned village? I'm a bit worried.";
+			next;
+			mes .nm$;
+			mes "Hmmm.. Actually it's not the time to worry about him. Adventure-sama can you help me?";
+			next;
+			mes .nm$;
+			mes "Have you heard about to task as an investigator we need to maintain the monster population here? Many adventurers come here to hunt, but it's not enough to maintain it.";
+			next;
+			mes .nm$;
+			mes "It's easy to figure out the number when you are dealing with a lot of monsters. How is it? Would you like to participate the investigation in this place?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Great! Thank you!!";
+			next;
+			mes .nm$;
+			mes "After entering the illusion, all you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Looking forward to your hunting skills~~";
+			setquest 3450;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Looking forward to your hunting skills~~";
+			end;
+		case 2:
+			mes .nm$;
+			mes "You are done already? You've cone with a lot of heat too~";
+			next;
+			mes .nm$;
+			mes "Then I'll do the rest of this research~";
+			next;
+			mes .nm$;
+			mes "You did a really good job, I wish to see you again!!";
+			getexp 	60000000,60000000;
+			completequest 3450;
+			setquest 3449;
+			setquest 3451;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 4_f_operation,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Elysia ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Baselevel > 119 && !isbegin_quest(3450) && isbegin_quest(3470) == 2 || checkquest(3451,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3450,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Luanda
+com_d02_i,253,232,3	script	Cassis	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 160) {
+		mes .nm$;
+		mes "I love this place.","It's so comfortable...";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3463,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "You are working so hard.";
+			next;
+			mes .nm$;
+			mes "Now, leave the rest to me.";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Thank you so much.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then I wish you good luck.";
+			erasequest 3462;
+			erasequest 3463;
+			erasequest 3461;
+			setquest 3462;
+			end;
+		}
+		switch(checkquest(3462,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello";
+			next;
+			mes .nm$;
+			mes "My name is Cassis welcome to investigation team.";
+			next;
+			mes .nm$;
+			mes "Eventhough this place is full of monsters, I still love this place.","It's so comfortable...";
+			next;
+			mes .nm$;
+			mes "I don't really like getting involved with people. Before joining Investigation Team, I was running a shop in Prontera...";
+			next;
+			mes .nm$;
+			mes "It was hard to bear the feeling of being crowded with people. I think facing with a lot of people is stressful for me.";
+			next;
+			mes .nm$;
+			mes "But eventhough this place is full with monsters, I still feel more comfortable being here. At least they don't talk to me.";
+			next;
+			mes .nm$;
+			mes "By the way, I heard one of the investigators is coming here to help. So is it you?";
+			next;
+			mes .nm$;
+			mes "Did you hear the details from Leader Joel? You just have to show off you fightning skills.";
+			next;
+			mes .nm$;
+			mes "Do you want to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Thank you so much.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then I wish you good luck.";
+			setquest 3462;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then I wish you good luck.";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Welcome. You are done!";
+			next;
+			mes .nm$;
+			mes "You are working so hard. Is there any injuries?";
+			next;
+			mes .nm$;
+			mes "Now, leave the rest to me.";
+			mes "Thank you!";
+			getexp 	290000000,196000000;
+			completequest 3462;
+			setquest 3461;
+			setquest 3463;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 4_m_khboy,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Casssis ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Baselevel > 159 && isbegin_quest(3462) == 0 && isbegin_quest(3470) == 2 || checkquest(3463,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3462,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Vampire
+gef_d01_i,122,237,3	script	Radimir	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 130) {
+		mes .nm$;
+		mes "I was sent to such a gloomy place, frankly speaking, I'm very scared.";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3454,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "I will finish the rest of the work soon and report it to the investigation team.";
+			mes "You did a good job!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Allright.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "The sooner you finish it, the better it will be.";
+			next;
+			mes .nm$;
+			mes "Then, I'll wait for you.";
+			erasequest 3453;
+			erasequest 3454;
+			erasequest 3452;
+			setquest 3453;
+			end;
+		}
+		switch(checkquest(3453,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello Adventurer!";
+			next;
+			mes .nm$;
+			mes "Working as Investigation Team, Radimir here.";
+			next;
+			mes .nm$;
+			mes "I was sent to such a gloomy place, frankly speaking, I'm very scared.";
+			next;
+			mes .nm$;
+			mes "However, I have always been interested in the Illusion thingy, and when the investigation team was formed like this, I actively applied for the club.";
+			next;
+			mes .nm$;
+			mes "So far no one has talked about this, because I couldn't figure it out myself.";
+			next;
+			mes .nm$;
+			mes "The current reasearch phase is still just the beginning, but it is certainly a great first step.";
+			next;
+			mes .nm$;
+			mes "That is why fear can be overcame by will-power.";
+			next;
+			mes .nm$;
+			mes "All preparation for the investigation are complete. Now, only those who can control the level of the monster were waiting.";
+			next;
+			mes .nm$;
+			mes "How about you get participated to in this investigation? That's why you here didn't you?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Allright.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "The sooner you finish it, the better it will be.";
+			next;
+			mes .nm$;
+			mes "Then, I'll wait for you.";
+			setquest 3453;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "I'll wait for you.";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Thank you for ending it so quickly!";
+			next;
+			mes .nm$;
+			mes "This make easier to research the number.";
+			next;
+			mes .nm$;
+			mes "I will finish the rest of the work soon and report it to the investigation team.";
+			mes "You did a good job!";
+			getexp 	100000000,100000000;
+			completequest 3453;
+			setquest 3452;
+			setquest 3454;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 8_f,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Radimir ]";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "Baselevel > 129 && isbegin_quest(3453) == 0 && isbegin_quest(3470) == 2 || checkquest(3454,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3453,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Teddy Bear
+ein_d02_i,161,180,5	script	Machoko	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 150) {
+		mes .nm$;
+		mes "Hello~~!!";
+		next;
+		mes .nm$;
+		mes "I'm Machoko from Illusion Investigation Team~~","Nice to meet you!";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3457,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "Leave the rest to me!! I'll report the result to the investigation team.";
+			mes "Now go and rest!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Good good! Let's go!!";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "I... I don't even have enough strength to move.","I'll wait you over here.";
+			erasequest 3456;
+			erasequest 3457;
+			erasequest 3455;
+			setquest 3456;
+			end;
+		}
+		switch(checkquest(3456,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello~~!!";
+			next;
+			mes .nm$;
+			mes "I'm Machoko from Illusion Investigation Team~~";
+			next;
+			mes .nm$;
+			mes "I really wanted to be sent to this place, But these Teddy Bear always followed me~";
+			next;
+			mes .nm$;
+			mes "This is so anoying~~";
+			mes "Please kill them anyway...";
+			next;
+			mes .nm$;
+			mes "But it doesn't make sense... I don't have enough strength... They look easy... But they are really strong...";
+			next;
+			mes .nm$;
+			mes "I thought I could do it myself.. I underestimate them... Huh...";
+			next;
+			mes .nm$;
+			mes "I rushed around ignorantly and got beaten up alot.. I almost dead...";
+			next;
+			mes .nm$;
+			mes "I barely recovered... I think it's possible to investigate. Are you strong enough to help me?";
+			next;
+			mes .nm$;
+			mes "If you are, then help me... I need someone to hold those vicious teddy bear under control...";
+			next;
+			mes .nm$;
+			mes "How is it? Would you like to participate??";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Good good! Let's go!!";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "I... I don't even have enough strength to move.","I'll wait you over here.";
+			setquest 3456;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "I... I don't even have enough strength to move.","I'll wait you over here.";
+			end;
+		case 2:
+			mes .nm$;
+			mes "I've been waiting... Come quick over here...";
+			next;
+			mes .nm$;
+			mes "Umm... I think it's enough... Umm... Yeah!! Great!!";
+			next;
+			mes .nm$;
+			mes "Leave the rest to me!! I'll report the result to the investigation team.";
+			mes "Now go and rest!";
+			next;
+			mes .nm$;
+			mes "Thank you~~";
+			getexp 	175000000,125000000;
+			completequest 3456;
+			setquest 3457;
+			setquest 3455;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 8_f_girl,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Machoko ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Baselevel > 149 && isbegin_quest(3456) == 0 && isbegin_quest(3470) == 2 || checkquest(3457,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3456,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Abyss
+tur_d03_i,125,186,5	script	Orian	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 150) {
+		mes .nm$;
+		mes "Hello!";
+		next;
+		mes .nm$;
+		mes "I'm Orian from Illusion Investigation Team","Nice to meet you!";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3460,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "Thank you~ You did a great job!!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Oh Thank you!";
+			next;
+			mes .nm$;
+			mes "From here, go up one floor and please go to Guyanggung Palace (Ancient Archery Palace)";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "I'll be waiting here. Have a safe trip!!";
+			erasequest 3459;
+			erasequest 3460;
+			erasequest 3458;
+			setquest 3459;
+			end;
+		}
+		switch(checkquest(3459,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello!";
+			next;
+			mes .nm$;
+			mes "I'm Orian from Illusion Investigation Team";
+			next;
+			mes .nm$;
+			mes "Illusion Investigation Team has just formed.","It seems that the organization is a little lacking in staff.","I saw the announcement that there is a new welcoming/recruitement for a new part-time contract worker.";
+			next;
+			mes .nm$;
+			mes "Actually, I'm not really insterested in this organization...";
+			mes "I'm busy making a living...";
+			next;
+			mes .nm$;
+			mes "Umm... It's all about money. When I got paid, I will buy new clothes.";
+			next;
+			mes .nm$;
+			mes "But even that is not easy.. I thought it would be very difficult by myself, so I am waiting for another investigation team like you to come.";
+			next;
+			mes .nm$;
+			mes "It would be greate if you could help me.. Could you do it?";
+			next;
+			mes .nm$;
+			mes "Would you like to joint the Investigation??";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Oh Thank you!";
+			next;
+			mes .nm$;
+			mes "From here, go up one floor and please go to Guyanggung Palace (Ancient Archery Palace)";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "I'll be waiting here. Have a safe trip!!";
+			setquest 3459;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "From here, go up one floor and please go to Guyanggung Palace (Ancient Archery Palace)";
+			next;
+			mes .nm$;
+			mes "I'll be waiting here. Have a safe trip!!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "You arrive safely.";
+			next;
+			mes .nm$;
+			mes "Umm... You did it much faster than I expected. Are you talented??";
+			next;
+			mes .nm$;
+			mes "Thanks to you for making this work seems easier.";
+			next;
+			mes .nm$;
+			mes "Thank you~ You did a great job!!";
+			getexp 	225000000,160000000;
+			completequest 3459;
+			setquest 3458;
+			setquest 3460;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 4_m_lgtpoor,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Orian ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Baselevel > 149 && isbegin_quest(3459) == 0 && isbegin_quest(3470) == 2 || checkquest(3460,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3459,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Twins
+ant_d02_i,167,184,5	script	Seshin	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 160) {
+		mes .nm$;
+		mes "Hello!";
+		next;
+		mes .nm$;
+		mes "I'm Seshin from Illusion Investigation Team","Nice to meet you!";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3509,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "From now on I'll do it my own.";
+			next;
+			mes .nm$;
+			mes "Thank you so much for your help.";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Good!";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then don't get injured and go carefully.";
+			erasequest 3509;
+			erasequest 3508;
+			erasequest 3507;
+			setquest 3508;
+			end;
+		}
+		switch(checkquest(3508,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello! Nice to meet you.";
+			next;
+			mes .nm$;
+			mes "I'm Seshin from Illusion Investigation Team";
+			next;
+			mes .nm$;
+			mes "I used to be the member of the Continentil Guard. At that time, I was working on exploring the dimensional rift created by the power of the Demon Lord Morroc.";
+			next;
+			mes .nm$;
+			mes "I'm guessing to some extent that the appearence of Illusions here and there has to do with the power emitted by the dimensional rift.";
+			next;
+			mes .nm$;
+			mes "The fact that the Illusion phenomenon is caused by a dimensional rift by the illusion investigation team, has been officially announced by the leader Joel.";
+			next;
+			mes .nm$;
+			mes "And not long after a new Illusion was discovered, yes, right here.";
+			next;
+			mes .nm$;
+			mes "I wanted to see with my own eyes, so I joined the Investigation Team, and now I am here.";
+			next;
+			mes .nm$;
+			mes "But I have a little problem...";
+			next;
+			mes .nm$;
+			mes "I thought my fighting skills would be enough to investigate here... I guess I am wrong.";
+			next;
+			mes .nm$;
+			mes "The monsters here are much more powerful than I expected.";
+			next;
+			mes .nm$;
+			mes "Ah.. I am too confident. I need help now..";
+			next;
+			mes .nm$;
+			mes "If you are adventurer, I guess you can help me.";
+			next;
+			mes .nm$;
+			mes "I feel like you are much stronger than me.";
+			next;
+			mes .nm$;
+			mes "Would you like to joint the Investigation in this area?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Good!";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then don't get injured and go carefully.";
+			setquest 3508;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then don't get injured and go carefully.";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Indeed... You came back after finishing it quickly";
+			next;
+			mes .nm$;
+			mes "I'll have to investigate further to see if this phenomenon si affected by Dimensional Rift.";
+			next;
+			mes .nm$;
+			mes "From now on I'll do it my own.";
+			next;
+			mes .nm$;
+			mes "Thank you so much for your help.";
+			getexp 	270000000,180000000;
+			completequest 3508;
+			setquest 3509;
+			setquest 3507;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 1_M_MOC_LORD,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Seshin ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Baselevel > 159 && isbegin_quest(3508) == 0 && isbegin_quest(3470) == 2 || checkquest(3509,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3508,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Underwater F2
+iz_d04_i,127,224,5	script	Lister	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 180) {
+		mes .nm$;
+		mes "Hello!";
+		next;
+		mes .nm$;
+		mes "I'm Lister from Illusion Investigation Team","Nice to meet you!";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3469,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "You have done so well. Now I'll go down carefully. I'll have a look.";
+			next;
+			mes .nm$;
+			mes "I'll do the rest. Thank you so much!!!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Good! Alright";
+			next;
+			mes .nm$;
+			mes "Now go down to the bottom of the abyssal cave and kill 100 monster there regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then go carefully!";
+			erasequest 3469;
+			erasequest 3468;
+			erasequest 3467;
+			setquest 3468;
+			end;
+		}
+		switch(checkquest(3468,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Good! Alright";
+			next;
+			mes .nm$;
+			mes "Now go down to the bottom of the abyssal cave and kill 100 monster there regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then go carefully!";
+			setquest 3468;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "Now go down to the bottom of the abyssal cave and kill 100 monster there regardless of the type.";
+			next;
+			mes .nm$;
+			mes "Then go carefully!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "How was it? The monsters down there are also powerfull right?";
+			next;
+			mes .nm$;
+			mes "You have done so well. Now I'll go down carefully. I'll have a look.";
+			next;
+			mes .nm$;
+			mes "I'll do the rest. Thank you so much!!!";
+			getexp 	650000000,450000000;
+			completequest 3468;
+			setquest 3469;
+			setquest 3467;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 4_F_01,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Lister ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Baselevel > 179 && isbegin_quest(3468) == 0 && isbegin_quest(3470) == 2 || checkquest(3469,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3468,HUNTING) == 2";
+	end;
+}
+
+//Investigation of Illusion Labytinth
+prt_fild01,131,364,5	script	Terrian	HIDDEN_WARP_NPC,10,10,{
+	if(Baselevel < 170) {
+		mes .nm$;
+		mes "Hello!";
+		next;
+		mes .nm$;
+		mes "I'm Terrian from Illusion Investigation Team","Nice to meet you!";
+		end;
+	}
+	if(isbegin_quest(3470) == 2) {		
+		switch(checkquest(3466,PLAYTIME)){
+		case 0:
+			mes .nm$;
+			mes "You have done so well, Thank you. Now we can collect data now the recovery rate.";
+			next;
+			mes .nm$;
+			mes "We will send the investigation result to the team soon. Thank you!!!";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Thank you";
+			next;
+			mes .nm$;
+			mes "In order to understand the object recovery rate, it is necessary to reduce the number of monsters as quicklu as possible.";
+			next;
+			mes .nm$;
+			mes "Hunt 100 monster of any type in Illusion Labytinth Dungeon. It is accessible by entering this entrance. Hunt them and come back.";
+			erasequest 3465;
+			erasequest 3466;
+			erasequest 3464;
+			setquest 3465;
+			end;
+		}
+		switch(checkquest(3465,HUNTING)){
+		case -1:
+			mes .nm$;
+			mes "Hello, would you like to join Investigation with me today?";
+			next;
+			mes .nm$;
+			mes "Just do what you usually did last time.";
+			next;
+			mes .nm$;
+			mes "All you have to do is to hunt 100 monsters regardless of the type. Would you like to participate?";
+			next;
+			if(select("Participate","Do not Participate") - 1){
+				mes .nm$;
+				mes "Well, let me know when you are ready.";
+				end;
+			}
+			mes .nm$;
+			mes "Thank you";
+			next;
+			mes .nm$;
+			mes "In order to understand the object recovery rate, it is necessary to reduce the number of monsters as quicklu as possible.";
+			next;
+			mes .nm$;
+			mes "Hunt 100 monster of any type in Illusion Labytinth Dungeon. It is accessible by entering this entrance. Hunt them and come back.";
+			setquest 3465;
+			end;
+		case 1:
+		case 0:
+			mes .nm$;
+			mes "In order to understand the object recovery rate, it is necessary to reduce the number of monsters as quicklu as possible.";
+			next;
+			mes .nm$;
+			mes "Hunt 100 monster of any type in Illusion Labytinth Dungeon. It is accessible by entering this entrance. Hunt them and come back.";
+			end;
+		case 2:
+			mes .nm$;
+			mes "Thanks for coming back quickly.";
+			next;
+			mes .nm$;
+			mes "You have done so well, Thank you. Now we can collect data now the recovery rate.";
+			next;
+			mes .nm$;
+			mes "We will send the investigation result to the team soon. Thank you!!!";
+			getexp 	350000000,227500000;
+			completequest 3465;
+			setquest 3464;
+			setquest 3466;
+			end;
+		}
+	}
+OnTouch:
+	if(isbegin_quest(3470) == 2)
+		classchange 4W_M_02,strnpcinfo(0),bc_self;
+	end;
+OnInit:
+	.nm$ = "[ Terrian ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Baselevel > 169 && isbegin_quest(3465) == 0 && isbegin_quest(3470) == 2 || checkquest(3466,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(3465,HUNTING) == 2";
+	end;
+}

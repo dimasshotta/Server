@@ -1,0 +1,54 @@
+//===== rAthena Script =======================================
+//= Illusion Teddy Bear Mob
+//===== By: ==================================================
+//= [ROManiac]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+ein_d02_i,0,0	monster	Red Teddy Bear	20255,25,3000,0,"ein_d02_i::OnSummonMVP"
+ein_d02_i,0,0	monster	Yellow Teddy Bear	20256,25,3000,0,"ein_d02_i::OnSummonMVP"
+ein_d02_i,0,0	monster	Green Teddy Bear	20257,25,3000,0,"ein_d02_i::OnSummonMVP"
+ein_d02_i,0,0	monster	White Teddy Bear	20258,25,3000,0,"ein_d02_i::OnSummonMVP"
+ein_d02_i,0,0	monster	Blue Teddy Bear	20259,25,3000,0,"ein_d02_i::OnSummonMVP"
+ein_d02_i,0,0	monster	Hardworking Pitman	20261,25,5000,0,"ein_d02_i::OnSummonMVP"
+ein_d02_i,0,0	monster	Vicious Soul Fragment	20262,25,5000,0,"ein_d02_i::OnSummonMVP"
+ein_d02_i,0,0	monster	Haunted Obsidian	20263,20,5000,0,"ein_d02_i::OnSummonMVP"
+
+-	script	ein_d02_i	-1,{
+	end;
+OnSummonMVP:
+	if(.mvp_teddy == 1){
+		end;
+	}
+	if(.mvp_teddy == 0){
+		$Ill_TB_MVP += 1;
+		if($Ill_TB_MVP == 400){ 
+			mapannounce "ein_d02_i","Shining Teddy Bear : Here I come again bringing light to the darkness~~.",bc_map;
+			monster "ein_d02_i",0,0,"Shining Teddy Bear",20260,1,"ein_d02_i::OnMyMVPDead";
+			$Ill_TB_MVP = 0;
+			.mvp_teddy = 1;
+		}
+	}
+	end;
+	
+OnMyMVPDead:
+	.mvp_teddy = 0;
+	end;
+	
+OnInit:
+	addmonsterdrop 20255,25271,8000;
+	addmonsterdrop 20256,25271,8000;
+	addmonsterdrop 20257,25271,8000;
+	addmonsterdrop 20258,25271,8000;
+	addmonsterdrop 20259,25271,8000;
+	addmonsterdrop 20260,25271,8000;
+	addmonsterdrop 20261,25271,8000;
+	addmonsterdrop 20262,25271,8000;
+	addmonsterdrop 20263,25271,8000;
+	end;
+}

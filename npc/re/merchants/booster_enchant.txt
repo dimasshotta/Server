@@ -1,0 +1,381 @@
+//===== rAthena Script =======================================
+//= Booster Event Shop
+//===== By: ==================================================
+//= [ROManiac]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Initial release
+//============================================================
+
+prt_in,40,94,5	script	Booster Shop	4_m_mercat1,{
+	if(!countitem(100337)){
+		mes "[Booster Shop]";
+		mes "Hello welcome to booster shop event.";
+		mes "But Im sorry you are not a booster call user.";
+		mes "Let me know if you found someone who use booster call service.";
+		end;
+	}
+	mes "[Booster Shop]";
+	mes "Welcome booster bell user~";
+	next;
+	mes "[Booster Shop]";
+	mes "We provide some items, that you can trade with some tickets that you got from booster quests.";
+	next;
+	mes "[Booster Shop]";
+	mes "What do you want to look at.";
+	next;
+	switch(select("Metal Weapons:Booster Armor Box:Booster Weapons:Booster Shadow Equipment:Illusion Gears")){
+	mes "[Booster Shop]";
+	mes "Here are the list. Enjoy shoping~.";
+	close2;
+	case 1:
+		callshop "Metal_W_Shop";
+		end;
+	case 2:
+		callshop "Booster_Armor_Shop";
+		end;
+	case 3:
+		callshop "Booster_Weapon_Shop";
+		end;
+	case 4:
+		callshop "Booster_Shadow_Shop";
+		end;
+	case 5:
+		callshop "Booster_Illusion_Shop";
+		end;
+	}
+OnInit:
+	setunittitle getnpcid(0),"<Mega Booster Call>";
+	end;
+}
+
+//booster illsuion module exchange
+sp_cor,98,136,3	script	RS26#boost_illusion_enchant	4_SYS_MSG,{
+
+	setarray .@normal[1],25670,25671,25672,25673,25674,25675,25676,25677;
+	setarray .@rare[1],25678,25679,25680,25681,25682,25683,25684,25685,25686,25687,25688,25689,25690,25691,25692;
+	setarray .@unique[1],25693,25694,25695,25696,25697,25698,25699;
+	setarray .@name$[1],"normal","rare","unique";
+	
+	if(!countitem(100337)){
+		mes "[RS26]";
+		mes "Hello welcome to Booster Promotional Enchant event.";
+		mes "But Im sorry you are not a booster call user.";
+		mes "Let me know if you found someone who use booster call service.";
+		end;
+	}
+	mes "[RS26]";
+	mes "Welcome Booster Bell Users!!";
+	mes "This is a special event, that you can exchange your booster coin to illusion modules.";
+	next;
+	mes "[RS26]";
+	mes "So this is the price you need to pay, for normal modules you need 10 Booster Coin.";
+	mes "Rare modules you need 30 Booster Coin, and for unique modules you need 50 Booster Coin.";
+	next;
+	mes "[RS26]";
+	mes "Now select the modules you want to exchange.";
+	next;
+	switch(select("Normal:Rare:Unique:Cancel")){
+	case 1:
+		if(countitem("Booster_Coin") < 10){
+			mes "[RS26]";
+			mes "Sorry you don't have enough Booster Coin. You need 10 of them.";
+			end;
+		}
+		mes "[RS26]";
+		mes "Here you go, come again later.";
+		close2;
+		getitem .@normal[rand(1,8)],1;
+		delitem "Booster_Coin",10;
+		end;
+	case 2:
+		if(countitem("Booster_Coin") < 30){
+			mes "[RS26]";
+			mes "Sorry you don't have enough Booster Coin. You need 30 of them.";
+			end;
+		}
+		mes "[RS26]";
+		mes "Here you go, come again later.";
+		close2;
+		getitem .@rare[rand(1,15)],1;
+		delitem "Booster_Coin",30;
+		end;
+	case 3:
+		if(countitem("Booster_Coin") < 50) {
+			mes "[RS26]";
+			mes "Sorry you don't have enough Booster Coin. You need 50 of them.";
+			end;
+		}
+		mes "[RS26]";
+		mes "Here you go, come again later.";
+		close2;
+		getitem .@unique[rand(1,7)],1;
+		delitem "Booster_Coin",50;
+		end;
+	case 4:
+		mes "[RS26]";
+		mes "Well, let me know if you want to do the barter. See you~.";
+		end;
+	}
+OnInit:
+	setunittitle getnpcid(0),"<Mega Booster Call>";
+	end;
+}
+
+//Booster Event Promotional Enchant Costume Yves Life NPC
+malangdo,152,137,5	script	Yves Life	4_m_mercat1,{
+	
+	//equip & enchancement data
+	.@eq_top = getequipid(EQI_COSTUME_HEAD_TOP);
+	.@eq_mid = getequipid(EQI_COSTUME_HEAD_MID);
+	.@eq_low = getequipid(EQI_COSTUME_HEAD_LOW);
+	.@eq_gar = getequipid(EQI_COSTUME_GARMENT);
+	setarray .@cost[1],10,10,10,30;
+	setarray .@eq_id[1],440001,440002,440003,440004,440005,440006,440007,20595,20615,20616;
+	setarray .@rune_job_1[1],29423,29428,29432,29460,29464,29468,29477,29481,29485,29513,29517,29521,29651,29655,29659,29664,29668; //Top
+	setarray .@rune_job_1[18],29424,29429,29433,29461,29465,29469,29478,29482,29486,29514,29518,29522,29652,29656,29660,29665,29669; //Middle
+	setarray .@rune_job_1[35],29425,29430,29434,29462,29466,29470,29479,29483,29487,29515,29519,29523,29653,29657,29661,29666,29670; //Low
+	setarray .@rune_job_1[52],29426,29431,29435,29463,29467,29471,29480,29484,29488,29516,29520,29524,29654,29658,29662,29663,29667,29671; //Robe
+	setarray .@rune_job_2[1],29613,29617,29621,310000,310004,310008,310181,310187,310191,310258,310262,310266; //Top
+	setarray .@rune_job_2[13],29612,29616,29620,310001,310005,310009,310182,310186,310190,310259,310263,310267; //Middle
+	setarray .@rune_job_2[25],29611,29615,29619,310002,310006,310010,310183,310185,310189,310260,310264,310268; //Low
+	setarray .@rune_job_2[37],29427,29614,29618,310003,310007,310011,310180,310184,310188,310257,310261,310265; //Robe
+	
+	if(!countitem(100337)){
+		mes "[Yves Life Malang]";
+		mes "Hello welcome to Booster Promotional Enchant event.";
+		mes "But Im sorry you are not a booster call user.";
+		mes "Let me know if you found someone who use booster call service.";
+		end;
+	}
+	
+	disable_items;	
+	mes "[Yves Life Malang]";
+	mes "Welcome Booster Bell Users!!";
+	mes "You are my special guess today.";
+	next;
+	mes "[Yves Life Malang]";
+	mes "I can enchant your costume that you get from booster event with Job Stone.";
+	mes "I just need Booster Coin to do the enchancement.";
+	next;
+	mes "[Yves Life Malang]";
+	mes "You can redo the enchancement process if you are not satisfied with the result.";
+	mes "Just let me know what can I do for you today?";
+	next;
+	if(select("Enchant my costume:Nevermind") == 2) {
+		mes "[Yves Life Malang]";
+		mes "Okay, let me know if I can help you with something.";
+		close;
+	}
+	if (.@eq_top == -1 && .@eq_mid == -1 && .@eq_low == -1 && .@eq_gar == -1) {
+		mes "[Yves Life Malang]";
+		mes "You must wear the costume you want to enchant.";
+		mes "Then, I will be able to help you out.";
+		close;
+	}
+	setarray .@eq[1],EQI_COSTUME_HEAD_TOP,EQI_COSTUME_HEAD_MID,EQI_COSTUME_HEAD_LOW,EQI_COSTUME_GARMENT;
+	for(set .@i,1; .@i<getarraysize(.@eq); set .@i,.@i+1){
+		if(getequipisequiped(.@eq[.@i])){
+			set .@menu$,.@menu$+F_getpositionname(.@eq[.@i])+" ~ [ " + getequipname(.@eq[.@i]) + " ]";
+		} set .@menu$,.@menu$+":";
+	} 
+	set .@part,.@eq[select(.@menu$)];
+	set .@costume,getequipid(.@part);
+	set .@garment[0],getequipcardid(EQI_COSTUME_GARMENT,0); // Save Item ID of Garment Card Slot 1
+	set .@head[0],getequipcardid(EQI_COSTUME_HEAD_TOP,0); // Save Item ID of Headgear Card Slot 1
+	set .@head[1],getequipcardid(EQI_COSTUME_HEAD_MID,1); // Save Item ID of Headgear Card Slot 2
+	set .@head[2],getequipcardid(EQI_COSTUME_HEAD_LOW,2); // Save Item ID of Headgear Card Slot 3
+	next;
+	for( .@a = 1; .@a<getarraysize(.@eq_id); .@a++) {
+		if( .@costume == .@eq_id[.@a] ) {
+			.@equipped = 1;
+		}
+	}
+	if (.@equipped == 0){
+		mes "[Yves Life Malang]";
+		mes "I'm sorry, but I can't work with that costume.";
+		next;
+		mes "[Yves Life Malang]";
+		mes "Remember only costume that you got from booster event that can be done.";
+		close;
+	}
+	if (.@head[0] && .@head[1] && .@head[2]) {
+		mes "[Yves Life Malang]";
+		mes "Let's see, you are in your full potential.";
+		mes "Do you wish to rewrite the enchant?";
+		next;
+		if(select("- Yes:- No") == 2) close;
+	}
+	mes "[Yves Life Malang]";
+	mes "Now select job stone Lv";
+	next;
+	switch(select("Lv 1:Lv 2")){
+	case 1:
+		mes "[Yves Life Malang]";
+		switch(.@part) {
+		mes "Now please select the Enchantment.";
+		next;
+		case EQI_COSTUME_HEAD_TOP: 
+			for ( .@e = 1; .@e < 18; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_1[.@e])+ ( (.@rune_job_1[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			if(countitem(1000254) < 10) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 10;
+			break;
+		case EQI_COSTUME_HEAD_MID:
+			for ( .@e = 18; .@e < 35; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_1[.@e])+ ( (.@rune_job_1[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			set .@rune, .@rune + 17;
+			if(countitem(1000254) < 10) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 10;
+			break;
+		case EQI_COSTUME_HEAD_LOW:
+			for ( .@e = 35; .@e < 52; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_1[.@e])+ ( (.@rune_job_1[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			set .@rune, .@rune + 34;
+			if(countitem(1000254) < 10) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 10;
+			break;
+		case EQI_COSTUME_GARMENT:
+			for ( .@e = 52; .@e < 70; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_1[.@e])+ ( (.@rune_job_1[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			set .@rune, .@rune + 51;
+			if(countitem(1000254) < 30) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 30;
+			break;
+		}
+		mes "[Yves Life Malang]";
+		mes "Proceed?";
+		if(select("- Yes:- No") == 2) close;
+		delequip .@part;
+		switch(.@part) {
+		case EQI_COSTUME_HEAD_TOP:
+			.@head[0] = .@rune_job_1[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@head[0], .@head[1], .@head[2], 0;
+			break;
+		case EQI_COSTUME_HEAD_MID:
+			.@head[1] = .@rune_job_1[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@head[0], .@head[1], .@head[2], 0;
+			break;
+		case EQI_COSTUME_HEAD_LOW:
+			.@head[2] = .@rune_job_1[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@head[0], .@head[1], .@head[2], 0;
+			break;
+		case EQI_COSTUME_GARMENT:
+			.@garment[0] = .@rune_job_1[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@garment[0], 0, 0, 0;
+			break;
+		}
+		next;
+		mes "[Yves Life Malang]";
+		mes "The enchantment is successful.";
+		mes "See ya next time.";
+		end;	
+	case 2:
+		mes "[Yves Life Malang]";
+		switch(.@part) {
+		mes "Now please select the Enchantment.";
+		next;
+		case EQI_COSTUME_HEAD_TOP: 
+			for ( .@e = 1; .@e < 13; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_2[.@e])+ ( (.@rune_job_2[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			if(countitem(1000254) < 10) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 10;
+			break;
+		case EQI_COSTUME_HEAD_MID: 
+			for ( .@e = 13; .@e < 25; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_2[.@e])+ ( (.@rune_job_2[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			set .@rune, .@rune + 12;
+			if(countitem(1000254) < 10) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 10;
+			break;
+		case EQI_COSTUME_HEAD_LOW: 
+			for ( .@e = 25; .@e < 37; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_2[.@e])+ ( (.@rune_job_2[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			set .@rune, .@rune + 24;
+			if(countitem(1000254) < 10) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 10;
+			break;
+		case EQI_COSTUME_GARMENT: 
+			for ( .@e = 37; .@e < 49; set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@rune_job_2[.@e])+ ( (.@rune_job_2[.@e+1] != 0)?":":"");
+			set .@rune,select(.@e_m$);
+			set .@rune, .@rune + 36;
+			if(countitem(1000254) < 30) {
+				mes "[Yves Life Malang]";
+				mes "I'm sorry, you don't have enough booster coin.";
+				close;
+			}
+			delitem 1000254, 30;
+			break;
+		}
+		mes "[Yves Life Malang]";
+		mes "Proceed?";
+		if(select("- Yes:- No") == 2) close;
+		delequip .@part;
+		switch(.@part) {
+		case EQI_COSTUME_HEAD_TOP:
+			.@head[0] = .@rune_job_2[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@head[0], .@head[1], .@head[2], 0;
+			break;
+		case EQI_COSTUME_HEAD_MID:
+			.@head[1] = .@rune_job_2[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@head[0], .@head[1], .@head[2], 0;
+			break;
+		case EQI_COSTUME_HEAD_LOW:
+			.@head[2] = .@rune_job_2[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@head[0], .@head[1], .@head[2], 0;
+			break;
+		case EQI_COSTUME_GARMENT:
+			.@garment[0] = .@rune_job_2[.@rune];
+			getitem2 .@costume, 1, 1, 0, 0, .@garment[0], 0, 0, 0;
+			break;
+		}
+		next;
+		mes "[Yves Life Malang]";
+		mes "The enchantment is successful.";
+		mes "See ya next time.";
+		close;
+	}
+OnInit:
+	setunittitle getnpcid(0),"<Mega Booster Call>";
+	end;
+}

@@ -1,0 +1,97 @@
+//===== rAthena Script ======================================= 
+//= Clear Episode Event
+//===== By: ==================================================
+//= [RoManiac]
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Episode clear ep 16
+//============================================================ 
+prt_cas,373,77,3	script	Valkyrie	811,{
+	mes "[Valkyrie]";
+	mes "It's a strange feeling that our eyes meet... do you see me";
+	mes "What can I see, grant me a wish?";
+	next;
+	mes "[Valkyrie]";
+	mes "After all, the place is a library.";
+	mes "I can arbitrarily fill in the missing parts in your adventure story, will you please? Not an awakened Confucius Shouldn't I be eating too?";
+	next;
+	mes "^0000FFYou can forcibly complete a quest that has not yet been completed by trading with the ticket.^000000 In this case, ^FF0000the reward or experience achievements that can be acquired through the process of Anysoap are not paid, only the progress status are done.^000000";
+	next;
+	mes "^0000FFspecific to advance to the next episode";
+	mes "Casts available in the episode";
+	mes "All can be completed.";
+	mes "No separate prerequisites are required or";
+	mes "Single quests are not eligible.^000000";
+	next;
+	mes "^0000FFkeep the event ticket";
+	mes "Event tickets first to adventurer^000000";
+	next;
+	switch(select("Use Episode 16 Clear Ticket:Use Episode 17 Clear Ticket:Use Episode 18 Clear Ticket:Buy Episode Clear Ticket:Cancel")){
+	case 1:
+		if(Baselevel < 100){
+			mes "[Valkyrie]";
+			mes "Oops, sorry, but the episode you choose can only be performed when you have a base level of 100 or higher. It's not what you need right now.";
+			end;
+		}
+		if(countitem(1000282) == 0 && countitem(1000283) == 0){
+			mes "[Valkyrie]";
+			mes "I'm sorry you dont have the ticket to clear the episode.";
+			end;
+		}
+		mes "[Valkyrie]";
+		mes "Filling in the story takes time.";
+		mes "it's getting there..";
+		mes "Please watch it slowly...";
+		mes "...Flagging the story...";
+		mes "...Creating quest items...";
+		mes "Adding the story of Clana Nemieri";
+		mes "tell a little story";
+		next;
+		mes "[Valkyrie]";
+		mes "It's all sorted out";
+		mes "Now, let's meet the new story right away";
+		mes "you can go!";
+		close2;
+		setarray .@questid[0],5402,5403,5415,5416,5417,5418,5419,5420,5421,5422,
+							  5423,5424,5425,5428,5431,5432,5436,5439,5442,5445,
+							  5737,7741,7746,7747,7748,7749,7681,7682,7683,7684,
+							  7686,11400,11412,11420,11462,11464,12369,12376,14469,
+							  14474,14475,14480,14481,14482,14487,14495,14500,14507,
+							  14516,14600,14601,14602,14613,16013,16014,14615,16019,
+							  16027,16028,16029,16030,16031,16032,16036,16041,16045,
+							  16048,16050,16054,16055,16056,16057,16061;
+		for(.@i = 0; .@i<73; .@i++){
+			setquest .@questid[.@i];
+			completequest .@questid[.@i];
+		}
+		if(countitem(1000282) >= 1 && !countitem(1000283))
+			delitem 1000282,1;
+		else if(countitem(1000283) >= 1 && !countitem(1000282))
+			delitem 1000283,1;
+		ep16_royal = 24;
+		ep16_cookbs = 23;
+		ep16_lug = 15;
+		ep16_wig = 21;
+		terra_gloria_main = 26;
+		terra_gloria_lady_part = 13;
+		end;
+	case 2:
+	case 3:
+		mes "script is being made.";
+		end;
+	case 4:
+		mes "[Valkyrie]";
+		mes "As you wish";
+		close2;
+		callshop "Clear_Ticket_Event";
+		end;
+	case 5:
+		mes "[Valkyrie]";
+		mes "Come back when you need it.~";
+		end;
+	}
+}

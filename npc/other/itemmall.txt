@@ -1,0 +1,1089 @@
+//===== rAthena Script ======================================= 
+//= Gym Pass Cash Item NPC
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Exchange Gym Passes to learn "Enlarge Weight Limit"
+//= iRO NPC situated in Payon beside Kafra Shop.
+//===== Additional Comments: ================================= 
+//= 1.0 First version [L0ne_W0lf]
+//= 1.1 Fixed the NPC saying you "00" [L0ne_W0lf]
+//= 1.2 Replaced effect numerics with constants. [Samuray22]
+//= 1.3 Updated script, and fixed potential errors. [L0ne_W0lf]
+//= 1.4 Updated script to itemmall based on KRO [ROManiac]
+//= 1.5 Implemented the 'mergeitem' script command. [Cydh]
+//= 1.6 Added extended stylist. [ROManiac]
+//============================================================ 
+
+function	script	F_Staff	{
+	mes "[Equipment PR Staff]";
+	mes "Hello, Adventurer!","Are you disatisfied with your equipment right now? Try a new modification method than any other method in Regenschirm Laboratory!";
+	next;
+	switch(select("Let's go at once:Listen explanation:Pass by")){
+	case 1:
+		mes "[Equipment PR Staff]";
+		mes "Great! As other facilities in the research center are confidential, entry is prohibited, so there is a special path that allows outsiders to enter. I'll guide you.";
+		close2;
+		warp "rgsr_in",125,170;
+		end;
+	case 2:
+		mes "[Equipment PR Staff]";
+		mes "Equipment including all weapons, armor, and accessories in the world. Regenschirm researcher can remodel them.","But they are still in the process of collecting data along with the reasearch and modification. Many adventurers need equipment modification experience.";
+		next;
+		mes "[Equipment PR Staff]";
+		mes "Reasearch is still ongoing, so look forward to adding more equipment as soon as it is completed!";
+		end;
+	case 3:
+		mes "[Equipment PR Staff]";
+		mes "If you are interested in the future, please come back.";
+		end;
+	}
+}
+
+function	script	F_Itemmall	{
+	mes "[Guide]";
+	mes "Hello..";
+	mes "I am a guide to take you to a special place. What kind of place is that?";
+	next;
+	mes "[Guide]";
+    mes "It is full of mysterious items.";
+    mes "Just buy stuff there.";
+	mes "A place to collect and sell. You need special money for that.";
+    next;
+	mes "[Guide]";
+	mes "So are you ready to go there?";
+	next;
+	if(select("Yes:No") == 2){
+		mes "[Guide]";
+		mes "Such..";
+		mes "But don't be discouraged. There's still a chance";
+		end;
+	}
+	mes "[Guide]";
+	mes "Yes, you are really well prepared. So, let's get some good stuff. I just forgot about this. When you leave, please remember that you will come back here again.";
+	close2;
+	warp "itemmall",21,42;
+	end;
+}
+
+payon,164,159,4	script	Itemmall Guide#Pay	899,{
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+	map$ = .@mapname$;
+	x = .@mapx;
+	y = .@mapy - 2;
+	callfunc "F_Itemmall";
+	end;
+}
+
+prontera,137,125,4	script	Itemmall Guide#Pron	899,{
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+	map$ = .@mapname$;
+	x = .@mapx;
+	y = .@mapy - 2;
+	callfunc "F_Itemmall";
+	end;
+}
+
+geffen,115,168,4	script	Itemmall Guide#Gef	899,{
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+	map$ = .@mapname$;
+	x = .@mapx;
+	y = .@mapy + 2;
+	callfunc "F_Itemmall";
+	end;
+}
+
+moc_ruins,115,143,4	script	Itemmall Guide#Moc	899,{
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+	map$ = .@mapname$;
+	x = .@mapx;
+	y = .@mapy - 2;
+	callfunc "F_Itemmall";
+	end;
+}
+
+lighthalzen,206,144,4	script	Itemmall Guide#Lig	899,{
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+	map$ = .@mapname$;
+	x = .@mapx;
+	y = .@mapy - 2;
+	callfunc "F_Itemmall";
+	end;
+}
+
+rachel,124,144,4	script	Itemmall Guide#Rac	899,{
+    getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC);
+	map$ = .@mapname$;
+	x = .@mapx;
+	y = .@mapy - 2;
+	callfunc "F_Itemmall";
+	end;
+}
+
+itemmall,21,45,4	script	Exit Guide	899,{
+	mes "[Guide]";
+	mes "Did you have a good time?";
+	mes "Thank you very much for using our items.";
+	mes "We will come back to you with good items in the future.";
+	next;
+	mes "[Guide]";
+	mes "So would you like to go back to where you came from?";
+	next;
+	if(select("Yes:No") == 2) {
+		mes "[Guide]";
+		mes "Well, you still have more stuff.";
+		mes "Then have a good time.";
+		end;
+	}
+	mes "[Guide]";
+	mes "Thank you for using it. Then we will send it back to where you came from.";
+	close2;
+	warp map$,x,y;
+	end;
+}
+
+itemmall,14,50,3	script	Equipment PR Staff#itemmall	4_f_zondagirl,{
+	warp_point = 1;
+	callfunc "F_Staff"; 
+	end;
+}
+
+lighthalzen,99,156,3	script	Equipment PR Staff	4_f_zondagirl,{
+	warp_point = 2;
+	callfunc "F_Staff"; 
+	end;
+}
+
+itemmall,16,78,4	script	Ripped Cabus#GymPass	899,{
+	mes "[Ripped]";
+	mes "Hey, there. People aren't";
+	mes "as physically active as they";
+	mes "used to be. Even if you fight";
+	mes "for a living, your body might";
+	mes "be weak and flabby in some";
+	mes "areas. Know what I mean?";
+	next;
+	mes "[Ripped]";
+	mes "Hey, train with me, and I can";
+	mes "guarantee that you'll be able";
+	mes "to lift and carry more of your";
+	mes "stuff. Just gimme your";
+	mes "^FF0000Gym Pass^000000 each time,";
+	mes "and we'll be good to go.";
+	next;
+	mes "[Ripped]";
+	mes "But don't get too excited:";
+	mes "no matter how much training";
+	mes "I take you through, you can";
+	mes "overdo it. You ever hear of";
+	mes "anyone that got too buff?";
+	mes "That's cuz they're dead. See?";
+	next;
+	mes "[Ripped]";
+	mes "I'd say that it'd be safe";
+	mes "for you to seriously train";
+	mes "with me and increase your";
+	mes "item carrying capacity ^FF000010 times^000000.";
+	mes "So... Are you ready to sweat?";
+	next;
+	switch(select("Yes:No:Um, my workouts wore off.")) {
+	case 1:
+		if (gympassmemory < 10) {
+			set .@add_carry,gympassmemory + 1;
+			set .@remain_carry,10 - .@add_carry;
+			if (countitem(7776) > 0) {
+				mes "[Ripped]";
+				mes "Oh, awesome, I see you";
+				mes "brought your Gym Pass.";
+				mes "Alright, just do what I do,";
+				mes "and try to feel the burn.";
+				mes "Ready? Let's do this.";
+				next;
+				specialeffect2 EF_EARTHSPIKE;
+				next;
+				specialeffect2 EF_DEVIL;
+				next;
+				specialeffect2 EF_COIN;
+				next;
+				specialeffect2 EF_SIGHTRASHER;
+				next;
+				mes "[Ripped]";
+				mes "There, you should be able";
+				mes "to carry more stuff with you.";
+				mes "Let's see, we can increase";
+				mes "your item carrying capacity";
+				mes "^FF00000" + .@remain_carry + "^000000 more times if we continue";
+				mes "training together like this.";
+				delitem 7776,1; //Max_Weight_Up_Scroll
+				set gympassmemory,.@add_carry;
+				skill "ALL_INCCARRY",.@add_carry,SKILL_PERM_GRANT;
+				close;
+			}
+			else {
+				mes "[Ripped]";
+				mes "Dude, what'd I tell you?";
+				mes "You gotta bring me your";
+				mes "^FF0000Gym Pass^000000 if you wanna";
+				mes "work out, and build up your";
+				mes "item carrying muscles.";
+				close;
+			}
+		}
+		else {
+			mes "[Ripped]";
+			mes "Dude, I don't think we can";
+			mes "build up your item carrying";
+			mes "muscles anymore than that.";
+			mes "It's too dangerous for your";
+			mes "body if we even tried! C'mon,";
+			mes "I told you about the limits.";
+			close;
+		}
+	case 2:
+		mes "[Ripped]";
+		mes "Aw, that's too bad.";
+		mes "Well, come back if you";
+		mes "change your mind. Tell";
+		mes "your friends about me:";
+		mes "if they're flabby, I'll help";
+		mes "get them in shape.";
+		close;
+	case 3:
+		if (gympassmemory > 0) {
+			mes "[Ripped]";
+			mes "What happened?";
+			mes "You let your item carrying";
+			mes "muscles just atrophy? Lucky";
+			mes "for you, there's such a thing";
+			mes "as muscle memory. It's won't take";
+			mes "as long to build 'em back up...";
+			next;
+			specialeffect2 EF_EARTHSPIKE;
+			next;
+			specialeffect2 EF_DEVIL;
+			next;
+			specialeffect2 EF_COIN;
+			next;
+			specialeffect2 EF_SIGHTRASHER;
+			next;
+			mes "[Ripped]";
+			mes "How about that?";
+			mes "Your item carrying";
+			mes "muscles grew back,";
+			mes "just like that! Try not to";
+			mes "wimp out again, okay?";
+			skill "ALL_INCCARRY",gympassmemory,SKILL_PERM_GRANT;
+			close;
+		}
+		else {
+			mes "[Ripped]";
+			mes "Uhh...";
+			mes "We didn't work out";
+			mes "together before.";
+			mes "I'm sure about that.";
+			close;
+		}
+	}
+}
+
+itemmall,35,75,2	script	Mergician#pron	64,{
+	if (checkweight(1301,1) == 0) {
+		mes "- Wait a second !! -";
+		mes "- You are carrying too many items -";
+		mes "- or too much weight to proceed. -";
+		mes "- Come back after -";
+		mes "- arranging your inventory. -";
+		close;
+	}
+	mes "[Mergician]";
+	mes "Do you believe in the miracle of Merge god?? If so, repeat my spell loudly as I pronunce it!!!";
+	mes "Merge Merge, Merrrrge!!!";
+	next;
+	switch(select("What is the miracle of Merge?:Merrrrge!!!!:Abandon...")) {
+	case 1:
+		mes "[Mergician]";
+		mes "There is an order which rules the world and keeps the world to go well.";
+		next;
+		mes "[Mergician]";
+		mes "But there has been a bad factor which totally jeopardised this rule!!";
+		next;
+		mes "[Mergician]";
+		mes "Those things which are separated even if they are composed by the same material!!";
+		next;
+		mes "[Mergician]";
+		mes "Have you never experienced this bad incident??";
+		mes "The fact that I had ^3131FFthe same potion, but appearing more than twice in your inventory!!^000000 So unpleasant!!!";
+		next;
+		mes "[Mergician]";
+		mes "Believe in Mergism. That is the truth.";
+		mes "Then I can help you be happy and content.";
+		close;
+	case 2:
+		mes "[Mergician]";
+		mes "This is the total holy ritual to pray to the Great God, Merge! and I am borrowing the power for a while!!";
+		next;
+		mes "[Mergician]";
+		mes "And if you eagerly want to be blessed by Merge, be humble and shout out loud! Merge Merge, Merrrrge!!!";
+		next;
+		switch(select("Merrrrge!:Don't follow what he says.")) {
+		case 1:
+			mergeitem;
+			mes "[Mergician]";
+			mes "Merge just heard your wish and let it be realised!";
+			mes "Open your inventory to check the miracle!";
+			close;
+		case 2:
+			mes "[Mergician]";
+			mes "You jerk!!! You just broke the whole rhythm! Why can't you get my flow and follow me?! Idiot!";
+			close;
+		}
+	case 3:
+		close;
+	}
+}
+
+itemmall,19,74,5	script	Stylist#cash	4_F_02,{
+	mes "[Kaniki]";
+	mes "Hey, I'm Kaniki. How can I help you?";
+	next;
+	switch(select("Change your style:End conversation")) {
+	case 1:
+		close2;
+		openstylist();
+		end;
+	case 2:
+		mes "[Kaniki]";
+		mes "Please visit us again~";
+		close;
+	}
+}
+
+itemmall,35,63,2	script	Mysterious Clown	715,{
+	mes "[Mysterious Clown]";
+	mes "Welcome~ I'm the world's greatest clown and wizard of yours";
+	mes "Only in the world that can completely reset your status";
+	mes "I'm the only person.";
+	next;
+	mes "[Mysterious Clown]";
+	mes "If you talk to remove while holding 1 status reset ticket, we will reset your status.";
+	mes "I'll do it.";
+	next;
+	mes "[Mysterious Clown]";
+	mes "However, if the weight of your belongings is 1 or more, or";
+	mes "Use Falcon, Warg, Dragon or Magic Gear";
+	mes "Please note that initialization service cannot be obtained if there is.";
+	next;
+	mes "[Mysterious Clown]";
+	mes "If the weight of this small diameter does not reach 0, reset";
+	mes "I can't do it for you.";
+	next;		
+	if (Weight != 0) {
+		mes "[Mysterious Clown]";
+		mes "Please come back to me after organizing everything you have.";
+		end;
+	}
+	if (checkcart() || checkwug() || checkfalcon() || checkriding()){
+		mes "[Mysterious Clown]";
+		mes "Oh! Please remove your";
+		mes "Pushcart, Warg, Falcon or any riding before proceeding";
+		end;
+	}
+	mes "[Mysterious Clown]";
+	mes "Okay now are you ready?";
+	if(select("Yes:No") == 2){
+		mes "[Mysterious Clown]";
+		mes "Let me know when you are ready";
+		end;
+	}
+	if(!countitem(6720)){
+		mes "[Mysterious Clown]";
+		mes "Sorry you need 1 "+getitemname(6720)+" to initialize.";
+		end;
+	}
+	mes "[Mysterious Clown]";
+	mes "Here you go, see you around.";
+	delitem 6720,1;
+	resetstatus;
+}
+
+itemmall,24,77,5	script	Basta#itemmall	4_M_DWARF,{
+	mes "[Basta]";
+	mes "I'm the most skillful blacksmith!";
+	close2;
+	refineui();
+	end;
+}
+
+// Fallen_Angel_Wing Enchant
+//============================================================
+itemmall,29,66,2	script	Dark Luhir#new10	4_F_VALKYRIE2,{
+	disable_items;
+	mes "[Dark Luhir]";
+	mes "Hello~ I am giving away extra stats to those who have a Fallen Angel Wing item.";
+	next;
+	if (getequipid(EQI_GARMENT) != 2589) {// Fallen_Angel_Wing
+		mes "[Dark Luhir]";
+		mes "Please ^0000ffwear your Fallen Angel Wing item first^000000, and then I will give you extra stats.";
+		close;
+	}
+	switch( select( "Cancel", "Enchant Fallen Angel Wing", "Reset Fallen Angel Wing Stats" ) ) {
+	case 1:
+		mes "[Dark Luhir]";
+		mes "Later then...";
+		close;
+	case 2:
+		.@refine = getequiprefinerycnt(EQI_GARMENT);
+		setarray .@card[0],
+			getequipcardid(EQI_GARMENT,0),
+			getequipcardid(EQI_GARMENT,1),
+			getequipcardid(EQI_GARMENT,2),
+			getequipcardid(EQI_GARMENT,3);
+		mes "[Dark Luhir]";
+		mes "Only 1 socket can get an extra stat when refine level is between 1~6.";
+		mes "If refine level is 7~8, it can receive stats for 2 sockets.";
+		mes "+9 can receive stats to all 3 sockets.";
+		next;
+		mes "[Dark Luhir]";
+		if (.@refine < 7)
+			mes "This item's refine level is lower than 7. Only ^ff0000socket slot 4^000000 can receive extra stats.";
+		else if (.@refine < 9)
+			mes "This item's refine level is between 7~8. ^ff0000Socket slot 3 and 4^000000 can receive extra stats.";
+		else
+			mes "This item's refine level is more than 9. All 3 of ^ff0000Socket slot 2, 3 and 4^000000 can receive extra stats.";
+		mes "What kind of extra stats do you want?";
+		next;
+		switch( select( "Let me get my gear on", "1.Fighting spirit", "2.Magic Attack", "3.Archery", "4.Critical", "5.MaxHP", "6.MaxSP", "7.Atk speed", "8.STR", "9.AGI", "10.VIT", "11.INT", "12.DEX", "13.LUK" ) ) {
+		case 1:
+			mes "[Dark Luhir]";
+			mes "Please come back after equipping your item.";
+			close;
+		case 2:
+			setarray .@enchants[0],4809,4808,4820,4821;		// Fighting Spirit 3~5 / Fighting Spirit 6
+			.@string$ = "Fighting Spirit stats will be given randomly by 3~5 (ATK+HIT) range.";
+			break;
+		case 3:
+			setarray .@enchants[0],4812,4826,4827,4828;		// Spell 4~6 / Spell 7
+			.@string$ = "Magic spell stats will be given randomly by 4~6 (MATK + Reduce change casting time).";
+			break;
+		case 4:
+			setarray .@enchants[0],4832,4833,4834,4835;		// Expert Archer 1~3 / Expert Archer 4
+			.@string$ = "Archery stats will be given randomly by 1~3 (Range atack rate).";
+			break;
+		case 5:
+			setarray .@enchants[0],4863,4864,4865,4866;		// Fatal 1~3 / Fatal 4
+			.@string$ = "Critical stats will be given randomly by 1~4 (Critical damage + CRI).";
+			break;
+		case 6:
+			setarray .@enchants[0],4861,4862,4867,4868;		// MaxHP +1~3% / MaxHP +4%
+			.@string$ = "MHP stats will be given randomly by 1~3 (Increase MHP %).";
+			break;
+		case 7:
+			setarray .@enchants[0],4870,4800,4871,4801;		// +25,50 or 75 sp / +100 sp
+			.@string$ = "SP stats will be given randomly by 25~75.";
+			break;
+		case 8:
+			setarray .@enchants[0],4869,4872,4873,4807;		// Delayafterattack 1~3 / +1 ASPD
+			.@string$ = "Atack delay stats will be given randomly by 1~3 (Reduce attack delay %).";
+			break;
+		case 9:
+			setarray .@enchants[0],4702,4703,4704,4853;		// Str +3~5 / Special Str
+			.@string$ = "STR stats will be given randomly by 3~5.";
+			break;
+		case 10:
+			setarray .@enchants[0],4731,4732,4733,4854;		// Agi +2~4 / Special Agi
+			.@string$ = "AGI stats will be given randomly by 2~4.";
+			break;
+		case 11:
+			setarray .@enchants[0],4742,4743,4744,4855;		// Vit +3~5 / Special Vit
+			.@string$ = "VIT stats will be given randomly by 3~5.";
+			break;
+		case 12:
+			setarray .@enchants[0],4712,4713,4714,4856;		// Int +3~5 / Special Int
+			.@string$ = "INT stats will be given randomly by 3~5.";
+			break;
+		case 13:
+			setarray .@enchants[0],4722,4723,4724,4857;		// Dex +3~5 / Special Dex
+			.@string$ = "DEX stats will be given randomly by 3~5.";
+			break;
+		case 14:
+			setarray .@enchants[0],4752,4753,4754,4858;		// Luk +3~5 / Special Luk
+			.@string$ = "LUK stats will be given randomly by 3~5.";
+			break;
+		}
+		mes "[Dark Luhir]";
+		mes .@string$ + " ^ff0000Given stats cannot be turned back.^000000 Do you want to proceed?";
+		next;
+		if (select( "1.Quit", "2.Yes, I want to try this." ) == 1) {
+			mes "[Dark Luhir]";
+			mes "Later then...";
+			close;
+		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_GARMENT, 2589) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine))
+			close;
+
+		if (.@card[3] == 0) {
+			.@card[3] = .@enchants[ rand(3) ];
+			.@slot = 4;
+		}
+		else if (.@card[2] == 0 && .@refine >= 7) {
+			.@card[2] = .@enchants[ rand(3) ];
+			.@slot = 3;
+		}
+		else if (.@card[1] == 0 && .@refine >= 9) {
+			.@card[1] = .@enchants[ rand(4) ];
+			.@slot = 2;
+		}
+		else {
+			mes "[Dark Luhir]";
+			mes "It seems this item is already has max enchanting. Please bring another one for extra stats.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Dark Luhir]";
+		mes "Giving ability to item's ^990000" + .@slot + " socket^000000.";
+		delequip EQI_GARMENT;
+		getitem2 2589,1,1, .@refine,0, .@card[0], .@card[1], .@card[2], .@card[3];
+		close;
+	case 3:
+		mes "[Dark Luhir]";
+		mes "Stat reset of the Fallen Angel Wing will cost you 1,000,000 zeny?";
+		mes "Do you wish to proceed?";
+		next;
+		if (select( "Yes", "No thanks!" ) == 2)
+			close;
+		if (Zeny < 1000000) {
+			mes "[Dark Luhir]";
+			mes "You liar you don't have enough zeny!";
+			close;
+		}
+		if (getequipid(EQI_GARMENT) == 2589) {
+			.@refine = getequiprefinerycnt(EQI_GARMENT);
+			.@card[0] = getequipcardid(EQI_GARMENT,0);
+
+			mes "[Dark Luhir]";
+			specialeffect2 EF_REPAIRWEAPON;
+			mes "Reseting item stats.";
+			delequip EQI_GARMENT;
+			Zeny -= 1000000;
+			getitem2 2589,1,1, .@refine,0, .@card[0],0,0,0;// Fallen_Angel_Wing
+		}
+		close;
+	}
+}
+
+
+// Jekyll Enchant
+//============================================================
+itemmall,31,70,2	script	Jekyll	4_m_genie,{
+	if(countitem(460020) > 0 || getequipid(EQI_HAND_L) == 460020)
+		.@menu1$ = "Mad Bunny-LT";
+	if(countitem(490163) > 0 || getequipid(EQI_ACC_L) == 490163)
+		.@menu2$ = "Hero's Badge";
+	if(countitem(470094) > 0 || getequipid(EQI_SHOES) == 470094)
+		.@menu3$ = "Hero Boots-LT";
+	disable_items;
+	donpcevent strnpcinfo(0)+"::OnEmo1";
+	mes "[Jekyll]";
+	mes "I protect the key fairy...";
+	mes "If any of the items on the list need a special enchantment, I'll be happy to help.";
+	next;
+	switch(select(.@menu1$+":"+.@menu2$+":"+.@menu3$+":Nevermind")){
+	case 1:
+		mes "[Jekyll]";
+		mes "Here we go";
+		close2;
+		item_enchant(15);
+		end;
+	case 2:
+		mes "[Jekyll]";
+		mes "Here we go";
+		close2;
+		item_enchant(20);
+		end;
+	case 3:
+		mes "[Jekyll]";
+		mes "Here we go";
+		close2;
+		item_enchant(21);
+		end;
+	case 4:
+		mes "[Jekyll]";
+		mes "That's very sad.";
+		donpcevent strnpcinfo(0)+"::OnEmo2";
+		close;
+	}
+OnEmo1:
+	emotion 33;
+	end;
+OnEmo2:
+	emotion 48;
+	end;
+}
+
+itemmall,29,61,2	script	Driller#itemmall	87,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "You're carrying too many items in your inventory. Visit Kafra storage and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "You cannot proceed because you're overweight.";
+		close;
+	}
+	set .@part, EQI_ACC_L;
+	if (!getequipisequiped(.@part)) {
+		mes "[Driller]";
+		mes "My job is to drill a card slot into RWC Memorial accessories.";
+		next;
+		mes "[Driller]";
+		mes "I'm sorry but you don't have any item equipped on your right accessory position.";
+		close;
+	}
+	mes "[Driller]";
+	mes "My job is to drill a card slot into RWC Memorial accessories. Moreover, I only treat ^ff0000pure items^000000, or those which have not been enchanted.";
+	next;
+	set .@equip_id, getequipid(.@part);
+	if (.@equip_id != 2966 && .@equip_id != 2968) {
+		mes "[Driller]";
+		mes "However, I can see that the accessory you are wearing on the right side cannot be treated. Please equip a RWC Memorial accessory.";
+		close;
+	}
+	mes "[Driller]";
+	mes "You should also know that making a card slot it extremely dangerous. ^ff0000Chances to succeed are about 50%.^000000 Do you wish to proceed?";
+	next;
+	if(select("Cancel:Let's go!") == 1) {
+		mes "[Driller]";
+		mes "See ya then.";
+		close;
+	}
+	if (.@equip_id == 2966) {
+		set .@slotted, 2967; //RWC_2012_Ring_
+		set .@name$,"RWC 2012 Memorial Ring";
+		set .@str$,"ring";
+	} else if (.@equip_id == 2968) {
+		set .@slotted, 2969; //RWC_2012_Pendant_
+		set .@name$,"RWC 2012 Memorial Pendant";
+		set .@str$,"pendant";
+	} else {
+		mes "[Driller]";
+		mes "I can't identify the accessory item you're wearing on your right hand. I can't work on it.";
+		close;
+	}
+	if (getequipcardid(.@part,3) > 0) {
+		mes "[Driller]";
+		mes "This item has already been enchanted. I can't work on this as it is against the rules.";
+		close;
+	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id))
+		close;
+
+	delequip .@part;
+	if (rand(1,10) > 5) {
+		getitem .@slotted,1;
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Driller]";
+		mes "Yay! Success! Your "+.@name$+" now has a card slot. Check it out!";
+		close;
+	} else {
+		specialeffect2 EF_LORD;
+		mes "[Driller]";
+		mes "Awww... Damn weak "+.@str$+"... It broke during the procedure. I'm sorry.";
+		close;
+	}
+}
+
+itemmall,29,64,2	script	Goldberg#itemmall	878,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "You are carrying too many items. Come back after you have organized your inventory.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "You cannot proceed because you're overweight.";
+		close;
+	}
+	mes "[Goldberg]";
+	mes "Hello! I am in charge of enchanting RWC Memorial accessories with some mystic powers.";
+	next;
+	set .@part, EQI_ACC_L;
+	if (!getequipisequiped(.@part)) {
+		mes "[Goldberg]";
+		mes "I'm sorry but you don't have any item equipped on your right accessory position.";
+		close;
+	}
+	set .@equip_id, getequipid(.@part);
+	if (.@equip_id < 2966 || .@equip_id > 2969) {
+		mes "[Goldberg]";
+		mes "However, I can see that the accessory you are wearing is not something I can work on. Please equip a RWC Memorial accessory.";
+		close;
+	}
+	set .@select, select("Sorry, not interested.:Please, empower my accessory.:Remove the Enchant.")-1;
+	if (.@select == 0) {
+		mes "[Goldberg]";
+		mes "Alright, then, see you next time...";
+		close;
+	}
+	setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+	if (.@select == 1) {
+		switch(getequipid(.@part)) {
+		case 2966:
+			setarray .@option[0],2,2,4,4;
+			break;
+		case 2967:
+			setarray .@option[0],0,2,4,4;
+			break;
+		case 2968:
+			setarray .@option[0],1,1,3,3;
+			break;
+		case 2969:
+			setarray .@option[0],0,1,3,3;
+			break;
+		default:
+			mes "[Goldberg]";
+			mes "I'm sorry, but I cannot work on the accessory you are currently wearing.";
+			mes "If you have equipped your RWC Memorial accessory on the left side, try to swap it to the right side.";
+			close;
+		}
+		for(set .@i,3; .@i>=0; set .@i,.@i-1) {
+			if (.@equip_card[.@i] == 0) {
+				set .@slot, .@i;
+				set .@op_type, .@option[.@i];
+				break;
+			}
+		}
+		switch(.@op_type) {
+		case 4:
+			mes "[Goldberg]";
+			mes "Which enchantment would you like to infuse?";
+			next;
+			setarray .@enchant_select[0],1,2,3,4;
+			set .@i, select("Cancel:Fighting Spirit:ATK (%):Max HP:HP")-2;
+			break;
+		case 3:
+			setarray .@enchant_select[0],5,6,7;
+			set .@i, select("Cancel:Spell:MATK (%):SP")-2;
+			break;
+		case 2:
+			mes "[Goldberg]";
+			mes "^ff0000Be careful! There is about a 25% chance that the enchantment will fail. If this happens, the item will be destroyed.^000000 Which enchantment would you like to infuse?";
+			next;
+			setarray .@enchant_select[0],8,9,10,11,12,13,14;
+			set .@i, select("Cancel:STR:AGI:VIT:INT:DEX:LUK:SP")-2;
+			break;
+		case 1:
+			mes "[Goldberg]";
+			mes "^ff0000There is about a 25% chance that the enchantment will fail. If this happens, the item will be destroyed.^000000 Which enchantment would you like to infuse?";
+			next;
+			setarray .@enchant_select[0],8,9,10,11,12,13,15,16;
+			set .@i, select("Cancel:STR:AGI:VIT:INT:DEX:LUK:MHP:HP")-2;
+			break;
+		case 0:
+			mes "[Goldberg]";
+			mes "Your accessory has received so many enchantments that I can hardly work on it anymore.";
+			close;
+		}
+		if (.@i == -1) {
+			mes "[Goldberg]";
+			mes "Alright, then, see you next time.";
+			close;
+		}
+		mes "[Goldberg]";
+		mes "The power of the enchantment will be randomly chosen. ^ff0000Once infused, the enchantment cannot be removed.^000000 Shall we continue?";
+		next;
+		if(select("No, please stop.:Yes, please proceed.") == 1) {
+			mes "[Goldberg]";
+			mes "Alright, then, see you next time...";
+			close;
+		}
+		set .@enchant_type, .@enchant_select[.@i];
+		if (!getequipisequiped(.@part)) {
+			mes "[Goldberg]";
+			mes "Do not take off your equipment while I'm working, okay?";
+			close;
+		}
+		switch(.@enchant_type) {
+		case 1:
+			setarray .@enc[0],4811,4810,4809; //Fighting_Spirit1,Fighting_Spirit2,Fighting_Spirit3
+			break;
+		case 2:
+			setarray .@enc[0],4819,4766,4767; //Atk1,Atk2,Atk3
+			break;
+		case 3:
+			setarray .@enc[0],4861,4862,4867; //MHP1,MHP2,MHP3
+			break;
+		case 4:
+			setarray .@enc[0],4795,4796,4797; //HP100,HP200,HP300
+			break;
+		case 5:
+			setarray .@enc[0],4760,4761,4806; //Matk1,Matk2,Matk3
+			break;
+		case 6:
+			setarray .@enc[0],4815,4814,4813; //Spell1,Spell2,Spell3
+			break;
+		case 7:
+			setarray .@enc[0],4870,4800,4871; //SP25,SP50,SP75
+			break;
+		case 8:
+			setarray .@enc[0],4700,4701,4702; //Strength1,Strength2,Strength3
+			break;
+		case 9:
+			setarray .@enc[0],4730,4731,4732; //Agility1,Agility2,Agility3
+			break;
+		case 10:
+			setarray .@enc[0],4740,4741,4742; //Vitality1,Vitality2,Vitality3
+			break;
+		case 11:
+			setarray .@enc[0],4710,4711,4712; //Inteligence1,Inteligence2,Inteligence3
+			break;
+		case 12:
+			setarray .@enc[0],4720,4721,4722; //Dexterity1,Dexterity2,Dexterity3
+			break;
+		case 13:
+			setarray .@enc[0],4750,4751,4752; //Luck1,Luck2,Luck3
+			break;
+		case 14:
+			setarray .@enc[0],4870,4800,4871; //SP25,SP50,SP75
+			break;
+		case 15:
+			setarray .@enc[0],4861,4862,4867; //MHP1,MHP2,MHP3
+			break;
+		case 16:
+			setarray .@enc[0],4795,4796,4797; //HP100,HP200,HP300
+			break;
+		default:
+			mes "[Goldberg]";
+			mes "We have got a problem, let me check it up.";
+			close;
+		}
+
+		if (.@enchant_type < 8)
+			set .@i, rand(1,300); // 0% break chance.
+		else
+			set .@i, rand(1,400); // 25% break chance.
+
+		     if (.@i < 151) set .@enchant, .@enc[0];
+		else if (.@i < 251) set .@enchant, .@enc[1];
+		else if (.@i < 301) set .@enchant, .@enc[2];
+		else set .@enchant,9;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) ||
+		    callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+			close;
+
+		set .@equip_card[.@slot], .@enchant;
+		if (.@slot == 2 && .@enchant == 0) {
+			set .@equip_card[3],0;
+		} else if (.@slot == 1 && .@enchant == 0) {
+			set .@equip_card[2],0;
+			set .@equip_card[3],0;
+		} else if (.@slot == 0 && .@enchant == 0) {
+			set .@equip_card[1],0;
+			set .@equip_card[2],0;
+			set .@equip_card[3],0;
+		}
+
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		delequip .@part;
+		if (.@enchant == 9) {
+			mes "[Goldberg]";
+			mes "Oh gosh!";
+ 			mes "The item was not strong enough to bear the enchantment and thus got destroyed. I am sorry.";
+			specialeffect2 EF_LORD;
+			close;
+		}
+		if (.@enchant == 0) { // Should never happen.
+			mes "[Goldberg]";
+			mes "Oh... It looks like there was an instability of some sort between all the powers infused. This caused all the enchantments to vanish. It is a shame, but please try again!";
+		} else {
+			mes "[Goldberg]";
+			mes "Great!";
+			mes "The enchantment is a success! It will be applied in socket No.^990000"+(.@slot+1)+"^000000.";
+			specialeffect2 EF_REPAIRWEAPON;
+		}
+
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+
+		close;
+	} else if (.@select == 2) {
+		mes "[Goldberg]";
+		mes "I will just initialize the enchant option without doing anything to the slotted card. You wanna continue?";
+		next;
+		if(select("I will stop.:Yep, sure, go on.") == 1) {
+			mes "[Goldberg]";
+			mes "Come back if you change your mind.";
+			close;
+		}
+		if (countitem(6665) == 0) {
+			mes "[Goldberg]";
+			mes "I'm sorry. But you don't have the RWC Initialization coupon. Can you check your inventory?";
+			close;
+		}
+		if (getiteminfo(.@equip_card[3], ITEMINFO_SUBTYPE) != CARD_ENCHANT) {
+			mes "[Goldberg]";
+			mes "Hm... this equipment is clean. I cannot initialize it if there's nothing! Check it again.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Goldberg]";
+		mes "The enchant option in your item will be initialized.";
+		delitem 6665,1; //RWC_Inicializer
+		delequip .@part;
+	
+//		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
+		for ( .@i = getiteminfo(.@equip_id, ITEMINFO_SLOT); .@i < MAX_SLOTS; .@i++ ) {
+			if (getiteminfo(.@equip_card[.@i], ITEMINFO_SUBTYPE) == CARD_ENCHANT)
+				.@equip_card[.@i] = 0;// Armor Enchant System
+		}
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+		
+		close;
+	}
+}
+
+itemmall,41,53,2	script	Kachua Mileage Shop	4_m_mercat1,{
+	mes "[Macarium]";
+	mes "Come on, fifty!";
+	mes "It doesn't come every day, every day!";
+	mes "The stuff you're going to see today is awesome!";
+	mes "You can only exchange with <ITEM>[Kachua mileage coupons]<ITEM>1000274</INFO></ITEM>!";
+	mes "Feel free to choose!";
+	next;
+	switch(select("3-1 Job Group Skill Shadow:3-2 Job Group Skill Shadow:Extended Job Group Skill Shadow:General Job Shadow:Shadow Cube:Refine, Reform, Useful Goods:Tuktak Boxes:Shadow Spellbooks")){
+	case 1:
+		mes "[Macarium]";
+		mes "You are talking about ^FF000003-1 Job Group Skill Boxes^000000";
+		mes "There are these things!";
+		close2;
+		callshop "3_1_Job_Group_Skill_Shadow";
+		end;
+	case 2:
+		mes "[Macarium]";
+		mes "You are talking about ^FF000003-2 Job Group Skill Boxes^000000";
+		mes "There are these things!";
+		close2;
+		callshop "3_2_Job_Group_Skill_Shadow";
+		end;
+	case 3:
+		mes "[Macarium]";
+		mes "You are talking about ^FF00000Expanded Job Group Skill Boxes^000000";
+		mes "There are these things!";
+		close2;
+		callshop "Extended_Job_Group_Skill_Shadow";
+		end;
+	case 4:
+		mes "[Macarium]";
+		mes "You are talking about ^FF00000General Job Boxes^000000";
+		mes "There are these things!";
+		close2;
+		callshop "General_Job_Shadow";
+		end;
+	case 5:
+		mes "[Macarium]";
+		mes "You are talking about ^FF00000Shadow Cube^000000";
+		mes "There are these things!";
+		close2;
+		callshop "Shadow_Cube";
+		end;
+	case 6:
+		mes "[Macarium]";
+		mes "You are talking about ^FF00000Useful Goods^000000";
+		mes "There are these things!";
+		close2;
+		callshop "Useful_Goods";
+		end;
+	case 7:
+		mes "[Macarium]";
+		mes "You are talking about ^FF00000Laphine Boxes^000000";
+		mes "There are these things!";
+		close2;
+		callshop "Tuktak_Box";
+		end;
+	case 8:
+		mes "[Macarium]";
+		mes "You are talking about ^FF00000Shadow Spellbooks^000000";
+		mes "There are these things!";
+		close2;
+		callshop "ShadowSpellBook";
+		end;
+	}
+}
+
+itemmall,41,50,2	script	Special Lapine Upgrade	4_m_mercat1,{
+	mes "[Meow]";
+	mes "Welcome. welcome. The item you need, right here. Please find what you want!";
+	next;
+	switch(select("Purchase with Nyangvine Fruit:Purchase with Zeny:Ancient Hero Conversion")){
+	case 1:
+		close2;
+		callshop "Lapine_Upgrade_Shop";
+		end;
+	case 2:
+		close2;
+		callshop "Lapine_Upgrade_Shop_2";
+		end;
+	case 3:
+		close2;
+		callshop "Ancient_Hero_Shop";
+		end;
+	}
+}
+
+itemmall,41,46,2	script	Refine Certificate Packager	4_xmas_cat4,{
+	mes "[Cat Gift Wrapper]";
+	mes "Nice to meet you..♡ Do you have that kind of reinforcement that you want to wrap?";
+	next;
+	switch(select("Weapon Refine Certificate:Armor Refine Certificate:Why you should wear a hat?:Wave your hand")){
+	case 1:
+		.@str$ = "Weapon_Certi";
+	case 2:
+		if(.@str$ == "")
+			.@str$ = "Armor_Certi";
+		close2;
+		npctalk "Gifts and welcome guests~♡";
+		callshop .@str$;
+		end;
+	case 3:
+		donpcevent strnpcinfo(0)+"::OnEmote1";
+		mes "[Cat Gift Wrapper]";
+		mes "what? Are you asking because you really don't know?";
+		next;
+		mes "[Cat Gift Wrapper]";
+		mes "Are you an out of fashion person? Such a guarantee is a precious ticket that cannot be traded with other adventurers.";
+		next;
+		mes "[Cat Gift Wrapper]";
+		mes "Has this precious ticket been traded in the dark? Did the cat pay attention to that?";
+		next;
+		mes "[Cat Gift Wrapper]";
+		mes "That's why~ If you give Nyangdarae fruit as a fee, you can join other adventurers.";
+		mes "Do you package it beautifully so that normal transactions are possible?";
+		end;
+	case 4:
+		donpcevent strnpcinfo(0)+"::OnEmote2";
+		mes "[Cat gift wrapper]";
+		mes "yes good bye~♡";
+		end;
+	}
+OnEmote1:
+	emotion 23;
+	end;
+OnEmote2:
+	emotion 13;
+	end;
+}
+
+//= Basic Shops
+//============================================================
+
+//= Special Lapine Upgrade
+-	marketshop	Lapine_Upgrade_Shop_2	HIDDEN_NPC,23100:1000000:-1,23170:1000000:-1,23175:1000000:-1,23289:1000000:-1,23290:1000000:-1,23291:1000000:-1,23308:1000000:-1,23311:1000000:-1,23545:1000000:-1,23547:1000000:-1,23546:500000:-1,9551:1000000:-1,9550:1000000:-1,100009:1000000:-1,100481:1000000:-1,100579:500000:-1,100580:1000000:-1,100710:1000000:-1,100744:30000000:-1,100745:30000000:-1,100823:1000000:-1;

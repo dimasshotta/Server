@@ -1,0 +1,306 @@
+//===== rAthena Script =======================================
+//= Booster Event
+//===== By: ==================================================
+//= [ROManiac]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Initial release (Dynamic NPC)
+//============================================================
+
+function	script	F_Booster_Call	{
+	calldynamic("Booster_Call","Lime Evenor","-"+getcharid(0));
+	end;
+}
+
+prontera,0,0,0	script	Booster_Call	4_F_EDEN_OFFICER,{
+	cutin "laime_evenor01",2;
+	mes $@ns$;
+	mes "Hello!";
+	mes "On-site service, Booster Call calling";
+	mes "I answered~ Need help?";
+	next;
+	switch(select("Booster Coin Shop.:Booster mission.:I need help!:Booster coin exchange.")){
+	case 1:
+		mes $@ns$;
+		mes "Here is some items that you can trade with booster coin.";
+		mes "Use your coin wisely~";
+		close2;
+		cutin "",255;
+		callshop "Booster_Shop_1";
+		end;
+	case 2:
+		for (.@d = 1; .@d < 20; .@d++) {
+			if(checkquest($@quest[.@d],HUNTING) == 2){
+				set .@f,getarraysize($@mes$);		
+				set .@z,0;
+				while(.@z != .@f) {
+					if(checkquest($@quest[.@z],HUNTING) == 2){
+						mes $@ns$;
+						mes $@mes$[.@z];
+						mes "You're done!", "That's great. We will reward you for completing the mission.";
+						next;
+						if( .@z == 1 ) {
+							getitem 1000254,1;
+							getitem 100342,5;
+						}
+						if( .@z >= 2 && .@z <= 4 ) {
+							getitem 1000254,1;
+							getitem 100342,5;
+							getitem 100346,5;
+						}
+						if( .@z >= 5 && .@z <= 8 ) {
+							if(.@z == 8) .@amount = 2;
+							else .@amount = 1;
+							getitem 1000254,.@amount;
+							getitem 100343,5;
+							getitem 100346,5;
+						}
+						if ( .@z == 9 ){
+							getitem 1000254,3;
+							getitem 100344,5;
+							getitem 100346,5; 
+						}
+						if ( .@z == 10 ){
+							getitem 1000254,4;
+							getitem 100344,5;
+							getitem 100346,5;
+						}
+						if ( .@z == 11 ){
+							getitem 1000254,4;
+							getitem 100344,5; 
+						}
+						if (.@z == 12 ){
+							getitem 1000254,5;
+							getitem 100344,5;
+						}
+						if ( .@z == 13 ){
+							getitem 1000254,5;
+							getitem 100345,5;
+						}
+						if (.@z == 14 || .@z == 15 ){
+							getitem 1000254,6;
+							getitem 100345,7;
+						}
+						if ( .@z > 15 ){
+							getitem 1000254,8;
+						}
+						getexp $@exp[.@z],$@jexp[.@z];
+						erasequest $@quest[.@z];
+						setquest $@quest_cd[.@z];
+					}
+					set .@z,.@z + 1;
+				}
+				mes $@ns$;
+				mes "Well, let's see if there are more quests that can be done.";
+				next;
+				goto OnHuntingLV;
+			}
+		}
+		mes $@ns$;
+		mes "I'll give you a mission that can only be performed once.";
+		mes "If you clear the presented mission, you can receive booster mission tickets and various rewards.";
+		next;
+		mes $@ns$;
+		mes "Hunting quests are also available for those who cannot perform booster missions. Instead of boosting missions, we are giving you experience as a reward, so it will help you grow.";
+		next;
+OnHuntingLV:
+		for (.@q = 1; .@q < 20; .@q++) {
+			if(checkquest($@quest_cd[.@q],PLAYTIME) == 2)
+				erasequest $@quest_cd[.@q];
+			if(isbegin_quest($@quest[.@q],getcharid(0)) == 1 || checkquest($@quest_cd[.@q],PLAYTIME,getcharid(0)) == 0)
+				.@color$[.@q] = "^666666";
+			else 
+				.@color$[.@q] = "^000000";
+		}
+		switch(select("Below Lv 99 Quests:Above Lv 99 Quests:Are there any other hunting quests?")){
+		case 1:
+			.@quest_level = 99;
+			if( Baselevel > $@level[9] ) {
+				mes $@ns$;
+				mes "I'm sorry but this quest is not for you anymore, please proceed to above lv "+$@level[9]+" quest";
+				cutin "",255;
+				end;
+			}
+			goto OnQuest;
+		case 2:
+			.@quest_level = 100;
+			goto OnQuest;
+		case 3:
+			cutin "",255;
+			end;
+		}
+	case 3:
+		mes $@ns$;
+		mes "How can I help you? I'll let you know if I can give you an answer.";
+		next;
+OnHelp:
+		switch(select("Basic Information Guide.:How to get to the area.:Go to Prontera Convenience Center.")){
+		case 1:
+			mes $@ns$; //custom text
+			mes "This a service that can help you grow your level.";
+			mes "We provide some quests that can be performed according to your level.";
+			next;
+			mes $@ns$;
+			mes "Each time you finish the quest you can report it to me by calling me back with the bell you have and the reward will be given depends on the level of the quests.";
+			next;
+			mes $@ns$;
+			mes "The prize also can be exchanged with some items that we provide.";
+			next;
+			mes $@ns$;
+			mes "I hope my explanation is clear enough for you. For futher information you may visit eden group, I'll be there.";
+			next;
+			mes $@ns$;
+			mes "Now what else that I can help you with?";
+			next;
+			goto OnHelp;
+		case 2:
+			mes $@ns$; //custom text
+			mes "To get to a certain area, you may use Zonda teleportation service that is provided in some cities in Rune Midgard.";
+			next;
+			mes $@ns$;
+			mes "The cost of the service is variant, depending on the location that you choose.";
+			next;
+			mes $@ns$;
+			mes "After you choose the location, Zonda will call a portal that will lead you to the place you want to go.";
+			mes "The portal will only be seen by you, and nobody can go to that portal except you since you are the one who pay the service.";
+			next;
+			mes $@ns$;
+			mes "I hope my explanation is clear enough for you. For futher information you may visit eden group, I'll be there.";
+			next;
+			mes $@ns$;
+			mes "Now what else that I can help you with?";
+			next;
+			goto OnHelp;
+		case 3:
+			mes $@ns$;
+			mes "Prontera's Adventurer's Convenience Center, shall I send you there?";
+			next;
+			if(select("Go now.:Go Later.") == 2){
+				mes $@ns$;
+				mes "Okay let me know when you are ready.";
+				cutin "",255;
+				end;
+			}
+			removedynamic strnpcinfo(0);
+			warp "prt_in",44,104;
+			cutin "",255;
+			end;
+		}
+	case 4:
+		mes $@ns$;
+		mes "You know that you can exchange your exp potion that you got from finishing the quest to Booster Coin.";
+		mes "Here are some of the lists~";
+		close2;
+		cutin "",255;
+		callshop "Booster_Shop_2";
+		end;
+	}
+OnQuest:
+	mes $@ns$;
+	mes "This is a hunting quest that can be performed from levels "+$@level$+". You can do it once. You can receive a lot of experience points as a reward for growth.";
+	next;
+OnMenu:
+	if(.@quest_level == 99)
+		.@s = select("Lv 1 - Let's catch Fabre!","Lv 11 - Payon Field Exploration","Lv 20 - Groundwater Exploration","Lv 35 - Mjornil Abandoned Mine Exploration","Lv 50 - Izlude Undersea Cave Exploration","Lv 65 - Payon Dungeon Exploration","Lv 80 - Aldebaran Clock Tower Exploration","Lv 85 - Alberta Turtle Island Exploration");
+	else 	
+		.@s = select("Lv 99 - Seasoned Hunter Beginner","Lv 115 - Seasoned Hunter Intermediate","Lv 130 - Seasoned Hunter Advanced 1","Lv 145 - Seasoned Hunter Advanced 2","Lv 160 - Clock Tower Nightmare Attack","Lv 175 - Attack the Glastheim Abyss","Lv 190 - Einbech Mine target","Lv 200 - Attack on the Banquet Hall of the Dead","Lv 215 - Attack on Amicitia 1st floor","Lv 230 - Attack on Amicitia 2nd floor","Lv 240 - Attack the Fallen Opera House") + 8;
+	switch(.@s){
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9: 
+		case 10:
+		case 11:
+	}
+	if ( Baselevel < $@level[.@s] ) {
+		mes $@ns$;
+		mes "I'm sorry but this quest is not for you, please select the quest that is suitable with your level.";
+		close3;
+	}
+	if(isbegin_quest($@quest[.@s]) == 1){
+		mes $@ns$;
+		mes $@mes$[.@s];
+		mes "You have not finished the quest";
+		close3;
+	}	
+	if(checkquest($@quest_cd[.@s],PLAYTIME) == 0){
+		mes $@ns$;
+		mes $@mes$[.@s];
+		mes "You is still in cooldown state.";
+		close3;
+	}
+	mes $@ns$;
+	mes $@mes$[.@s];
+	mes "Would you like to proceed? This quest is to hunt monsters "+$@txt$[.@s];
+	next;
+	if(select("Receive.:Refuse.") == 2){
+		mes $@ns$;
+		mes "Let me know when you are ready for the quests.";
+		close3;
+	}
+	mes $@ns$;
+	mes "You can check the quest information through the quest window.";
+	mes "After completion, you can use the booster call item to summon me.";
+	setquest $@quest[.@s];
+	open_quest_ui $@quest[.@s],getcharid(0);
+	next;
+	mes $@ns$, "Then, shall we look at the other quests?";
+	next;
+	goto OnMenu;
+OnInit:
+	$@ns$ = "[Lime Evenor]";
+	setunittitle getnpcid(0),"<Mega Booster Call>";	
+	setarray $@mes$[1],"Lv 1 - Let's catch Fabre!"
+					  ,"Lv 11 - Payon Field Exploration"
+					  ,"Lv 20 - Groundwater Exploration"
+					  ,"Lv 35 - Mjornil Abandoned Mine Exploration"
+					  ,"Lv 50 - Izlude Undersea Cave Exploration"
+					  ,"Lv 65 - Payon Dungeon Exploration"
+					  ,"Lv 80 - Aldebaran Clock Tower Exploration"
+					  ,"Lv 85 - Alberta Turtle Island Exploration"
+					  ,"Lv 99 - Seasoned Hunter Beginner"
+					  ,"Lv 115 - Seasoned Hunter Intermediate"
+					  ,"Lv 130 - Seasoned Hunter Advanced 1"
+					  ,"Lv 145 - Seasoned Hunter Advanced 2"
+					  ,"Lv 160 - Clock Tower Nightmare Attack"
+					  ,"Lv 175 - Attack the Glastheim Abyss"
+					  ,"Lv 190 - Einbech Mine target"
+					  ,"Lv 200 - Attack on the Banquet Hall of the Dead"
+					  ,"Lv 215 - Attack on Amicitia 1st floor"
+					  ,"Lv 230 - Attack on Amicitia 2nd floor"
+					  ,"Lv 240 - Attack the Fallen Opera House";
+	setarray $@txt$[1],"near Prontera."
+					  ,"near Payon."
+					  ,"inside culvert."
+					  ,"in Coal mine."
+					  ,"in Byalan dungeon."
+					  ,"inside Payon cave."
+					  ,"inside Clock Tower."
+					  ,"in Turtle Island."
+					  ,"inside Juperos."
+					  ,"near manuk."
+					  ,"inside Old Glast Heim Castle."
+					  ,"inside Prontera Prison."
+					  ,"at the other side of Clock Tower."
+					  ,"at the other side of Glast Heim."
+					  ,"inside Einbech Mine."
+					  ,"inside Banquet Hall of the Dead"
+					  ,"inside Amiticia Lab 1st floor"
+					  ,"inside Amiticia Lab 2nd floor"
+					  ,"inside Fallen Opera House";
+	setarray $@level[1],1,11,20,35,50,65,80,85,99,115,130,145,160,175,190,200,215,230,240;
+	setarray $@quest[1],18029,18031,18033,18035,18037,18039,18041,18043,18045,18047,18049,18051,18053,18055,18057,18088,18090,18092,18094;
+	setarray $@quest_cd[1],18030,18032,18034,18036,18038,18040,18042,18044,18046,18048,18050,18052,18054,18056,18058,18089,18091,18093,18095;
+	setarray $@exp[1],5000,11500,18000,124500,1104300,3750023,4442000,5330500,5703400,6635100,7423200,7623500,8012300,15129500,18600232,19591423,20329000,31153500,61220300;
+	setarray $@jexp[1],2500,9000,15500,122000,908500,3502000,4131500,4834000,5344400,6511000,6907500,7464000,7840500,17787000,14493500,18000000,19006500,31313000,51419500;
+	end;
+}

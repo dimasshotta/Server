@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Terra Gloria - Illusion
+//===== Description: =========================================
+//= Warp of Illusion Luanda
+//============================================================
+
+beach_dun2,248,254,4	script	Mystical Statue#illusionluanda	4_ENERGY_BLUE,{
+	if(Baselevel < 160) {
+		mes "You seems don't have strength to use this statue.";
+		close;
+	}
+	mes "It's a Totem that glows in a soft blue color.";
+	next;
+	switch(select("Touch the statue","Ignore it")) {
+	case 1:
+		warp "com_d02_i",251,244;
+		close2;
+	case 2:
+		mes "- You ignore it. -";
+		close;
+	}
+}
+
+com_d02_i,255,244,0	warp	luandawarp	1,1,beach_dun2,250,244

@@ -1,0 +1,487 @@
+hugel,74,89,5	script	Enchant Researcher Oipel	4_M_SCIENCE,{
+	setArray .@HGons[0],19189,19190,19191,19192,19193,19194,19195,19196,19197,19198,19199,19200,19201,19202,19203,19204,19205,19396,19397;
+	setArray .@enchant1[0],4700,4701,4702,4710,4711,4712,4720,4721,4722,4730,4731,4732,4740,4741,4742,4750,4751,4752;
+	setArray .@enchant2[0],4700,4701,4702,4703,4710,4711,4712,4713,4720,4721,4722,4723,4730,4731,4732,4733,4740,4741,4742,4743,4750,4751,4752,4753;
+	setArray .@enchant3[0],4832,4815,4818,4811,4863,4869,29310,29313,29316,29319,29322,29325,29328,29331,29334,29337,29340,29343,29346,29349,29352,29355,29579,29582;	
+	.@RC = 0;
+	.@HG = getequipid(EQI_HEAD_TOP);
+	.@refine = getequiprefinerycnt(EQI_HEAD_TOP);
+	.@card0 = getequipcardid(EQI_HEAD_TOP,0);
+	.@card1 = getequipcardid(EQI_HEAD_TOP,1);
+	.@card2 = getequipcardid(EQI_HEAD_TOP,2);
+	.@card3 = getequipcardid(EQI_HEAD_TOP,3);
+	.@material = 25273;
+	.@amount1 = 10;
+	.@amount2 = 15;
+	.@amount3 = 20;
+	.@zeny1 = 100000;
+	.@zeny2 = 150000;
+	.@zeny3 = 200000;
+	
+	for(.@i = 0; .@i < 38; .@i++) {
+		if(.@HGons[.@i] == .@HG) {
+			.@RC = 1;
+		} 
+	}
+	
+	if(.@RC == 0) {
+		mes "Wear one of the following list!";
+		next;
+		mes "<ITEM>"+getitemname(19189)+"<INFO> 19189 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19190)+"<INFO> 19190 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19191)+"<INFO> 19191 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19192)+"<INFO> 19192 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19193)+"<INFO> 19193 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19194)+"<INFO> 19194 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19195)+"<INFO> 19195 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19196)+"<INFO> 19196 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19197)+"<INFO> 19197 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19198)+"<INFO> 19198 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19199)+"<INFO> 19199 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19200)+"<INFO> 19200 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19201)+"<INFO> 19201 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19202)+"<INFO> 19202 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19203)+"<INFO> 19203 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19204)+"<INFO> 19204 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19205)+"<INFO> 19205 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19396)+"<INFO> 19396 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(19397)+"<INFO> 19397 </INFO> </ITEM>";
+		close;
+	}
+	disable_items;
+	mes .n$;
+	mes "I can enchant your racing cap";
+	mes "To do it i need "+getitemname(25273);
+	mes "Are you interested?";
+	next;
+	if(select("Yes","No.. But i'd like to reset my enchant") - 1) {
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "=====[Reset Material]=====";
+		mes "Ohh okay i need";
+		mes "500.000,- zeny";
+		mes "<ITEM>["+getitemname(25273)+"]<INFO> 25273 </INFO> </ITEM>	       10pcs";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+		if (!.@card3) {
+			mes .n$;
+			mes "Sorry but there is nothing to do with your "+getequipname(EQI_HEAD_TOP);
+			enable_items;
+			close;
+		}
+		if (Zeny < 500000) {
+			mes "^FF0000* Insufficient Zeny!^000000"; 
+			enable_items; 
+			close; 
+		} else if(countitem(25273) < .@amount1) { 
+			mes "^FF0000* You need 10x "+getitemname(25273)+"!^000000";
+			enable_items;
+			close; 
+		}
+		set Zeny,Zeny-500000;
+		delitem .@material,.@amount1;
+		delequip EQI_HEAD_TOP;
+		getitem2 .@HG, 1, 1, .@refine,0, .@card0, 0, 0, 0;
+		specialeffect2 154;
+		dispbottom "Reset process success";
+		enable_items; 
+		close; 
+	}
+	next;
+	mes .n$;
+	mes "Which type of enchant do you want?";
+	next;
+	if(select("Normal Enchant","Special Enchant") - 2) {
+		if(.@card3 == 0) {
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "=====[Reinforcement Material]=====";
+		mes "100.000,- zeny";
+		mes "<ITEM>["+getitemname(25273)+"]<INFO> 25273 </INFO> </ITEM>	       10pcs";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+			if(Zeny < .@zeny1) { 
+				mes "^FF0000* Insufficient Zeny!^000000"; 
+				enable_items; 
+				close; 
+			} else if(countitem(25273) < .@amount1) { 
+				mes "^FF0000* You need 10x "+getitemname(25273)+"!^000000";
+				enable_items;
+				close; 
+			} 
+			set Zeny,Zeny-.@zeny1;
+			delitem .@material,.@amount1;
+			delequip EQI_HEAD_TOP;
+			.@card3 = .@enchant1[rand(0,17)];
+			getitem2 .@HG, 1, 1, .@refine,0, .@card0, .@card1, .@card2, .@card3;
+			specialeffect2 154;
+			dispbottom "The enchantment success";
+			enable_items; 
+			close; 
+		}
+		if(.@card2 == 0) {
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "=====[Reinforcement Material]=====";
+		mes "150.000,- zeny";
+		mes "<ITEM>["+getitemname(25273)+"]<INFO> 25273 </INFO> </ITEM>	       15pcs";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+			if(Zeny < .@zeny2) { 
+				mes "^FF0000* Insufficient Zeny!^000000"; 
+				enable_items; 
+				close; 
+			} else if(countitem(25273) < .@amount2) { 
+				mes "^FF0000* You need 15x "+getitemname(25273)+"!^000000";
+				enable_items;
+				close; 
+			}
+			set Zeny,Zeny-.@zeny1;
+			delitem .@material,.@amount2;
+			delequip EQI_HEAD_TOP;
+			.@card2 = .@enchant2[rand(0,23)];
+			getitem2 .@HG, 1, 1, .@refine,0, .@card0, .@card1, .@card2, .@card3;
+			specialeffect2 154;
+			dispbottom "The enchantment success";
+			enable_items; 
+			close; 
+		}
+		if(.@card1 == 0) {
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "=====[Reinforcement Material]=====";
+		mes "200.000,- zeny";
+		mes "<ITEM>["+getitemname(25273)+"]<INFO> 25273 </INFO> </ITEM>	       20pcs";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+			if(Zeny < .@zeny3) { 
+				mes "^FF0000* Insufficient Zeny!^000000"; 
+				enable_items; 
+				close; 
+			} else if(countitem(25273) < .@amount1) { 
+				mes "^FF0000* You need 10x "+getitemname(25273)+"!^000000";
+				enable_items;
+				close; 
+			}
+			set Zeny,Zeny-.@zeny1;
+			delitem .@material,.@amount1;
+			delequip EQI_HEAD_TOP;
+			.@card1 = .@enchant3[rand(0,23)];
+			getitem2 .@HG, 1, 1, .@refine,0, .@card0, .@card1, .@card2, .@card3;
+			specialeffect2 154;
+			dispbottom "The enchantment success";
+			enable_items; 
+			close; 
+		}		
+			if(inarray(.slot2_1[0],.@card1) > -1) set .@list,1;
+		else if(inarray(.slot2_2[0],.@card1) > -1) set .@list,2;
+		else if(inarray(.slot2_3[0],.@card1) > -1) set .@list,3;
+		else if(inarray(.slot2_4[0],.@card1) > -1) set .@list,4;
+		else if(inarray(.slot2_5[0],.@card1) > -1) set .@list,5;
+		else if(inarray(.slot2_6[0],.@card1) > -1) set .@list,6;
+		else if(inarray(.slot2_7[0],.@card1) > -1) set .@list,7;
+		else if(inarray(.slot2_8[0],.@card1) > -1) set .@list,8;
+		else if(inarray(.slot2_9[0],.@card1) > -1) set .@list,9;
+		else if(inarray(.slot2_10[0],.@card1) > -1) set .@list,10;
+		else if(inarray(.slot2_11[0],.@card1) > -1) set .@list,11;
+		else if(inarray(.slot2_12[0],.@card1) > -1) set .@list,12;
+		else if(inarray(.slot2_13[0],.@card1) > -1) set .@list,13;
+		else if(inarray(.slot2_14[0],.@card1) > -1) set .@list,14;
+		else if(inarray(.slot2_15[0],.@card1) > -1) set .@list,15;
+		else if(inarray(.slot2_16[0],.@card1) > -1) set .@list,16;
+		else if(inarray(.slot2_17[0],.@card1) > -1) set .@list,17;
+		else if(inarray(.slot2_18[0],.@card1) > -1) set .@list,18;
+		else if(inarray(.slot2_19[0],.@card1) > -1) set .@list,19;
+		else if(inarray(.slot2_20[0],.@card1) > -1) set .@list,20;
+		else if(inarray(.slot2_21[0],.@card1) > -1) set .@list,21;
+		else if(inarray(.slot2_22[0],.@card1) > -1) set .@list,22;
+		else if(inarray(.slot2_23[0],.@card1) > -1) set .@list,23;
+		else if(inarray(.slot2_24[0],.@card1) > -1) set .@list,24;
+		else set .@list,99;
+
+		set .@v,inarray((.@list == 1 ? .slot2_1[0]:(.@list == 2 ? .slot2_2[0]:(.@list == 3 ? .slot2_3[0]:(.@list == 4 ? .slot2_4[0]:(.@list == 5 ? .slot2_5[0]:(.@list == 6 ? .slot2_6[0]:(.@list == 7 ? .slot2_7[0]:(.@list == 8 ? .slot2_8[0]:(.@list == 9 ? .slot2_9[0]:(.@list == 10 ? .slot2_10[0]:(.@list == 11 ? .slot2_11[0]:(.@list == 12 ? .slot2_12[0]:(.@list == 13 ? .slot2_13[0]:(.@list == 14 ? .slot2_14[0]:(.@list == 15 ? .slot2_15[0]:(.@list == 16 ? .slot2_16[0]:(.@list == 17 ? .slot2_17[0]:(.@list == 18 ? .slot2_18[0]:(.@list == 19 ? .slot2_19[0]:(.@list == 20 ? .slot2_20[0]:(.@list == 21 ? .slot2_21[0]:(.@list == 22 ? .slot2_22[0]:(.@list == 23 ? .slot2_23[0]:(.@list == 24 ? .slot2_24[0]:0)))))))))))))))))))))))),.@card1);
+		set .@lv1,(.@v < 1 ? 1:(.@v == 1 ? 2:0));
+		set .@lv2,(.@v < 1 ? 2:(.@v == 1 ? 3:0));
+		set .@amn,(.@v < 1 ? 50:(.@v == 1 ? 100:0));
+		set .@zeny,(.@v < 1 ? 500000:(.@v == 1 ? 1000000:0));
+		set .@fail,(.@v < 1 ? 30:(.@v == 1 ? 15:0));
+		set .@amn1,(.@v < 1 ? 500:(.@v == 1 ? 1000:0));
+		set .@zeny4,(.@v < 1 ? 7500000:(.@v == 1 ? 10000000:0));
+		if(.@v >= 2){ 
+			mes "^FF0000* You reach maximum enchant!^000000"; 
+			enable_items; 
+			close; 
+		}
+		switch(.@list) {
+			case 1: set .@cardx,.slot2_1[(.@v+1)]; break;
+			case 2: set .@cardx,.slot2_2[(.@v+1)]; break;
+			case 3: set .@cardx,.slot2_3[(.@v+1)]; break;
+			case 4: set .@cardx,.slot2_4[(.@v+1)]; break;
+			case 5: set .@cardx,.slot2_5[(.@v+1)]; break;
+			case 6: set .@cardx,.slot2_6[(.@v+1)]; break;
+			case 7: set .@cardx,.slot2_7[(.@v+1)]; break;
+			case 8: set .@cardx,.slot2_8[(.@v+1)]; break;
+			case 9: set .@cardx,.slot2_9[(.@v+1)]; break;
+			case 10: set .@cardx,.slot2_10[(.@v+1)]; break;
+			case 11: set .@cardx,.slot2_11[(.@v+1)]; break;
+			case 12: set .@cardx,.slot2_12[(.@v+1)]; break;
+			case 13: set .@cardx,.slot2_13[(.@v+1)]; break;
+			case 14: set .@cardx,.slot2_14[(.@v+1)]; break;
+			case 15: set .@cardx,.slot2_15[(.@v+1)]; break;
+			case 16: set .@cardx,.slot2_16[(.@v+1)]; break;
+			case 17: set .@cardx,.slot2_17[(.@v+1)]; break;
+			case 18: set .@cardx,.slot2_18[(.@v+1)]; break;
+			case 19: set .@cardx,.slot2_19[(.@v+1)]; break;
+			case 20: set .@cardx,.slot2_20[(.@v+1)]; break;
+			case 21: set .@cardx,.slot2_21[(.@v+1)]; break;
+			case 22: set .@cardx,.slot2_22[(.@v+1)]; break;
+			case 23: set .@cardx,.slot2_23[(.@v+1)]; break;
+			case 24: set .@cardx,.slot2_24[(.@v+1)]; break;
+			case 99: clear; mes "^FF0000* Unknown Enchanment!^000000"; enable_items; close;
+		}
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "Attempting upgrade from lv "+.@lv1+"->"+.@lv2+".";
+		mes "=====[Reinforcement Material]=====";
+		mes "- "+.@zeny;	
+		mes "<ITEM>- ["+getitemname(25273)+"]<INFO> 25273 </INFO> </ITEM>	  "+.@amn+"pcs";
+		mes "- Success Rate "+.@fail+"%";
+		mes "HeadGear wont break";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+		if(countitem(25273) < .@amn) { 
+			mes .n$;
+			mes "^FF0000* You need "+.@amn+"x "+getitemname(25273)+"!^000000"; 
+			enable_items; 
+			close; 
+		}
+		if(Zeny < .@zeny) {
+			mes .n$; 
+			mes "^FF0000*Insuficient zeny!^000000"; 
+			enable_items; 
+			close; 
+		}		
+		if(rand(1,100) >= .@fail){
+			mes .n$;
+			mes "Upps.. better luck next time";
+			delitem 25273,.@amn;
+			set Zeny,Zeny-.@zeny;
+			delequip EQI_HEAD_TOP;
+			getitem2 .@HG,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+			specialeffect2 155;
+			enable_items;
+			end;
+		}	
+		delitem 25273,.@amn;
+		set Zeny,Zeny-.@zeny;
+		delequip EQI_HEAD_TOP;
+		getitem2 .@HG,1,1,.@refine,0,.@card0,.@cardx,.@card2,.@card3;
+		specialeffect2 154;
+		dispbottom "The enchantment success";
+		enable_items; 
+		close;
+	}	
+	if(.@card1) {
+				if(inarray(.slot2_1[0],.@card1) > -1) set .@list,1;
+		else if(inarray(.slot2_2[0],.@card1) > -1) set .@list,2;
+		else if(inarray(.slot2_3[0],.@card1) > -1) set .@list,3;
+		else if(inarray(.slot2_4[0],.@card1) > -1) set .@list,4;
+		else if(inarray(.slot2_5[0],.@card1) > -1) set .@list,5;
+		else if(inarray(.slot2_6[0],.@card1) > -1) set .@list,6;
+		else if(inarray(.slot2_7[0],.@card1) > -1) set .@list,7;
+		else if(inarray(.slot2_8[0],.@card1) > -1) set .@list,8;
+		else if(inarray(.slot2_9[0],.@card1) > -1) set .@list,9;
+		else if(inarray(.slot2_10[0],.@card1) > -1) set .@list,10;
+		else if(inarray(.slot2_11[0],.@card1) > -1) set .@list,11;
+		else if(inarray(.slot2_12[0],.@card1) > -1) set .@list,12;
+		else if(inarray(.slot2_13[0],.@card1) > -1) set .@list,13;
+		else if(inarray(.slot2_14[0],.@card1) > -1) set .@list,14;
+		else if(inarray(.slot2_15[0],.@card1) > -1) set .@list,15;
+		else if(inarray(.slot2_16[0],.@card1) > -1) set .@list,16;
+		else if(inarray(.slot2_17[0],.@card1) > -1) set .@list,17;
+		else if(inarray(.slot2_18[0],.@card1) > -1) set .@list,18;
+		else if(inarray(.slot2_19[0],.@card1) > -1) set .@list,19;
+		else if(inarray(.slot2_20[0],.@card1) > -1) set .@list,20;
+		else if(inarray(.slot2_21[0],.@card1) > -1) set .@list,21;
+		else if(inarray(.slot2_22[0],.@card1) > -1) set .@list,22;
+		else if(inarray(.slot2_23[0],.@card1) > -1) set .@list,23;
+		else if(inarray(.slot2_24[0],.@card1) > -1) set .@list,24;
+		else set .@list,99;
+
+		set .@v,inarray((.@list == 1 ? .slot2_1[0]:(.@list == 2 ? .slot2_2[0]:(.@list == 3 ? .slot2_3[0]:(.@list == 4 ? .slot2_4[0]:(.@list == 5 ? .slot2_5[0]:(.@list == 6 ? .slot2_6[0]:(.@list == 7 ? .slot2_7[0]:(.@list == 8 ? .slot2_8[0]:(.@list == 9 ? .slot2_9[0]:(.@list == 10 ? .slot2_10[0]:(.@list == 11 ? .slot2_11[0]:(.@list == 12 ? .slot2_12[0]:(.@list == 13 ? .slot2_13[0]:(.@list == 14 ? .slot2_14[0]:(.@list == 15 ? .slot2_15[0]:(.@list == 16 ? .slot2_16[0]:(.@list == 17 ? .slot2_17[0]:(.@list == 18 ? .slot2_18[0]:(.@list == 19 ? .slot2_19[0]:(.@list == 20 ? .slot2_20[0]:(.@list == 21 ? .slot2_21[0]:(.@list == 22 ? .slot2_22[0]:(.@list == 23 ? .slot2_23[0]:(.@list == 24 ? .slot2_24[0]:0)))))))))))))))))))))))),.@card1);
+		set .@lv1,(.@v < 1 ? 1:(.@v == 1 ? 2:0));
+		set .@lv2,(.@v < 1 ? 2:(.@v == 1 ? 3:0));
+		set .@amn1,(.@v < 1 ? 500:(.@v == 1 ? 1000:0));
+		set .@zeny4,(.@v < 1 ? 7500000:(.@v == 1 ? 10000000:0));
+		if(.@v >= 2){ 
+			mes "^FF0000* You reach maximum enchant!^000000"; 
+			enable_items; 
+			close; 
+		}
+		switch(.@list) {
+			case 1: set .@cardx,.slot2_1[(.@v+1)]; break;
+			case 2: set .@cardx,.slot2_2[(.@v+1)]; break;
+			case 3: set .@cardx,.slot2_3[(.@v+1)]; break;
+			case 4: set .@cardx,.slot2_4[(.@v+1)]; break;
+			case 5: set .@cardx,.slot2_5[(.@v+1)]; break;
+			case 6: set .@cardx,.slot2_6[(.@v+1)]; break;
+			case 7: set .@cardx,.slot2_7[(.@v+1)]; break;
+			case 8: set .@cardx,.slot2_8[(.@v+1)]; break;
+			case 9: set .@cardx,.slot2_9[(.@v+1)]; break;
+			case 10: set .@cardx,.slot2_10[(.@v+1)]; break;
+			case 11: set .@cardx,.slot2_11[(.@v+1)]; break;
+			case 12: set .@cardx,.slot2_12[(.@v+1)]; break;
+			case 13: set .@cardx,.slot2_13[(.@v+1)]; break;
+			case 14: set .@cardx,.slot2_14[(.@v+1)]; break;
+			case 15: set .@cardx,.slot2_15[(.@v+1)]; break;
+			case 16: set .@cardx,.slot2_16[(.@v+1)]; break;
+			case 17: set .@cardx,.slot2_17[(.@v+1)]; break;
+			case 18: set .@cardx,.slot2_18[(.@v+1)]; break;
+			case 19: set .@cardx,.slot2_19[(.@v+1)]; break;
+			case 20: set .@cardx,.slot2_20[(.@v+1)]; break;
+			case 21: set .@cardx,.slot2_21[(.@v+1)]; break;
+			case 22: set .@cardx,.slot2_22[(.@v+1)]; break;
+			case 23: set .@cardx,.slot2_23[(.@v+1)]; break;
+			case 24: set .@cardx,.slot2_24[(.@v+1)]; break;
+			case 99: clear; mes "^FF0000* Unknown Enchanment!^000000"; enable_items; close;
+		}
+		mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+		mes "Attempting upgrade from lv "+.@lv1+"->"+.@lv2+".";
+		mes "=====[Reinforcement Material]=====";
+		mes "- "+.@zeny4;	
+		mes "<ITEM>- ["+getitemname(25274)+"]<INFO> 25274 </INFO> </ITEM>	  "+.@amn1+"pcs";
+		mes "- Success Rate 100%";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+		if(countitem(25274) < .@amn1) { 
+			mes .n$;
+			mes "^FF0000* You need "+.@amn1+"x "+getitemname(25274)+"!^000000"; 
+			enable_items; 
+			close; 
+		}
+		if(Zeny < .@zeny4) {
+			mes .n$; 
+			mes "^FF0000*Insuficient zeny!^000000"; 
+			enable_items; 
+			close; 
+		}			
+		delitem 25274,.@amn1;
+		set Zeny,Zeny-.@zeny4;
+		delequip EQI_HEAD_TOP;
+		getitem2 .@HG,1,1,.@refine,0,.@card0,.@cardx,.@card2,.@card3;
+		specialeffect2 154;
+		dispbottom "The enchantment success";
+		enable_items; 
+		close;
+	}
+	mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+	mes "- Special Enchant";
+	mes "- Slot 1 Available";
+	mes "- 1st Attempt";
+	next;
+	mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO> "+getequipid(EQI_HEAD_TOP)+" </INFO> </ITEM>";
+	mes "=====[Reinforcement Material]=====";
+	mes "10.000.000 zeny";
+	mes "<ITEM>- ["+getitemname(25274)+"]<INFO> 25274 </INFO> </ITEM> 250 pcs";
+	mes "Success Rate 100%";
+	next;
+	mes .n$;
+	mes "Now select the enchant!";
+	next;
+	for ( set .@e,0; .@e < getarraysize(.@enchant3); set .@e,.@e + 1)
+		set .@e_m$,.@e_m$ + "> "+getitemname(.@enchant3[.@e])+ ( (.@enchant3[.@e+1] != 0)?":":"");
+	set .@rune,select(.@e_m$) - 1;
+	mes "<ITEM>["+getequipname(EQI_HEAD_TOP)+"]<INFO>"+getequipid(EQI_HEAD_TOP)+"</INFO> </ITEM>";
+	mes "Selected Enchantment: "+getitemname(.@enchant3[.@rune]);
+	mes "Proceed?";
+	if(select("- Yes:- No") - 1) close;
+	next;
+	if(Zeny < 10000000) { 
+		mes "^FF0000* Insufficient Zeny!^000000"; 
+		enable_items; 
+		close; 
+	} else if(countitem(25274) < 250) { 
+		mes "^FF0000* You need 250x "+getitemname(25274)+"!^000000";
+		enable_items;
+		close;
+	}
+	delitem 25274,250;
+	set Zeny,Zeny-10000000;
+	delequip EQI_HEAD_TOP;
+	.@card1 = .@enchant3[.@rune];
+	getitem2 .@HG,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+	specialeffect2 154;
+	dispbottom "The enchantment success";
+	enable_items; 
+	close;
+OnInit:
+	.n$ = "[Enchant Researcher Oipel]";
+	
+	//Enchanment slot 2_1º
+	setarray .slot2_1[0],4832,4833,4834;
+	
+	//Enchanment slot 2_2º
+	setarray .slot2_2[0],4815,4814,4813;
+	
+	//Enchanment slot 2_3º
+	setarray .slot2_3[0],4818,4817,4816;
+	
+	//Enchanment slot 2_4º
+	setarray .slot2_4[0],4811,4810,4809;
+	
+	//Enchanment slot 2_5º
+	setarray .slot2_5[0],4863,4864,4685;
+	
+	//Enchanment slot 2_6º
+	setarray .slot2_6[0],4869,4872,4873;
+
+	//Enchanment slot 2_7º
+	setarray .slot2_7[0],29310,29311,29312;
+	
+	//Enchanment slot 2_8º
+	setarray .slot2_8[0],29313,29314,29315;
+	
+	//Enchanment slot 2_9º
+	setarray .slot2_9[0],29316,29317,29318;
+	
+	//Enchanment slot 2_10º
+	setarray .slot2_10[0],29319,29320,29321;
+	
+	//Enchanment slot 2_11º
+	setarray .slot2_11[0],29322,29323,29324;
+	
+	//Enchanment slot 2_12º
+	setarray .slot2_12[0],29325,29326,29327;
+	
+	//Enchanment slot 2_13º
+	setarray .slot2_13[0],29328,29329,29330;
+
+	//Enchanment slot 2_14º
+	setarray .slot2_14[0],29331,29332,29333;
+	
+	//Enchanment slot 2_15º
+	setarray .slot2_15[0],29334,29335,29336;
+	
+	//Enchanment slot 2_16º
+	setarray .slot2_16[0],29337,29338,29339;
+	
+	//Enchanment slot 2_17º
+	setarray .slot2_17[0],29340,29341,29342;
+	
+	//Enchanment slot 2_18º
+	setarray .slot2_18[0],29343,29344,29345;
+	
+	//Enchanment slot 2_19º
+	setarray .slot2_19[0],29346,29347,29348;
+	
+	//Enchanment slot 2_20º
+	setarray .slot2_20[0],29349,29350,29351;
+
+	//Enchanment slot 2_21º
+	setarray .slot2_21[0],29352,29353,29354;
+	
+	//Enchanment slot 2_22º
+	setarray .slot2_22[0],29355,29356,29357;
+	
+	//Enchanment slot 2_23º
+	setarray .slot2_23[0],29379,29380,29381;
+
+	//Enchanment slot 2_24º
+	setarray .slot2_24[0],29382,29383,29384;
+	
+}

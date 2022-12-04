@@ -1,0 +1,89 @@
+//===== rAthena Script ======================================= 
+//= Illusion Frozen (kRO Servers)
+//===== By: ================================================== 
+//= [ROmaniac]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//===== Additional Comments: ================================= 
+// - MobSpawn. MVP Spawn (Custom) [ROmaniac]
+//============================================================
+
+// Illusion of Frozen Respawn
+ice_d03_i,0,0	monster	Angry Gazeti	3792,30,0
+ice_d03_i,0,0	monster	Angry Snowier	3793,30,0
+ice_d03_i,0,0	monster	Angry Ice Titan	3794,20,0
+ice_d03_i,0,0	monster	Solid Icicle	3795,20,0
+
+ice_d03_i,0,0,0	script	ice_d03_i	-1,{
+	end;
+OnInit:
+	addmonsterdrop 3792,25271,8000;
+	addmonsterdrop 3793,25271,8000;
+	addmonsterdrop 3794,25271,8000;
+	addmonsterdrop 3795,25271,8000;
+	addmonsterdrop 3796,25271,8000;
+	end;
+}
+	
+ice_dun02,150,11,5	script	#Rice_dun00	HIDDEN_WARP_NPC,2,2,{
+	if(BaseLevel < 110){
+		mes "[Black Portal]";
+		mes "You touch the mysterious portal.";
+		mes "You can feel cold fog suddenly rolling toward you.";
+		next;
+		mes "[Black Portal]";
+		mes "^0000FFRequired Level: 110 to access^000000.";
+		end;
+	}
+	warp "ice_d03_i",148,24;
+	end;	
+}
+
+// boss summoning - 1 day of delay for now
+ice_d03_i,126,126,3	script	Orb of Seal#frozen1	CLEAR_NPC,{
+	if ($ill_frozen_boss_timer >= gettimetick(2)) {	// Note: maybe a permanent variable is too much?
+		mes "This orb needs more time to gather enough energy before it'll work.";
+		close;
+	}
+	.@i = atoi( charat(strnpcinfo(2), 6) );
+	.timer[.@i] = 30;
+	initnpctimer;	// the effect continue after boss spawn
+	if (.timer[1] > 0 && .timer[2] > 0 && .timer[3] > 0 && .timer[4] > 0) {
+		$ill_frozen_boss_timer = gettimetick(2) + 86400;// respawn timer (seems to be one day)
+		donpcevent "bosseff#frozen::OnEvent";
+	}
+	end;
+OnTimer1000:
+	.@i = atoi( charat(strnpcinfo(2), 6) );
+	.timer[.@i]--;
+	if (.timer[.@i] < 1)
+		stopnpctimer;
+	else {
+		initnpctimer;
+		specialeffect EF_DETOXICATION;
+	}
+	end;
+}
+ice_d03_i,172,126,3	duplicate(Orb of Seal#frozen1)	Orb of Seal#frozen2	CLEAR_NPC
+ice_d03_i,172,173,3	duplicate(Orb of Seal#frozen1)	Orb of Seal#frozen3	CLEAR_NPC
+ice_d03_i,127,172,3	duplicate(Orb of Seal#frozen1)	Orb of Seal#frozen4	CLEAR_NPC
+
+ice_d03_i,149,112,0	script	bosseff#frozen	HIDDEN_WARP_NPC,{
+	end;
+OnEvent:
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce "ice_d03_i", "All the energy that was sealed inside the cave has been released, awakening Ktullanux.", bc_map, 0xFFFF00;
+	end;
+OnTimer3000:
+	stopnpctimer;
+	mapannounce "ice_d03_i", "Ktullanux: Who dares call me a lizard? I'll freeze you all!", bc_map, 0xFFFF00;
+	specialeffect EF_PORTAL;
+	if (mobcount("ice_d03_i", "bosseff#frozen::OnBossDead") < 1)
+		monster "ice_d03_i",149,112,"Awakened Ktullanux",3796,1, "bosseff#frozen::OnBossDead";	// ILL_KTULLANUX
+	end;
+OnBossDead:
+	mapannounce "ice_d03_i", "Ktullanux: I'll... be... back...", bc_map;
+	end;
+}

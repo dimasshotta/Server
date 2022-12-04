@@ -1,0 +1,290 @@
+//===== rAthena Script =======================================
+//= Memories of Thanatos
+//===== Description: =========================================
+//= Initial Version from Bw39
+//= Translated / Fixed by Muh
+//============================================================
+tha_t01,139,83,5	script	Clara#npc	91,{
+	mes "[Clara]";
+	mes "You can trade in various items from Memories of Thanatos here.";
+	switch(select("Shard Exchange","Sinful Accessories","Brilliant Light Accessories")) {
+		case 1:
+			close2;
+			callshop "Clara#shard";
+			end;
+		case 2:
+			close2;
+			callshop "Clara#sin";
+			end;
+		case 3:
+			close2;
+			callshop "Clara#brill";
+			end;
+	}
+	end;
+OnInit:
+	setunittitle getnpcid(0), "Exchanger";
+	end;
+}
+
+//tha_t01 136/83
+tha_t01,136,83,5	script	Tamila	4064,{
+	disable_items;
+	function RateCalc {
+		for(.@i=0; getarg(.@i,"")!= ""; .@i++){
+			deletearray .@array$;
+			explode(.@array$,getarg(.@i),",");
+			setarray .@rate[.@i],atoi(.@array$[0]);
+			setd ".@item_"+.@i,atoi(.@array$[rand(1,getarraysize(.@array$)-1)]);
+		}
+		
+		.@rand = rand(1,10000);
+		for(.@k=0; .@k<getarraysize(.@rate); .@k++)
+		{
+			if(.@rand <= .@rate[.@k])
+				return getd(".@item_"+.@k);
+		}
+		return;
+	}
+	mes "["+strnpcinfo(1)+"]";
+	mes "Hello, I can enchant Sin or Brilliant accessories from ^0000FFMemories of Thanatos^000000.","Which service would you like me to perform?" ;
+	next;
+	switch(select("I want to enchant." , "I want to reset." , "Cancel.")) {
+		case 1:			
+			mes "["+strnpcinfo(1)+"]";
+			mes "Please select the accessory you want to enchant.";
+			next;
+			switch(select(((getequipid(EQI_ACC_L) != -1)? ("^0000ff "+getitemname(getequipid(EQI_ACC_L))+"^000000"):("")),((getequipid(EQI_ACC_R) != -1)? ("^0000ff "+getitemname(getequipid(EQI_ACC_R))+"^000000"):("")), "Cancel")) {
+				case 1:
+					set .@part,EQI_ACC_L;
+					break;
+				case 2:
+					set .@part,EQI_ACC_R;
+					break;
+				case 3:
+					close;
+			}
+			if(inarray(.EquipID, getequipid(.@part)) == -1) 
+			{
+				mes "["+strnpcinfo(1)+"]";
+				mes "This item is not a Sin or Brilliant accessories from ^0000FFMemories of Thanatos^000000." ;
+				close;
+			}
+			if(getequipcardid(.@part,2) && getequipcardid(.@part,3)) 
+			{
+				mes "["+strnpcinfo(1)+"]";
+				mes getequipname(.@part)+" can not be enchanted again, please reset and come back." ;
+				close;			
+			}
+			.@nameid = getequipid(.@part);
+			setarray .@card[1], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+			if(.@card[3] || .@card[4])
+				{
+					mes "["+strnpcinfo(1)+"]";
+					mes "There is already an enchantment on the item, you have to reset it." ;
+					close;
+				}
+			if(.@nameid >= 490044 && .@nameid <= 490055)
+				.@estring$ = "sin";
+			else
+				.@estring$ = "bril";
+			.@item_id = getd("."+.@estring$);
+			mes "["+strnpcinfo(1)+"]";
+			mes "What a nice item!" ;
+			mes "So... How do you want to enchant it?";
+			mes "Use 50x <ITEM>"+getitemname(.@item_id)+"<INFO>"+.@item_id+"</INFO></ITEM> to select 1 enchant with random level or";
+			mes "Use 10x <ITEM>"+getitemname(.@item_id)+"<INFO>"+.@item_id+"</INFO></ITEM> to get 2 random enchants with random levels.";
+			next;
+			switch((.@type = select("Select 1 enchant." , "Get 2 random enchants.")))
+			{
+				case 1:
+					if(countitem(.@item_id) < 50)
+					{
+						mes "["+strnpcinfo(1)+"]";
+						mes "You don't have 50x <ITEM>"+getitemname(.@item_id)+"<INFO>"+.@item_id+"</INFO></ITEM>." ;
+						close;
+					}
+					mes "["+strnpcinfo(1)+"]";
+					mes "Which slot do you want to enchant?";
+					mes "Remember, you can't choose another one afterwards.";
+					next;
+					.@slot = 2 + select("Slot 3:Slot 4");
+					mes "["+strnpcinfo(1)+"]";
+					mes "Which enchant do you want to apply?";
+					switch (.@slot) {
+						case 3:
+							if (.@estring$ == "sin")
+								.@menu$ = "Anger:Horror:Resentment:Regret";
+							else
+								.@menu$ = "Empathy:Happiness:Shelter:Solace";
+							break;
+						case 4:
+							if (.@estring$ == "sin")
+								.@menu$ = "Inverse Scale:Dragon Scale";
+							else
+								.@menu$ = "Divine Evil:Destructive Evil";
+							break;
+					}
+					.@e = select(.@menu$);
+					.@card[.@slot] = getd("."+.@estring$+.@slot+"_"+rand(1,.@e)+"["+rand(5)+"]");
+					break;
+				case 2:
+					.@card[3] = getd("."+.@estring$+"3_"+rand(1,4)+"["+rand(5)+"]");
+					.@card[4] = getd("."+.@estring$+"4_"+rand(1,2)+"["+rand(5)+"]");
+					if(countitem(.@item_id) < 10)
+					{
+						mes "["+strnpcinfo(1)+"]";
+						mes "You don't have 10x <ITEM>"+getitemname(.@item_id)+"<INFO>"+.@item_id+"</INFO></ITEM>." ;
+						close;
+					}
+					break;
+			}
+			delitem .@item_id, .@type == 1 ? 50 : 10;
+			specialeffect 112;
+			setarray .@OptID[0],getequiprandomoption(.@part,0,ROA_ID),getequiprandomoption(.@part,1,ROA_ID),getequiprandomoption(.@part,2,ROA_ID),getequiprandomoption(.@part,3,ROA_ID),getequiprandomoption(.@part,4,ROA_ID);
+			setarray .@OptVal[0],getequiprandomoption(.@part,0,ROA_VALUE),getequiprandomoption(.@part,1,ROA_VALUE),getequiprandomoption(.@part,2,ROA_VALUE),getequiprandomoption(.@part,3,ROA_VALUE),getequiprandomoption(.@part,4,ROA_VALUE);
+			setarray .@OptParam[0],getequiprandomoption(.@part,0,ROA_PARAM),getequiprandomoption(.@part,1,ROA_PARAM),getequiprandomoption(.@part,2,ROA_PARAM),getequiprandomoption(.@part,3,ROA_PARAM),getequiprandomoption(.@part,4,ROA_PARAM);
+			delequip .@part;
+			if(getarraysize(.@OptID))
+				getitem3 .@nameid,1,1,0,0,0,0,.@card[3],.@card[4], .@OptID, .@OptVal, .@OptParam;
+			else
+				getitem2 .@nameid,1,1,0,0,0,0,.@card[3],.@card[4];
+			mes "["+strnpcinfo(1)+"]";
+			mes "Enchantment successful." ;
+			close;
+		
+		case 2:
+			mes "["+strnpcinfo(1)+"]";
+			mes "Please select the accessory you want to reset.";
+			next;
+			switch(select(((getequipid(EQI_ACC_L) != -1)? ("^0000ff "+getitemname(getequipid(EQI_ACC_L))+"^000000"):("")),((getequipid(EQI_ACC_R) != -1)? ("^0000ff "+getitemname(getequipid(EQI_ACC_R))+"^000000"):("")), "Cancel")) {
+				case 1:
+					set .@part,EQI_ACC_L;
+					break;
+				case 2:
+					set .@part,EQI_ACC_R;
+					break;
+				case 3:
+					close;
+			}
+			if(inarray(.EquipID, getequipid(.@part)) == -1) 
+			{
+				mes "["+strnpcinfo(1)+"]";
+				mes "This item is not a Sin or Brilliant accessories from ^0000FFMemories of Thanatos^000000." ;
+				close;
+			}
+			if(getequipcardid(.@part,2) == 0 && getequipcardid(.@part,3) == 0) 
+			{
+				mes "["+strnpcinfo(1)+"]";
+				mes "This item needs to be enchanted first." ;
+				close;			
+			}
+			.@nameid = getequipid(.@part);
+			mes "["+strnpcinfo(1)+"]";
+			mes "To reset "+getitemname(.@nameid)," there are two ways.^000000";
+			mes "Which one do you want to choose, please?" ;
+			next;
+			if(select("Spend 1,000,000 Zeny (70% success rate)", "Use 3x " + getitemname(6909) + " (100% success rate)") == 1)
+			{
+				mes "["+strnpcinfo(1)+"]";
+				mes "The success rate of a reset with the option to spend 1,000,000 Zeny is 70%";
+				mes "^FF0000 Failure will cause the equipment to disappear!^000000";
+				mes "Do you wish to continue?" ;
+				next;
+				if(select("Cancel." , "Continue.") == 1) close;
+				if(Zeny < 1000000)
+				{
+					mes "["+strnpcinfo(1)+"]";
+					mes "You don't have 1,000,000 Zeny.";
+					close;
+				}
+				Zeny -= 1000000;
+				if(rand(100) < 30)
+				{
+					delequip .@part;
+					specialeffect 155;
+					mes "["+strnpcinfo(1)+"]";
+					mes "Ahhhh!!! I'm sorry... The reset failed!!! Aaaah!!!" ;
+					close;
+				}
+			}
+			else
+			{
+				mes "["+strnpcinfo(1)+"]";
+				mes "The reset success rate for choosing to use 3 <ITEM>"+getitemname(6909)+"<INFO>6909</INFO></ITEM> is 100%";
+				mes "Sure you want to reset?" ;
+				next;
+				if(select("Cancel." , "OK.") == 1) close;
+				if(countitem(6909) < 5)
+				{
+					mes "["+strnpcinfo(1)+"]";
+					mes "There are less than 3 <ITEM>"+getitemname(6909)+"<INFO>6909</INFO></ITEM>." ;
+					close;
+				}
+				delitem 6909,3;
+			}
+			specialeffect 154;
+			setarray .@OptID[0],getequiprandomoption(.@part,0,ROA_ID),getequiprandomoption(.@part,1,ROA_ID),getequiprandomoption(.@part,2,ROA_ID),getequiprandomoption(.@part,3,ROA_ID),getequiprandomoption(.@part,4,ROA_ID);
+			setarray .@OptVal[0],getequiprandomoption(.@part,0,ROA_VALUE),getequiprandomoption(.@part,1,ROA_VALUE),getequiprandomoption(.@part,2,ROA_VALUE),getequiprandomoption(.@part,3,ROA_VALUE),getequiprandomoption(.@part,4,ROA_VALUE);
+			setarray .@OptParam[0],getequiprandomoption(.@part,0,ROA_PARAM),getequiprandomoption(.@part,1,ROA_PARAM),getequiprandomoption(.@part,2,ROA_PARAM),getequiprandomoption(.@part,3,ROA_PARAM),getequiprandomoption(.@part,4,ROA_PARAM);
+			delequip .@part;
+			if(getarraysize(.@OptID))
+				getitem3 .@nameid,1,1,0,0,0,0,0,0, .@OptID, .@OptVal, .@OptParam;
+			else
+				getitem2 .@nameid,1,1,0,0,0,0,0,0;
+			mes "["+strnpcinfo(1)+"]";
+			mes "Reset complete." ;
+			close;
+		
+		case 3:
+			close;
+	}
+	end;
+OnInit:
+	.@nid = getnpcid(0);
+	setunittitle .@nid, "Enchanter";
+	setunitdata .@nid,UNPC_HEADTOP,547;
+	setunitdata .@nid,UNPC_HAIRSTYLE,2;
+	setunitdata .@nid,UNPC_HAIRCOLOR,1;
+	setunitdata .@nid,UNPC_CLOTHCOLOR,1;
+	.sin = 1000257;
+	.bril = 1000263;
+	setarray .sin3_1[0],310197,310198,310199,310200,310201;
+	setarray .sin3_2[0],310202,310203,310204,310205,310206;
+	setarray .sin3_3[0],310207,310208,310209,310210,310211;
+	setarray .sin3_4[0],310212,310213,310214,310215,310216;
+	setarray .sin4_1[0],310237,310238,310239,310240,310241;
+	setarray .sin4_2[0],310242,310243,310244,310245,310246;
+	setarray .bril3_1[0],310217,310218,310219,310220,310221;
+	setarray .bril3_2[0],310222,310223,310224,310225,310226;
+	setarray .bril3_3[0],310227,310228,310229,310230,310231;
+	setarray .bril3_4[0],310232,310233,310234,310235,310236;
+	setarray .bril4_1[0],310247,310248,310249,310250,310251;
+	setarray .bril4_2[0],310252,310253,310254,310255,310256;
+	setarray .EquipID,
+				490044, // The ruby ring of sin
+				490045, // The ruby necklace of sin
+				490046, // The Emerald Ring of Sin
+				490047, // The Emerald Necklace of Sin
+				490048, // Topaz ring of sin
+				490049, // Topaz necklace of sin
+				490050, // Sinful amethyst ring
+				490051, // Amethyst necklace of sin
+				490052, // Sinful sapphire ring
+				490053, // Sinful sapphire necklace
+				490054, // Sinful opal ring
+				490055, // Opal necklace of sin
+				490056, // Ruby ring of good will
+				490057, // Ruby necklace with good intentions
+				490058, // Emerald ring of goodwill
+				490059, // Emerald necklace of goodwill
+				490060, // Topaz ring of goodwill
+				490061, // Topaz necklace of goodwill
+				490062, // Amethyst ring of goodwill
+				490063, // Amethyst necklace with goodwill
+				490064, // Goodwill sapphire ring
+				490065, // Goodwill sapphire necklace
+				490066, // Goodwill opal ring
+				490067; // Goodwill opal necklace
+	end;
+}

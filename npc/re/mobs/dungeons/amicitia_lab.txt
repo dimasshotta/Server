@@ -1,0 +1,21 @@
+//===== rAthena Script =======================================
+//= Amicitia lab Monster Spawn Script
+//===== By: ==================================================
+//= [RoManiac]
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [RoManiac]
+//============================================================
+
+amicitia1,0,0	monster	Amitera	20924,55
+amicitia1,0,0	monster	Litus	20925,55
+amicitia1,0,0	monster	Fillia	20926,55
+amicitia1,0,0	monster	Vanilaqus	20927,55
+amicitia2,0,0	monster	Lavaeter	20920,55
+amicitia2,0,0	monster	Fulgor	20921,55
+amicitia2,0,0	monster	Napeo	20922,55
+amicitia2,0,0	monster	Galensis	20923,55
+amicitia2,0,0,0,0	boss_monster	The One	20928,1,7200000,600000,1

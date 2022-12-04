@@ -1,0 +1,606 @@
+//============Training System==============
+// By = [ROManiac]
+//=========================================
+
+prt_in,41,114,5	script	Mastery Trainer	110,{
+	if (readparam(bStr) > 129 && readparam(bAgi) > 129 && readparam(bVit) > 129 && readparam(bInt) > 129 && readparam(bDex) > 129 && readparam(bLuk) > 129) {
+		mes .n$;
+		mes "Sorry...";
+		mes "You have mastered all parameters, your training session has ended.";
+		end;
+	}
+	if(gettimetick(2) < training_cd) {
+		set .@tr_lim_time,training_cd; // 1 days
+		set .@tr_cur_time,gettimetick(2);
+		set .@tr_ent_t,(.@tr_lim_time - .@tr_cur_time);
+		set .@tr_h,(.@tr_ent_t / 3600);
+		set .@tr_m,(.@tr_ent_t - (.@tr_h * 3600)) / 60;
+		set .@tr_s,.@tr_ent_t - ((.@tr_h * 3600) + (.@tr_m * 60));
+		if(getgroupid() >= 1) {
+			mes .n$;
+			mes "Hi GM/Admin";
+			mes "I need 3 <ITEM> "+getitemname(6320)+" <INFO> 6320 </INFO></ITEM> to reset the cooldown.";		
+			next;
+			switch(select("Here are the items","Create materials for me please!")){
+			case 1:
+				if (countitem(6320) < 3) {
+					mes .n$;
+					mes "Sorry you don't have the items!";
+					close;
+				}
+				delitem 6320,3;
+				set training_cd,0;
+				dispbottom "Training System has been reseted.";
+				end;
+			case 2:
+				mes .n$;
+				mes "Okay GM/Admin";
+				mes "Here you go";
+				atcommand "@item 6320 3";
+				close;
+			}
+		}
+		mes .n$;
+		mes "You cannot access the training yet.";
+		mes "Cooldown: "+.@tr_h+" hours "+.@tr_m+ " minutes "+.@tr_s+" seconds left to do training again.";
+		close;
+	} else if (BaseJob == Job_Novice) {
+		mes .n$;
+		mes "The Training Program is not for novice!";
+		end;
+	}
+training:
+	mes .n$;
+	mes "Would you like to do training?";
+	next;
+	switch(select("- I need explanation:- Yes")) {
+	case 1:
+		mes .n$;
+		mes "Basically, This is training system helps you to grow your status point.";
+		next;
+		mes .n$;
+		mes "There are 6 stages of training that represent every status (STR, AGI, etc...) and you must finish all the stages without failure.";
+		next;
+		mes .n$;
+		mes "You can only do training once a day, and everytime you finish the training program you will gain experience and 10 status point.";
+		next;
+		mes .n$;
+		mes "If you fail the training, you will be kicked out from the training room and you have to wait your next schedule to do training again.";
+		next;
+		mes .n$;
+		mes "Do I make myself clear?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		goto training;
+		end;
+	case 2:
+		if(getmapusers(.map$) != 0) {
+			mes .n$;
+			mes "I'm sorry, but there is someone practicing already.";
+			mes "Please be patient.";
+			close;
+		}
+		mes .n$;
+		mes "So this is the training program.";
+		next;
+		mes "===== [Stage 1 STR] =====";
+		mes "Defeating a Mob which always recieves 1 damage, like a plant does.";
+		mes "===== [Stage 2 AGI] =====";
+		mes "Typing a random text as fast as you can in a calculated time.";
+		mes "===== [Stage 3 VIT] =====";
+		mes "Survival Mode. Skills are blocked, Item Usage is allowed";
+		mes "There will be "+.vit_mob_spawn+" different mobs to kill.";
+		mes "The Spawn Amount of these Mobs will depend on your Level.";
+		next;
+		mes "===== [Stage 4 INT] =====";
+		mes "Quiz about the world of Ragnarok.";
+		mes "===== [Stage 5 DEX] =====";
+		mes "Clicking an NPC which moves to random spots around you in a limited time.";
+		mes "===== [Stage 6 LUK] =====";
+		mes "Guessing numbers, every 10th level you need to have one number more correct than before.";
+		next;
+		mes .n$;
+		mes "Are you ready?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		warp .map$,50,53;
+		@train = 1;
+		set training_cd,gettimetick(2)+86400;
+	}
+OnInit:
+	set .n$,"["+strnpcinfo(0)+"]";
+	set .map$,"guild_vs1"; // Map for Practice
+	set .vit_mob_spawn,3;
+	end;
+}
+
+guild_vs1.gat,50,50,4	script	Trainer#Mastery	110,{
+	switch (@train) {
+	case 0:
+		mes .n$;
+		mes "I am sorry you are failed";
+		close2;
+		warp "prt_in",41,112;
+		end;
+	case 2:
+		//Setting countdown
+		set @time,5;
+		//Getting random array index
+		set @txt,rand(getarraysize(.agi_txt$));
+		mes .n$;
+		mes "Congratulation welcome to training stage 2, where you are going to train your agility";
+		next;
+		mes .n$;
+		mes "This will be done by typing an random text in "+@time+" seconds.";
+		mes "The text is case-sensitive, be sure to write it correctly.";
+		next;
+		mes .n$;
+		mes "Here is the text you need to type:";
+		mes "\""+.agi_txt$[@txt]+"\"";
+		mes "The countdown will start after you press \"next\".";
+		next;
+		set @a_t,0; // Resetting Counter
+		attachnpctimer;
+		initnpctimer;
+		input @i_txt$;
+		if(@i_txt$ != .agi_txt$[@txt]) {
+			mes .n$;
+			mes "The text you have input is wrong.";
+			stopnpctimer;
+			@train = 0;
+			end;
+		}
+		mes .n$;
+		mes "Congratulations!! Talk to me again to continue your training";
+		close2;
+		stopnpctimer;
+		@train = 3;
+		end;
+	OnTimer1000:
+		stopnpctimer;
+		set @a_t,@a_t + 1;
+		if(@a_t == @time) {
+			announce .n$+": You have failed to type the given text in "+@time+" seconds. The practice will end now.",bc_self;
+			set @a_t,0;
+			sleep2 2000;
+			warp "prt_in",41,112;
+			end;
+		}
+		initnpctimer;
+		end;
+	case 4:
+		mes .n$;
+		mes "Now you are in stage 4";
+		mes "This will be done via a quiz about Ragnarok Online.";
+		next;
+		mes .n$;
+		mes "You always have four answers available.";
+		mes "Let's get started, should we?";
+		mes "Good luck.";
+		set @int,0; // Reseting points
+		// Every 10th level you need one more question to answer
+		set @req,.int_pt;
+		
+		// Creating question catalog & Counter
+		set .@f,getarraysize(.int_quest$);				
+		while(.@c != .@f) {
+		
+			set .@x,rand(getarraysize(.int_quest$));
+			set .@rep,0;
+			
+			for ( set .@q,0; .@q < getarraysize(.@q_id); set .@q,.@q + 1) 
+				// Checking if the question has been put already
+				if(.@q_id[.@q] == .@x) {
+					set .@rep,1;
+					break;
+				}
+				
+			if(!.@rep) {
+				setarray .@q_id[getarraysize(.@q_id)],.@x;
+				set .@c,.@c + 1;
+			}
+			continue;
+		}
+		set .@q,0;
+		while(.@q != .@f) {
+			next;
+			set .@ans$,"";
+			// Creating Answers
+			for ( set .@a,1; .@a <= 4; set .@a,.@a + 1) 
+				set .@ans$,.@ans$ + .@a+". "+getd(".int_ans"+.@a+"$["+.@q_id[.@q]+"]")+ ( (.@a < 4)?":":"");
+			mes "Question #"+(.@q+1)+":";
+			mes "==================";
+			mes .int_quest$[.@q_id[.@q]];
+			// Selecting Answer
+			next;
+			set .@sel,select(.@ans$);	
+			// Correct Answer
+			if(.@sel == .int_right[.@q_id[.@q]]) {
+				set @int,@int + 1;
+				mes .n$;
+				mes "Correct Answer!!! +1 Point!!!";
+				mes "Current Points: "+@int;
+				mes "Required Points: "+@req;
+			}		
+			// Enough points to pass
+			if(@int >= @req) {
+				next;
+				mes .n$;
+				mes "Congratulations!! Talk to me again to continue your training";
+				close2;
+				@train = 5;
+				end;
+			}
+			set .@q,.@q + 1;
+		}
+		@train = 0;
+		end;
+	case 6:				
+		mes "Welcome to the last training!";
+		mes "This will be done by guessing numbers from 1-10,";
+		set .@no,2; // Numbers required
+		mes "you have "+.luk_que+" chances where "+ .@no+" have to be correct.";
+		mes "Good luck.";
+		while( set(.@c_t,.@c_t + 1) != .luk_gue) {
+			next;
+			set .@c_no,rand(1,10); // Randomize
+			input @g_no;
+			if(@g_no == .@c_no)	
+				set .@ct,.@ct + 1; // Guessed number is the same as the randomed one, increase this counter
+			mes .n$;
+			mes "Number #"+.@c_t+":";
+			mes "Chosen number: "+@g_no;
+			mes "Required number: "+.@c_no;
+			mes "Correct numbers so far: "+.@ct;
+			mes "Chances left: "+(.luk_gue-.@c_t);
+			if(.@ct >= .@no) {
+				next;
+				mes .n$;
+				mes "Congratulations!! You have passed this stage. Talk to me again after this";
+				close2;
+				@train = 7;
+				end;
+			}
+		}
+		if(.@c_t == .luk_gue && .@ct != .@no) {
+			next;
+			mes "I'm sorry, but you have failed this training.";
+			@train = 0;
+			close;
+		}
+		end;
+	case 1:
+	case 3:
+	case 5:
+		mes .n$;
+		mes "Welcome to stage "+@train+"!!";
+		mes "I am sure that you have been explained before about the program.";
+		next;
+		mes "Are you ready to join the training?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		warp .map$,.map_x,53;
+		doevent strnpcinfo(0)+"::OnTrain"+@train;
+		hideonnpc strnpcinfo(0);
+		end;
+	case 7:
+		mes .n$;
+		mes "Well done, you have finished all the training program.";
+		mes "Here is your reward and see you next time";
+		close2;
+		atcommand "@lvup 1";
+		if(Baselevel > 200) {
+			atcommand "@stpoint 20";
+			atcommand "@trpoint 5";
+		} else {
+			atcommand "@stpoint 10";
+		}
+		warp "prt_in",41,112;
+		end;
+	}
+
+OnTrain1:
+	mapannounce .map$,"This will be done by hitting on a single mob which always recieves 1 damage per attack, like a Plant would.",bc_map;
+	sleep2 5000;
+	mapannounce .map$,"I hope u are ready.",bc_map;
+	monster .map$,49,49,"STR Training",.str_mid,1,""+strnpcinfo(0)+"::OnStrMobDead";
+	end;
+OnStrMobDead:
+	if(mobcount(.map$,strnpcinfo(0)+"::OnStrMobDead") != 0) end;
+	dispbottom .n$+": You have completed the 1st stage of the training successfully.";
+	sleep2 5000;
+	@train = 2;
+	warp .map$,50,53;
+	hideoffnpc strnpcinfo(0);
+	end;
+OnTrain3:	
+	pcblockmove getcharid(3),1;
+	mapannounce .map$,"This will be done by staying alive for 2 minutes.",bc_map;
+	sleep2 3000;
+	mapannounce .map$,"Also you are not allowed to kill any mob while the training is running.",bc_map;
+	sleep2 3000;
+	mapannounce .map$,"If you kill the monster you will failed this training program.",bc_map;
+	sleep2 3000;
+	mapannounce .map$,"Okay it starts now",bc_map;
+	pcblockmove getcharid(3),0;
+	
+	// Setting Mob ID's depending on your Level
+	if(BaseLevel >= 1 && BaseLevel <= 25)
+		setarray .@mob[0],1023, // Orc Warrior
+						  1015;// Zombie
+	
+	else if(BaseLevel >= 26 && BaseLevel <= 50)
+		setarray .@mob[0],1028, // Soldier Skeleton
+						  1033, // Elder Willow
+						  1026, // Munak
+						  1071, // Pirate Skeleton
+						  1077, // Poison Spore
+						  1100, // Argos
+						  1169; // Skeleton Worker
+						  
+	else if(BaseLevel >= 51 && BaseLevel <= 75)
+		setarray .@mob[0],1036, // Ghoul
+						  1029, // Isis
+						  1041, // Mummy
+						  1037, // Siderwinder
+						  1061, // Nightmare
+						  1065, // Strouf
+						  1129, // Horong
+						  1140, // Marduk
+						  1069, // Swordfish
+						  1119, // Frilldora
+						  1152, // Orc Skeleton
+						  1153, // Orc Zombie
+						  1180, // Nine Tails
+						  1188, // Bongun
+						  1195; // Rideword
+
+	else if(BaseLevel >= 76 && BaseLevel <= 90)
+		setarray .@mob[0],1102, // Bathory
+						  1099, // Argiope
+						  1117, // Evil Druid
+						  1143, // Marionette
+						  1131, // Joker
+						  1154, // Pasana
+						  1155, // Petite Green
+						  1156, // Petite Blue
+						  1193, // Alarm
+						  1192, // Wraith
+						  1199, // Punk
+						  1209, // Cramp
+						  1256, // Pest
+						  1263, // Wind Ghost
+						  1269; // Clock
+
+	else if(BaseLevel >= 91 && BaseLevel <= 99)
+		setarray .@mob[0],1401, // Shinobi
+						  1622, // Teddy Bear
+						  1109, // Deviruchi
+						  1408, // Bloody Butterfly
+						  1692, // Breeze
+						  1302, // Dark Illusion
+						  1378, // Demon Pungus
+						  1319, // Freezer
+						  1318, // Heater
+						  1515, // Garm Baby
+						  1255, // Neraid
+						  1257; // Injustice
+						  
+	else if(BaseLevel >= 100 && BaseLevel <= 125)
+		setarray .@mob[0],1668, // Archdam
+						  1701, // Shelter
+						  1627, // Anopheles
+						  1736, // Aliot
+						  1735, // Alicel
+						  2016, // Aqua Elemental
+						  1367, // Blazer
+						  1268, // Bloody Knight
+						  1738, // Constant
+						  2015; // Dark Pinguicula
+		
+	else if(BaseLevel >= 126 && BaseLevel <= 150)
+		setarray .@mob[0],1870, // Necromancer
+						  1754, // Skeggiold
+						  1918, // Incarnation of Morroc (Randgris)
+						  1716, // Acidus Blue
+						  1713, // Acidus Yellow
+						  1769, // Agav
+						  1654, // Armeyer Dinze
+						  1753, // Frus
+						  2132, // Pom Spider
+						  1653; // Wickebine Tres
+						  
+	else 
+		setarray .@mob[0],2917, // Big Bell
+						  2133, // Angra Mantis
+						  1634, // Seyron Windsor
+						  1636, // Howard Alt-Eisen
+						  1637, // Margaretha Sorin
+						  2367, // Blue Lichtern
+						  2365, // Cenere
+						  2371; // Faithful Manager
+						  
+	set .@i,rand(getarraysize(.@mob));
+	monster .map$,49,49,getmonsterinfo(.@mob[.@i],0),.@mob[.@i],1,strnpcinfo(0)+"::OnVitMobKill";
+	sleep2 60000;
+	mapannounce .map$,"1 minutes has passed",bc_map;
+	sleep2 60000;
+	mapannounce .map$,"Congratulations!! you have completed the training program",bc_map;
+	removemapflag .map$,mf_noskill;
+	killmonsterall .map$;
+	hideoffnpc strnpcinfo(0);
+	@train = 4;
+	end;
+OnVitMobKill:
+	set @f,1;
+	doevent strnpcinfo(0)+"::OnVitEnd";
+	end;
+OnVitEnd:
+	if(@f) {
+		dispbottom .n$+": You have killed an monster, so you failed the training. See you next time.";
+	}
+	sleep2 1000;
+	@train = 0;
+	hideoffnpc strnpcinfo(0);
+	end;
+OnPCLogoutEvent:
+	if(@train == 0) end;
+	if(strcharinfo(3) == .map$) killmonsterall .map$;
+	removemapflag .map$,mf_noskill;
+	warp "prt_in",41,112;
+	end;
+OnTrain5:
+	hideoffnpc "5th Trainer";
+	doevent "5th Trainer::OnPrepare";
+	end;
+OnPCDieEvent:
+	if(strcharinfo(3) == .map$) {
+		if(	@train == 0) end;
+		deltimer strnpcinfo(0)+"::OnVitEnd";
+		killmonsterall .map$;
+		removemapflag .map$,mf_noskill;
+		warp "prt_in",41,112;
+		sleep2 1000;
+		if(HP == 0) atcommand "@alive";
+		hideoffnpc strnpcinfo(0);
+		set @train,0;
+		dispbottom .n$+": You have failed the training. See you next time.";
+		end;
+	}
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == .map$ && @train == 0) {
+		dispbottom .n$+": You are NOT allowed to be here, unless you're participating in an training.";
+		sleep2 2000;
+		warp "prt_in",41,112;
+	}	
+OnInit:
+	set .n$,"["+strnpcinfo(1)+"]";
+	set .map$,"guild_vs1"; // Map for Practice
+	set .map_x,50; // X Cooardinate for the warp
+	set .map_y,50; // Y Cooardinate for the warp
+	setarray .mob_x[0],34,65;
+	setarray .mob_y[0],32,57;
+	// =========== Mapflags ===========
+	setmapflag .map$,mf_noreturn;
+	setmapflag .map$,mf_nosave;
+	setmapflag .map$,mf_nowarpto;
+	setmapflag .map$,mf_nowarp;
+	setmapflag .map$,mf_nobranch;
+	setmapflag .map$,mf_noteleport;
+	setmapflag .map$,mf_loadevent;
+	setmapflag .map$,mf_nobaseexp;
+	setmapflag .map$,mf_nojobexp;
+	setmapflag .map$,mf_nomobloot;
+	setmapflag .map$,mf_nopenalty;
+	setmapflag .map$,mf_noskill;
+	setmapflag .map$,mf_monster_noteleport;
+	// ====== Str Mastery ======
+	// = Training Mob ID
+	set .str_mid,1078; // 1906 = WoE:SE Barricade 
+	// ====== Agi Mastery - Fast Typing ======
+	setarray .agi_txt$[0],"Train me","Moar Speed","Agi r0ckz","I wanna be faster";
+	set .agi_b_time,15; // x seconds to type the text
+	set .agi_x_red,10; // Every x lvl the duration to type will be reduced by 1
+	// ====== Vit Mastery - Survival ======
+	// - Mob Spawn Type at once: 
+	// 0 = One Mob
+	// 1 = Multiply Mobs
+	set .vit_mob_s,1; 
+	set .vit_cd,30; // x seconds base countdown
+	set .vit_inc,10; // x seconds the countdown increases by every 10th level
+	// Mob Spawn Quantity:
+	// Until [X] Mastery Level spawn x Mobs each
+	// [0] == Mob Amount for Mastery Training Level 1
+	setarray .vit_mob_am[0],3,3,3,3,3,5,5,5,5,5,8,8,8,8,8,10,10,10,10,10,13,13,13,13,13,17,17,17,17,17,17,20,20,20,20,20,23,23,23,23,23,26,26,26,26,26,28,28,28,28,28;
+	// Max x different Mobs spawned at once:
+	// Note: This value is not the Quantity of 1 Mob, see above for that
+	set .vit_mob_spawn,3;
+	// ====== Int Mastery - Quiz ======
+	set .int_max,200; // Max Questions in the array 
+	set .int_base,10; // Minium quantity of questions
+	set .int_pt,8; // Minimum points required to pass
+	setarray .int_quest$[0],"What is the name of this Server?","Which Card gives +100% HP, -50% DEF?","How many Stats exists?","In which year was Ragnarok released?","What is the main City of Ragnarok?","Which item allows you to resurrect when you die?","Which card gives you the penetration effect?","How many 1st Classes exist?","What is the name of the Angel MVP?","How many Fragments are used in the Thanatos Tower?","What is the cutest slime monster?","How many elements exist?","How many races exist?","How many Slots can Equipment have?","Where do you spawn for the first time?";
+	setarray .int_ans1$[0],"Server 1","Tao Gunka Card","6","1998","Gonryun","Jellopy","Thanatos Card","3","Baphomet","2","Myst","4","10","4","Prontera";
+	setarray .int_ans2$[0],"Server 2","Fabre Card","2","2002","Morroc","White Potion","Poring Card","10","Valkyrie Randgris","7","Poring","7","4","2","Heaven";
+	setarray .int_ans3$[0],"Server 3","Acidus Card","3","2010","Payon","Token of Siegfried","Tooth Pick","6","Baroness of Retribution","2","Aqua Elemenal","10","15","3","Jail";
+	setarray .int_ans4$[0],"Server 4","Mimic Card","9","2005","Prontera","Gold Coin","Detale Card","8","Ifrit","4","Gloom Under Night","9","12","0","Izlude Ship";
+	setarray .int_right[0],2,1,1,2,4,3,1,3,2,4,2,3,1,1,4;
+	// ====== Luk Mastery - Number guessing ======
+	set .luk_gue,20; // Chances to guess
+	// ========== Showing Practice Map Usage ===============
+}
+
+guild_vs1.gat,50,50,4	script	5th Trainer	110,{
+	if(.dex_t) {
+		if (@d_pt >= 9) end;
+		set @d_pt,@d_pt + 1;
+		npctalk strnpcinfo(0)+": "+@d_pt+" Points";
+		goto OnTimer1000;
+	}
+end;
+
+OnPrepare:
+	set .t_id,getcharid(3);
+	pcblockmove .t_id,1; // Blocking Movement of the Character
+	npctalk strnpcinfo(0)+": This will be done by clicking on the NPC, which moves to random spots around you.";
+	sleep2 3000;
+	npctalk strnpcinfo(0)+": You won't be able to move during the training.";
+	sleep2 3000;
+	npctalk strnpcinfo(0)+": The fifth Training will begin in 5 seconds! Prepare yourself!";
+	sleep2 5000;
+	npctalk strnpcinfo(0)+": LET'S GO!!!";
+	sleep2 1000;
+	set .npc,1; // Times the NPC has been moved
+	set .dex_t,1; // Training Activated
+	set @d_pt,0; // Reseting Points
+	initnpctimer;
+	end;
+OnTimer1000:
+	stopnpctimer;
+	if(.npc == .dex_npc) goto OnEnd;
+	movenpc strnpcinfo(0),rand(.x[0],.x[1]),rand(.y[0],.y[1]);
+	set .npc,.npc + 1; // Times the NPC has been moved
+	initnpctimer;
+	end;
+OnEnd:
+	if(playerattached() == 0)  // If no player is attached
+		if(isloggedin(.t_id) == 1)   // Check if the character is still online
+			attachrid(.t_id); 
+		else goto OnTrainDisable;
+	pcblockmove getcharid(3),0;
+	@train = 0;
+	sleep2 1000;
+	if(@d_pt >= getvariableofnpc(.dex_pt,"5th Trainer") ) {
+		npctalk strnpcinfo(0)+": Congratulations!! You have passed the 5th training.";
+		hideonnpc strnpcinfo(0);
+		hideoffnpc "Trainer#Mastery";
+		@train = 6;
+	} else {
+		dispbottom getvariableofnpc(.n$,"5th Trainer")+": You have failed this training.";
+		dispbottom getvariableofnpc(.n$,"5th Trainer")+": Your points: "+@d_pt+", required: "+getvariableofnpc(.dex_pt,"5th Trainer")+".";
+		hideonnpc strnpcinfo(0);
+		hideoffnpc "Trainer#Mastery";
+	}
+	end;
+OnTrainDisable:
+	hideonnpc strnpcinfo(0);
+	hideoffnpc "Trainer#Mastery";
+	set .dex_t,0;
+	@train = 0;
+	end;
+OnInit:
+	set .n$,"["+strnpcinfo(1)+"]";
+	set .map$,"guild_vs1"; // Map for Practice
+	// ====== Dex Mastery - Reaction ======
+	set .dex_time,15; // x seconds to click the npc
+	set .dex_npc,10; // x times the NPC have to be clicked
+	set .dex_pt,8; // x Points required to pass the test
+	// Randomly chosen coordinates in a specified area:
+	// [0] = left-down corner
+	// [1] = right-upper corner
+	setarray .x[0],44,55;
+	setarray .y[0],44,57;
+	hideonnpc strnpcinfo(0);
+end;
+}
+// ==============================

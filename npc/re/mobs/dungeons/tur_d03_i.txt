@@ -1,0 +1,14 @@
+//===== rAthena Script ======================================= 
+//= Illusion Frozen (kRO Servers)
+//===== By: ================================================== 
+//= [ROmaniac]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//===== Additional Comments: ================================= 
+// - MobSpawn. MVP Spawn [ROmaniac]
+//============================================================
+tur_d03_i,0,0	monster	Ominous Permeter	3800,15,5000,0
+tur_d03_i,0,0	monster	Ominous Freezer	3801,40,5000,0
+tur_d03_i,0,0	monster	Ominous Assulter	3799,35,5000,0
+tur_d03_i,0,0	monster	Ominous Solider	3802,40,5000,0
+tur_d03_i,0,0	monster	Ominous Heater	3803,10,5000,0

@@ -1,0 +1,331 @@
+function	script	F_Zonda_Bell_Edward	{
+	calldynamic("Zonda_Bell","Edward","-"+getcharid(0),4_service_30_m_01);
+	end;
+}
+
+function	script	F_Zonda_Bell_Elysee	{
+	calldynamic("Zonda_Bell","Elysee","-"+getcharid(0),4_service_30_f_01);
+	end;
+}
+
+prontera,0,0,0	script	Zonda_Bell	CLEAR_NPC,{
+	if(gettimetick(2) > both_cd)
+		both_effect = 0;
+	.@itemboost = getstatus(SC_ITEMBOOST2,5,getcharid(0));
+	.@jobboost = getstatus(SC_JEXPBOOST2,5,getcharid(0));
+	if(checkquest(14518,PLAYTIME) == 2) {
+		bubblegum_effect = 0;
+		erasequest 14518;
+	}
+	if(checkquest(14519,PLAYTIME) == 2) {
+		job_effect = 0;
+		erasequest 14519;
+	}
+	mes "["+strnpcinfo(1)+"]";
+	mes	"Master, did you call? How can I help you?";
+	next;
+	switch(select("Move to saved location:Limited service:Mysterious egg:Service purchase:Cancel")){
+	case 1:
+		warp "SavePoint",0,0;
+		removedynamic strnpcinfo(0);
+		end;
+	case 2:
+		mes "["+strnpcinfo(1)+"]";
+		mes "That's right. There is one thing I would like to point out before service.";
+		next;
+		mes "["+strnpcinfo(1)+"]";
+		mes "If you are currently using the 24-hour bubble gum or JOB battle manual service, you cannot get both the effects service before the usage time ends.";
+		next;
+		mes "["+strnpcinfo(1)+"]";
+		mes "Also, at 04:00 every day, the basic service is reset.";
+		mes "So, it would be better to receive both twice a day as much as possible.";
+		next;
+		mes "["+strnpcinfo(1)+"]";
+		mes "You can receive the bubble gum effect and the JOB battle manual effect. What kind of service would you like to receive?";
+		next;
+		switch(select("Bubble gum effect:JOB battle manual:I want to get both the effects at the same time:I don't need it.")){
+		case 1:
+			if (.@itemboost != 0) {
+				mes "["+strnpcinfo(1)+"]";
+				mes "Master! You are currently using the 24-hour bubble gum or JOB battle manual service, you cannot the effects service before the usage time ends.";
+				end;
+			}
+			bubblegum_effect += 1;
+			bubblegum_cooldown = 2 - bubblegum_effect;
+			switch(checkquest(14518,PLAYTIME)){
+			case 2:
+			case -1:
+				mes "["+strnpcinfo(1)+"]";
+				mes "Today's first bubblegum effect service.";
+				next;
+				specialeffect2 330,SELF;
+				mes "["+strnpcinfo(1)+"]";
+				mes "Today's bubble gum effect service has only "+bubblegum_cooldown+" left. Lots of good items";
+				mes "Hope you get it!";
+				close2;
+				sc_start SC_ITEMBOOST,1800000,200;
+				setquest 14518;
+				end;
+			case 0:
+				if(bubblegum_cooldown >= 0){
+					specialeffect2 330,SELF;
+					mes "["+strnpcinfo(1)+"]";
+					mes "Today's bubble gum effect service has only "+bubblegum_cooldown+" left. Lots of good items";
+					mes "Hope you get it!";
+					close2;
+					sc_start SC_ITEMBOOST,1800000,200;
+					end;
+				}
+				mes "["+strnpcinfo(1)+"]";
+				mes "Master, you are still in a cooldown state, wait until 4 AM.";
+				end;
+			}
+		case 2:	
+			if (.@jobboost != 0) {
+				mes "["+strnpcinfo(1)+"]";
+				mes "Master! You are currently using the 24-hour bubble gum or JOB battle manual service, you cannot the effects service before the usage time ends.";
+				end;
+			}
+			job_effect += 1;
+			job_cooldown = 2 - job_effect;
+			switch(checkquest(14519,PLAYTIME)){
+			case 2:
+				job_effect = 0;
+				job_effect += 1;
+				job_cooldown = 2 - job_effect;
+				erasequest 14519;
+			case -1:
+				mes "["+strnpcinfo(1)+"]";
+				mes "Today's first Job battle effect service.";
+				next;
+				specialeffect2 330,SELF;
+				mes "["+strnpcinfo(1)+"]";
+				mes "Today's Job battle effect service has has only "+job_cooldown+" left. Lots of good items";
+				mes "Hope you get it!";
+				close2;
+				sc_start SC_JEXPBOOST,1800000,200;
+				setquest 14519;
+				end;
+			case 0:
+				if(job_cooldown >= 0){
+					specialeffect2 330,SELF;
+					mes "["+strnpcinfo(1)+"]";
+					mes "Today's job battle effect service has only "+job_cooldown+" left. Lots of good items";
+					mes "Hope you get it!";
+					close2;
+					sc_start SC_JEXPBOOST,1800000,200;
+					end;
+				}
+				mes "["+strnpcinfo(1)+"]";
+				mes "Master, you are still in a cooldown state, wait until 4 AM.";
+				end;
+			}
+		case 3:
+			if(.@jobboost != 0 || .@itemboost != 0) {
+				mes "["+strnpcinfo(1)+"]";
+				mes "Master! You are currently using the 24-hour bubble gum or JOB battle manual service, you cannot get both the effects service before the usage time ends.";
+				end;
+			}
+			job_effect += 1;
+			both_effect += 1;
+			bubblegum_effect += 1;
+			both_cooldown = 2 - both_effect;
+			set both_cd,gettimetick(2)+86400;
+			if(both_effect == 1) {
+				mes "["+strnpcinfo(1)+"]";
+				mes "Today's first both effect service.";
+				next;
+			}
+			if(both_cooldown >= 0){
+				specialeffect2 330,SELF;
+				mes "["+strnpcinfo(1)+"]";
+				mes "Today's both effect service has only "+both_cooldown+" left. Lots of good items";
+				mes "Hope you get it!";
+				close2;
+				sc_start SC_ITEMBOOST,1800000,200;
+				sc_start SC_JEXPBOOST,1800000,200;
+				if(isbegin_quest(14518) == 1)
+					erasequest 14518;
+				if(isbegin_quest(14519) == 1)
+					erasequest 14519;
+				setquest 14518;
+				setquest 14519;
+				end;
+			}		
+			mes "["+strnpcinfo(1)+"]";
+			mes "Master, you only have 2 chances to get both effect.";
+			end;
+		case 4:
+			callsub S_End;
+		}
+	case 3:
+		mes "["+strnpcinfo(1)+"]";
+		mes "Do you come to pick up a fragment of a mysterious egg? Or would you like to turn egg fragments into eggs?";
+		next;
+		switch(select("I'm here to pick up a piece.:Turn egg fragments into eggs.:Cancel")){
+		case 1:
+			switch(checkquest(14530,PLAYTIME)){
+			case 2:
+				erasequest 14530;
+			case -1:
+				mes "["+strnpcinfo(1)+"]", "You've come to get a piece of the egg.";
+				close2;
+				getitem 25042, 1;
+				setquest 14530;
+				end;
+			case 0:
+			case 1:
+				mes "["+strnpcinfo(1)+"]";
+				mes "Master, you are still in a cooldown state, wait until 4 AM.";
+				end;
+			}
+		case 2:
+			if(countitem(25042) < 4){
+				mes "["+strnpcinfo(1)+"]";
+				mes "Master, you need 4 "+getitemname(25042)+", to turn them into an egg.";
+				end;
+			}
+			mes "["+strnpcinfo(1)+"]";
+			mes "You come to make pieces of egg fragments into eggs. Then, I'll take a moment to check the piece of the egg fragment that you have.";
+			next;
+			mes "["+strnpcinfo(1)+"]";
+			mes "Checking...";
+			next;
+			mes "["+strnpcinfo(1)+"]";
+			mes "Checking....";
+			next;
+			progressbar_npc "00FF00",5;
+			mes "["+strnpcinfo(1)+"]";
+			mes "Done here you go";
+			delitem 25042, 4;
+			getitem 22812, 1;
+			end;
+		case 3:
+			callsub S_End;
+			
+		}
+	case 4:
+		mes "["+strnpcinfo(1)+"]", "What service would you like to purchase?";
+		next;
+		switch(select("1 Day Service Purchase.:Reset Service Purchase.:Cancel.")){
+		case 1:
+			mes "["+strnpcinfo(1)+"]";
+			mes "That's right. You can purchase the bubblegum effect service that lasts for 24 hours and the JOB battle manual effect service that also lasts 24 hours with Nyandarae fruit.";
+			next;
+			mes "["+strnpcinfo(1)+"]";
+			mes "The price of bubblegum effect service is 10 "+getitemname(6909)+", and the price of JOB battle manual effect service is 10 "+getitemname(6909)+".";
+			next;
+			mes "["+strnpcinfo(1)+"]", "Both services take effect immediately upon purchase, only one service is provided and time is consumed even when not logged in, so please proceed with caution.";
+			next;
+			mes "["+strnpcinfo(1)+"]", "What service would you like to purchase?";
+			next;
+			switch(select("Bubble Gum Effect.:JOB Battle Manual Effect.:I don't need any.")){
+			case 1:
+				set .@eff$,"Bubble Gum";
+			case 2:
+				if (.@eff$ == "")
+					set .@eff$,"JOB Battle Manual";
+				if(countitem(6909) < 10) {
+					mes "["+strnpcinfo(1)+"]";
+					mes "I'm sorry but you are lack of requirements.";
+					end;
+				}
+				mes "["+strnpcinfo(1)+"]";
+				mes "Are you sure that you";
+				mes "want to proceed with";
+				mes "my ^FF0000"+.@eff$+" effect^000000 service?";
+				next;
+				if(select("Yes:Cancel") == 1)
+					break;
+			case 3:
+				callsub S_End;
+			}
+			mes "["+strnpcinfo(1)+"]";
+			mes "Thank you for using";
+			mes "1 Day Service. Oh, and best";
+			mes "of luck to you on your";
+			mes "travels, adventurer.";
+			delitem 6909,10;
+			if (.@eff$ == "Bubble Gum")
+				sc_start SC_ITEMBOOST2,86400000,100;
+			else 
+				sc_start SC_JEXPBOOST2,86400000,100;
+			end;
+		case 2:
+			mes "["+strnpcinfo(1)+"]";
+			mes "That's right. This is a service that allows you to initialize the skill tree or initialize the status with a small amount of Nyandarae fruit.";
+			next;
+			mes "["+strnpcinfo(1)+"]";
+			mes "The price of the skill tree reset service is 46 "+getitemname(6909)+", and the status reset service price is 106 "+getitemname(6909);
+			next;
+			mes "["+strnpcinfo(1)+"]";
+			mes "Both services are initialized immediately upon purchase, and only one service is provided, so please proceed carefully.";
+			next;
+			mes "["+strnpcinfo(1)+"]";
+			mes "The weight of your inventory or equipped belongings must be 0, and all carts, falcons, wargs, and various mounts must be removed and the cart must be light.";
+			next;
+			mes "["+strnpcinfo(1)+"]", "What service would you like to purchase?";
+			next;
+			switch(select("Skill Tree Reset.:Status Reset.:I do not need.")){
+			case 1:
+				if(countitem(6909) < 46) {
+					mes "["+strnpcinfo(1)+"]";
+					mes "I'm sorry but you are lack of requirements.";
+					end;
+				}
+				set .@str$,"Skill";
+			case 2:
+				if (.@str$ == "") {
+					if(countitem(6909) < 106) {
+						mes "["+strnpcinfo(1)+"]";
+						mes "I'm sorry but you are lack of requirements.";
+						end;
+					}
+					set .@str$,"Stat";
+				}
+				mes "["+strnpcinfo(1)+"]";
+				mes "Are you sure that you";
+				mes "want to proceed with";
+				mes "my ^FF0000"+.@str$+" Reset^000000 service?";
+				next;
+				if(select("Yes:Cancel") == 1)
+					break;
+			case 3:
+				callsub S_End;
+			}		
+			if (Weight != 0 || checkcart() || checkwug() || checkfalcon() || checkriding()) {
+				mes "["+strnpcinfo(1)+"]";
+				mes "Oh Master! Please remember that";
+				mes "the weight of your inventory or equipped belongings must be 0, and all carts, falcons, wargs, and various mounts must be removed";
+				mes "before you proceed with the "+.@str$+" Reset service.";
+				mes "Thanks for cooperating~";
+				end;
+			}	
+			mes "["+strnpcinfo(1)+"]";
+			mes "Thank you for using";
+			mes "my "+.@str$+" Redistribution";
+			mes "services. Oh, and best";
+			mes "of luck to you on your";
+			mes "travels, adventurer.";
+			if (.@str$ == "Stat") {
+				delitem 6909,106;
+				resetstatus;
+			} else {
+				delitem 6909,46;
+				resetskill;
+			}
+			end;
+		case 3:
+			callsub S_End;
+		}
+	case 5:
+		callsub S_End;
+	}
+	
+S_End:
+	mes "["+strnpcinfo(1)+"]";
+	mes "Okay. Anytime you need me";
+	mes "Shake the bell. run right away";
+	mes "I'll come.";
+	end;
+}

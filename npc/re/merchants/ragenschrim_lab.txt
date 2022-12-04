@@ -1,0 +1,367 @@
+//===== By: =================================================================
+//= [ROManiac]
+//===== Current Version: ====================================================
+//= 1.0
+//===== Description: ========================================================
+//= Initial release Reform and Enchant UI demo in Regenschirm Lab (KRO).
+//===========================================================================
+
+rgsr_in,128,174,3	script	Head of Institute	1_m_librarymaster,{
+	mes "[Director of the Institute]";
+	mes "...Welcome","You may have heard the explanation when you arrived, but to briefly introduce this place, although we still have a long way to go, we are reasearching ho to convert as many weapons, armor, and accessories as possible into something of a different dimension.";
+	next;
+	mes "[Director of the Institute]";
+	mes "It is essential to set the refine level of the modification equipment, but more it can be regarded as a labor for great power.";
+	next;
+	mes "[Director of the Institute]";
+	mes "Research is on going, so when something suddenly it is not known whether it will be completed and provided to adventurers.","It will be something as soos as the data is collected";
+	next;
+	mes "[Director of the Institute]";
+	mes "Come to thing of it, this time, team Richt is the focus.","If you are interested, check out what the study is about.";
+	next;
+	mes "[Director of the Institute]";
+	mes "Everybidy likes quite, so don't talk loud.","Please do not bring any food or beverages here.";
+	end;
+}
+
+rgsr_in,129,159,3	script	Exit Guard#0	4_m_lgtguard,{
+	mes "[Exit Guard]";
+	mes "Are you done with your business?","Are you sure you want to ^FF0000exit^000000?";
+	next;
+	if(select("Go Back:Work is left")== 2){
+		mes "[Exit Guard]";
+		mes "When you are done with your business let me know.";
+		end;
+	}
+	mes "[Exit Guard]";
+	mes "We will guide you on the way back.";
+	close2;
+	if(warp_point == 1)
+		warp "itemmall",14,48;
+	else if (warp_point == 2)
+		warp "lighthalzen",101,156;
+	end;
+}
+
+rgsr_in,123,159,3	duplicate(Exit Guard#0)	Exit Guard#1	4_m_lgtguard	
+
+rgsr_in,109,167,3	script	Assistant#1	4_m_seanmccurdy,{
+	npctalk	"Assistant: ...right.";
+	sleep 100;
+	npctalk "Assistant: Adventure-sama, please walk around a litte. The building is old and the floor is creaking.","Assistant#2";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Atnard";
+	end;
+}
+
+rgsr_in,106,167,4	script	Assistant#2	4_m_seanmccurdy,{
+	npctalk	"Assistant: Someday, when the achievements come, can we move it to a larger laboratory?";
+	sleep 100;
+	npctalk "Assistant: .. Sure.","Assistant#1";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Atnard";
+	end;
+}
+
+rgsr_in,144,170,4	script	Assistant#3	4_m_seanmccurdy,{
+	npctalk	"Assistant: Hey. This data is really, it's cool. It's good that you followed the manager.";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Richt";
+	end;
+}
+
+rgsr_in,146,169,3	script	Assistant#4	4_m_seanmccurdy,{
+	npctalk	"Assistant: Be Quite!";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Richt";
+	end;
+}
+
+rgsr_in,146,167,3	script	Assistant#5	4_m_seanmccurdy,{
+	npctalk	"Assistant: Our manager is a really great person. I'm still young...";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Richt";
+	end;
+}
+
+rgsr_in,143,180,4	script	Assistant#6	4_m_seanmccurdy,{
+	npctalk	"Assistant: Isn't it a little to noisy outside?";
+	sleep 100;
+	npctalk	"Assistant: I wish we could move to a place with a better soundproofing.","Assistant#7";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Atnard";
+	end;
+}
+
+rgsr_in,146,178,3	script	Assistant#7	4_m_seanmccurdy,{
+	npctalk	"Assistant: If you have any questions, ask our manager.";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Atnard";
+	end;
+}
+
+rgsr_in,137,187,3	script	Assistant#8	4_F_HUWOMAN,{
+	npctalk	"Assistant: No, it's not. That's not it.";
+	sleep 500;
+	npctalk	"Assistant: Today is a big day. Didn't you see Dr. Jo Soo-hee?","Assistant#9";
+	sleep 100;
+	npctalk	"Researcher: ?","Ore Researcher";
+	end;
+}
+
+rgsr_in,135,186,7	script	Assistant#9	4_m_alche_c,{
+	npctalk	"Assistant: Don't touch the tide, because it's dangerous.";
+	sleep 500;
+	npctalk	"Assistant: ....Shoot.","Assistant#8";
+	sleep 100;
+	npctalk	"Assistant: Don't worry it's nothing.","Assistant#10";
+	end;
+}
+
+rgsr_in,135,189,4	script	Assistant#10	4_m_seanmccurdy,{
+	npctalk	"Assistant: ...Salary... Pay...? Then unnecessary questions...";
+	sleep 500;
+	npctalk	"Assistant: Of Course.","Assistant#9";
+	end;
+}
+rgsr_in,131,187,4	script	Ore Researcher	4_m_science,{
+	mes "[Grid]";
+	mes "Welcome.","Since the budget is always insufficient in the lab, I have prepare even these things.","Me and my assistants come out with the raw stones used in this lab.";
+	mes "I will refine these and get some fee.";
+	next;
+	switch(select("Check the exchange list:What are you exchanging?:Quit")){
+	case 1:
+		mes "[Grid]";
+		mes "Let's see...","Now I have these things.";
+		next;
+		switch(select("Gemstone Refining:Gemstone Exchange:Buy Extra Gemstone:Quit")){
+		case 1:
+			mes "[Grid]";
+			mes "Gemstone Refining";
+			close2;
+			callshop "Gemstone";
+			end;
+		case 2:
+			mes "[Grid]";
+			mes "Gemstone Exchange";
+			close2;
+			callshop "OreExcha";
+			end;
+		case 3:
+			mes "[Grid]";
+			mes "Running out of ore? Then I have a special collection.","Do you have any shadowdecon?";
+			close2;
+			callshop "ExtraOre";
+			end;
+		case 4:
+			mes "[Grid]";
+			mes "Come again if you need anything.";
+			end;
+		}
+	case 2:
+		mes "[Grid]";
+		mes "In our research, as you can see, the materials are very rare. We do have some adventurers hired by our team, but they're small compared to the amount we need.";
+		mes "So, when adventurers bring their own materials, we decided to provide research value that is common to them.";
+		next;
+		mes "[Grid]";
+		mes "We're lucky, we do research, and the adventurers who visit us provide us with the materials.","If you want to modify it, you only need to bring the suggested materials.";
+		next;
+		mes "[Grid]";
+		mes "You are an adventurer, so you know what I mean right?";
+		end;
+	case 3:
+		mes "[Grid]";
+		mes "Come again if you need anything.";
+		end;
+	}
+}
+
+rgsr_in,136,171,4	script	Equipment Researcher	4_m_science,{
+	mes "[Stack]";
+	mes "Would you like to see the performance of Tim Richt?","We are the pride of this lab.";
+	mes "What would you like to revamp?","Remodelable Item is on the list.";
+	next;
+	switch(select("Non-Standard Armor:Non-Standard Weapon:Quit")){
+	case 1:
+		mes "[Stack]";
+		mes "For ^0000FFnon-standard armor^000000, the remodeling method is low, intermediate, and advanced.";
+		mes "Unsmelted armor can only be converted to advanced level.";
+		next;
+		switch(select("Low Modification:Intermediate Modification:Advanced Modification:Quit")){
+		case 1:
+			mes "[Stack]";
+			mes "Armor Low Modification? Allright.","^FF0000Refinement is reduced by 5^000000, but use fewer materials.";
+			mes "And in order to remodel the equipment, refinement level must be +9 or higher.";
+			close2;
+			item_reform(100694);
+			end;
+		case 2:
+			mes "[Stack]";
+			mes "Armor Intermediate Modification? Allright.","^FF0000Refinement is reduced by 1^000000, but use more materials.";
+			mes "And in order to remodel the equipment, refinement level must be +9 or higher.";
+			close2;
+			item_reform(100695);
+			end;
+		case 3:
+			mes "[Stack]";
+			mes "Armor Advanced Modificatio? Allright.","^FF0000Refinement level is increased^000000, and use more materials.";
+			mes "And the modification equipment must be +9 or higher refinement required.";
+			mes "Even equipment the cannot be smelted can be remodel with this method";
+			mes "However, the ^FF0000refine level does not increased^000000";
+			close2;
+			item_reform(100786);
+			end;
+		case 4:
+			mes "[Stack]";
+			mes "You are going already?","You should check out more of our outstanding achievements!";
+			end;
+		}
+	case 2:
+		mes "[Stack]";
+		mes "For ^0000FFnon-standard weapon^000000, the remodeling method is low, intermediate, and advanced.";
+		mes "Unsmelted armor can only be converted to advanced level.";
+		next;
+		switch(select("Low Modification:Intermediate Modification:Advanced Modification:Quit")){
+		case 1:
+			mes "[Stack]";
+			mes "Weapon Low Modification? Allright.","^FF0000Refinement is reduced by 5^000000, but use fewer materials.";
+			mes "And in order to remodel the equipment, refinement level must be +9 or higher.";
+			close2;
+			item_reform(100746);
+			end;
+		case 2:
+			mes "[Stack]";
+			mes "Weapon Intermediate Modification? Allright.","^FF0000Refinement is reduced by 1^000000, but use more materials.";
+			mes "And in order to remodel the equipment, refinement level must be +9 or higher.";
+			close2;
+			item_reform(100747);
+			end;
+		case 3:
+			mes "[Stack]";
+			mes "Weapon Advanced Modification? Allright.","^FF0000Refinement level is increased^000000, and use more materials.";
+			mes "And the modification equipment must be +9 or higher refinement required.";
+			close2;
+			item_reform(100748);
+			end;
+		case 4:
+			mes "[Stack]";
+			mes "You are going already?","You should check out more of our outstanding achievements!";
+			end;
+		}
+	case 3:
+		mes "[Stack]";
+		mes "You are going already?","You should check out more of our outstanding achievements!";
+		end;
+	}
+OnInit:
+	setunittitle getnpcid(0),"Team Richt";
+	end;
+}
+
+rgsr_in,115,180,4	script	Armor Researcher	4_m_science,{
+	npctalk	"Huh";
+	mes "[Logarithm]";
+	mes "Oh, at least you came all the way here, but our team's research isn't done yet.","Not enough experiments...";
+	mes "Next time I'll improve it a bit and get the captain's permission, then let's proceed.","Okay?";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Fressa";
+	end;
+}
+
+rgsr_in,137,178,3	script	Acc Researcher	4_m_science,{
+	mes "[Champ]";
+	mes "Finally he called the adventurer and confirmed the research result. Is it you?";
+	mes "Unfortunately, our team is still not good enough to send us out.";
+	next;
+	mes "[Champ]";
+	mes "Not yet, yet.","I'll see you next time when the captain's permission is granted.";
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Sertyr";
+	end;
+}
+
+rgsr_in,115,169,4	script	Weapon Researcher	4_m_science,{
+	mes "[Phase]";
+	mes "Let's go, Adventure-sama";
+	mes "I like people who know what they want.";
+	mes "Read the List of modifiable items.","Other than that, let me answer what you want.";
+	next;
+	switch(select("Thanos Weapon:OS Weapon:Quit")){
+	case 1:
+		mes "[Phase]";
+		mes "For ^0000FFthanos weapon^000000, the remodeling method is low, and intermediate.";
+		next;
+		switch(select("Low Modification:Intermediate Modification:Quit")){
+		case 1:
+			mes "[Phase]";
+			mes "Thanos Low Modification? Allright.","^FF0000Refinement is reduced by 5^000000, but use fewer materials.";
+			mes "And in order to remodel the equipment, refinement level must be +9 or higher.";
+			close2;
+			item_reform(100591);
+			end;
+		case 2:
+			mes "[Phase]";
+			mes "Thanos Intermediate Modification? Allright.","^FF0000Refinement is reduced by 1^000000, but use more materials.";
+			mes "And in order to remodel the equipment, refinement level must be +9 or higher.";
+			close2;
+			item_reform(100592);
+			end;
+		case 3:
+			mes "[Phase]";
+			mes "Come back when you need remodeling.","You are always welcomed to help with our reasearch.";
+			end;
+		}
+	case 2:
+		mes "[Phase]";
+		mes "It's ^0000FFOS weapon^000000, the remodeling method is require at least +7 or higher, It doesn't decrease refine level.";
+		mes "Do you bring any?";
+		next;
+		if(select("Remodel:Quit") == 2){
+			mes "[Phase]";
+			mes "Come back when you need remodeling.","You are always welcomed to help with our reasearch.";
+			end;
+		}
+		mes "[Phase]";
+		mes "Let's see what we got here.";
+		close2;
+		item_reform(101355);
+		end;
+	case 3:
+		mes "[Phase]";
+		mes "Come back when you need remodeling.","You are always welcomed to help with our reasearch.";
+		end;
+	}
+OnInit:
+	setunittitle getnpcid(0),"Team Artnard";
+	end;
+}
+
+rgsr_in,112,167,7	script	Enchant Researcher	4_m_science,{
+	mes "[Torus]";
+	mes "Yes? Is there anything to see with our team other than the manager?";
+	mes "Then, my name is Torus, in charge with the enchantment.";
+	mes "Shall we see what you brought?";
+	next;
+	if(select("Enchant Modified OS Weapon:Quit") == 2){
+		mes "[Torus]";
+		mes "Come back anytime you want.","We need result.";
+		end;
+	}
+	mes "[Torus]";
+	mes "Where are you...";
+	close2;
+	item_enchant(33);
+	end;
+OnInit:
+	setunittitle getnpcid(0),"Team Artnard";
+	end;
+}

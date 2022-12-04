@@ -1,0 +1,13 @@
+//===== rAthena Script =======================================
+//= Illusion of Abyss Warp Script
+//===== By: ==================================================
+//= [ROManiac]
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Abyss of Labyrinth
+//============================================================
+tur_d03_i,218,70,0	warp	3_to_4#abyssturtleisland	2,2,tur_d04_i,100,190
+tur_d04_i,100,196,0	warp	4_to_3#abyssturtleisland	2,2,tur_d03_i,218,81

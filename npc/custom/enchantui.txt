@@ -1,0 +1,58 @@
+geffen,128,62,4	script	Magic Mike	4_m_youngknight,2,2,{
+	switch(select("Enchant1","Enchant2","Enchant3","Enchant4","Enchant5","Enchant6","Enchant7","Enchant8","Enchant9","Enchant10","Enchant11","Enchant12","Enchant13","Enchant14","Enchant15","Enchant16","Enchant17")){
+	case 1:
+		item_enchant(1);
+		end;
+	case 2:
+		item_enchant(2);
+		end;
+	case 3:
+		item_enchant(3);
+		end;
+	case 4:
+		item_enchant(4);
+		end;
+	case 5:
+		item_enchant(5);
+		end;
+	case 6:
+		item_enchant(6);
+		end;
+	case 7:
+		item_enchant(7);
+		end;
+	case 8:
+		item_enchant(8);
+		end;
+	case 9:
+		item_enchant(9);
+		end;
+	case 10:
+		item_enchant(10);
+		end;
+	case 11:
+		item_enchant(11);
+		end;
+	case 12:
+		item_enchant(12);
+		end;
+	case 13:
+		item_enchant(13);
+		end;
+	case 14:
+		item_enchant(14);
+		end;
+	case 15:
+		item_enchant(15);
+		end;
+	case 16:
+		item_enchant(32);
+		end;
+	case 17:
+		item_enchant(33);
+		end;
+	}
+OnTouch:
+	cloakonnpc strnpcinfo(0),getcharid(0);
+	end;
+}

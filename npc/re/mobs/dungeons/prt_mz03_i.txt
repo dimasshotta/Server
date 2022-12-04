@@ -1,0 +1,61 @@
+//===== rAthena Script ======================================= 
+//= Illusion Labyrinth (kRO Servers)
+//===== By: ================================================== 
+//= [ROmaniac]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//============================================================ 
+// prt_mz03_i - Illusion Labyrinth
+//============================================================ 
+
+prt_mz03_i,0,0	monster	Chaotic Andrea	20521,1,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Anes	20522,1,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Silvano	20523,1,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Cecilia	20524,1,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Baphomet Jr.	20525,30,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Side Winder	20526,16,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Hunter Fly	20527,21,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Mantis	20528,20,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Ghostring	20529,2,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Killer Mantis	20530,10,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Poporing	20531,33,5000,0,"prt_mz03_i::OnSummonMVP"
+prt_mz03_i,0,0	monster	Chaotic Stem Worm	20532,16,5000,0,"prt_mz03_i::OnSummonMVP"
+
+-	script	prt_mz03_i	-1,{
+	end;
+OnSummonMVP:
+	if(.mvp_labyrinth == 1)
+		end;
+	if(.mvp_labyrinth == 0){
+		$Ill_labyrinth_mvp += 1;
+		if($Ill_labyrinth_mvp == 1500){ 
+			monster "prt_mz03_i",0,0,"Chaotic Baphomet",20520,1,"prt_mz03_i::OnMVPDead";
+			mapannounce "prt_mz03_i","Chaotic Baphomet : Roooaarrrr!!! You just wake me up from my eternal slumber.",bc_map;
+			sleep 3000;
+			mapannounce "prt_mz03_i","Chaotic Baphomet has appeared!",bc_map;
+			$Ill_labyrinth_mvp = 0;
+			.mvp_labyrinth = 1;
+		}
+	}
+	end;
+	
+OnMVPDead:
+	.mvp_labyrinth = 0;
+	end;
+	
+OnInit:
+	addmonsterdrop 20520,25271,8000;
+	addmonsterdrop 20521,25271,8000;
+	addmonsterdrop 20522,25271,8000;
+	addmonsterdrop 20523,25271,8000;
+	addmonsterdrop 20524,25271,8000;
+	addmonsterdrop 20525,25271,8000;
+	addmonsterdrop 20526,25271,8000;
+	addmonsterdrop 20527,25271,8000;
+	addmonsterdrop 20528,25271,8000;
+	addmonsterdrop 20529,25271,8000;
+	addmonsterdrop 20530,25271,8000;
+	addmonsterdrop 20531,25271,8000;
+	addmonsterdrop 20532,25271,8000;
+	end;
+}

@@ -1,0 +1,168 @@
+//===== rAthena Script =======================================
+//= Illusion of Luanda Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Initial release [ROManiac]
+//============================================================
+
+-	script	luandamob#ctrl	-1,{
+	end;
+OnInit: 
+	$map$ = "com_d02_i";
+	.mob = 35;
+	$mob = 1;
+	$megalith = 1;
+	$wootan = 0;
+	$megalithmvp = 0;
+	$wootanmvp = 0;	
+	donpcevent strnpcinfo(0)+"::OnMob";
+	addmonsterdrop 20270,25271,8000;
+	addmonsterdrop 20271,25271,8000;
+	addmonsterdrop 20272,25271,8000;
+	addmonsterdrop 20273,25271,8000;
+	addmonsterdrop 20274,25271,8000;
+	addmonsterdrop 20275,25271,8000;
+	addmonsterdrop 20276,25271,8000;
+	addmonsterdrop 20277,25271,8000;
+	end;
+OnMob:
+	freeloop(true);
+	do{
+		if(mobcount($map$,strnpcinfo(0)+"::OnMegalithKilled") > 100)
+			end;
+		if(mobcount($map$,strnpcinfo(0)+"::OnWootanKilled") > 100)
+			end;
+		donpcevent strnpcinfo(0)+"::OnMegaWootan";
+		sleep 300000;
+	}while($mob == 1);
+	freeloop(false);
+	end;
+OnMegaWootan:
+	if($megalith == 1) {
+		monster $map$,0,0,"--ja--",20270,.mob,strnpcinfo(0)+"::OnMegalithKilled";
+		for (.@i = 0; .@i < .mob; .@i++) {
+			.GID1 = $@mobid[.@i];
+			getunitdata .GID1,.@mob;
+			setunitdata .GID1,UMOB_GROUP_ID,5;
+		}
+		monster $map$,0,0,"--ja--",20271,.mob,strnpcinfo(0)+"::OnMegalithKilled";
+		for (.@i = 0; .@i < .mob; .@i++) {
+			.GID2 = $@mobid[.@i];
+			getunitdata .GID2,.@mob;
+			setunitdata .GID2,UMOB_GROUP_ID,5;
+		}
+		monster $map$,0,0,"--ja--",20272,.mob,strnpcinfo(0)+"::OnMegalithKilled";
+		for (.@i = 0; .@i < .mob; .@i++) {
+			.GID3 = $@mobid[.@i];
+			getunitdata .GID3,.@mob;
+			setunitdata .GID3,UMOB_GROUP_ID,5;
+		}
+		end;
+	}
+	if($wootan == 1) {
+		monster $map$,0,0,"--ja--",20274,.mob,strnpcinfo(0)+"::OnWootanKilled";
+		for (.@i = 0; .@i < .mob; .@i++) {
+			.GID4 = $@mobid[.@i];
+			getunitdata .GID4,.@mob1;
+			setunitdata .GID4,UMOB_GROUP_ID,4;
+		}
+		monster $map$,0,0,"--ja--",20275,.mob,strnpcinfo(0)+"::OnWootanKilled";
+		for (.@i = 0; .@i < .mob; .@i++) {
+			.GID5 = $@mobid[.@i];
+			getunitdata .GID5,.@mob1;
+			setunitdata .GID5,UMOB_GROUP_ID,4;
+		}
+		monster $map$,0,0,"--ja--",20276,.mob,strnpcinfo(0)+"::OnWootanKilled";
+		for (.@i = 0; .@i < .mob; .@i++) {
+			.GID6 = $@mobid[.@i];
+			getunitdata .GID6,.@mob1;
+			setunitdata .GID6,UMOB_GROUP_ID,4;
+		}
+		end;
+	}
+	
+OnMegalithKilled:
+	if(.mvp_megalith == 1){
+		end;
+	}
+	if(.mvp_megalith == 0){
+		$megalithmvp++;
+		if($megalithmvp == 1500) {
+			mapannounce $map$,"Ancient Tao Gun Ka has Appeared! Eliminate it soon!",bc_map;
+			monster $map$,0,0,"--ja--",20273,1,strnpcinfo(0)+"::OnMeghalithover";
+			.mvp_megalith = 1;
+			end;
+		}
+	}
+	end;
+	
+OnWootanKilled:
+	if(.mvp_wootan == 1){
+		end;
+	}
+	if(.mvp_wootan == 0){
+		$wootanmvp++;
+		if($wootanmvp == 1500) {
+			mapannounce $map$,"Ancient Wootan Defender has Appeared! Eliminate it soon!",bc_map;
+			monster $map$,0,0,"--ja--",20277,1,strnpcinfo(0)+"::OnWootanover";
+			.mvp_wootan = 1;
+			end;
+		}
+	}
+	end;
+OnMeghalithover:
+	killmonsterall $map$;
+	$megalith = 0;
+	$wootan = 1;
+	.mvp_megalith = 0;
+	$megalithmvp = 0;
+	monster $map$,0,0,"--ja--",20274,.mob,strnpcinfo(0)+"::OnWootanKilled";
+	for (.@i = 0; .@i < .mob; .@i++) {
+		.GID10 = $@mobid[.@i];
+		getunitdata .GID10,.@mob2;
+		setunitdata .GID10,UMOB_GROUP_ID,4;
+	}
+	monster $map$,0,0,"--ja--",20275,.mob,strnpcinfo(0)+"::OnWootanKilled";
+	for (.@i = 0; .@i < .mob; .@i++) {
+		.GID11 = $@mobid[.@i];
+		getunitdata .GID11,.@mob2;
+		setunitdata .GID11,UMOB_GROUP_ID,4;
+	}
+	monster $map$,0,0,"--ja--",20276,.mob,strnpcinfo(0)+"::OnWootanKilled";
+	for (.@i = 0; .@i < .mob; .@i++) {
+		.GID12 = $@mobid[.@i];
+		getunitdata .GID12,.@mob2;
+		setunitdata .GID12,UMOB_GROUP_ID,4;
+	}
+	end;
+OnWootanover:
+	killmonsterall $map$;
+	$megalith = 1;
+	$wootan = 0;
+	.mvp_wootan = 0;
+	$wootanmvp = 0;		
+	monster $map$,0,0,"--ja--",20270,.mob,strnpcinfo(0)+"::OnMegalithKilled";
+	for (.@i = 0; .@i < .mob; .@i++) {
+		.GID7 = $@mobid[.@i];
+		getunitdata .GID7,.@mob3;
+		setunitdata .GID7,UMOB_GROUP_ID,5;
+	}
+	monster $map$,0,0,"--ja--",20271,.mob,strnpcinfo(0)+"::OnMegalithKilled";
+	for (.@i = 0; .@i < .mob; .@i++) {
+		.GID8 = $@mobid[.@i];
+		getunitdata .GID8,.@mob3;
+		setunitdata .GID8,UMOB_GROUP_ID,5;
+	}
+	monster $map$,0,0,"--ja--",20272,.mob,strnpcinfo(0)+"::OnMegalithKilled";
+	for (.@i = 0; .@i < .mob; .@i++) {
+		.GID9 = $@mobid[.@i];
+		getunitdata .GID9,.@mob3;
+		setunitdata .GID9,UMOB_GROUP_ID,5;
+	}
+	end;
+}

@@ -1,0 +1,684 @@
+//===== rAthena Script ======================================= 
+//= Illusion Labyrinth (kRO Servers)
+//===== By: ================================================== 
+//= [ROmaniac]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//===== Additional Comments: ================================= 
+// - Walkthrough Conversion [ROmaniac]
+//============================================================
+
+// warp point: prt_fild01,136,364
+
+// Signboard
+prt_fild01,139,369,5	script	Signboard#illusionlabyrinth	837,5,5,{
+	mes "This labyrinth are Baphomet and Chaotic Baphomet lairs. You can get lost easily in this labyrinth.";
+	close;
+OnTouch:
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == strnpcinfo(4)){
+		if(isbegin_quest(12489) > 0)
+			cloakoffnpc "Esmeralda#illusionlabyrinth_2",getcharid(0);
+	}
+	end;
+}
+
+prt_maze01,97,26,5	script	Irene#illusionlabyrinth	10337,{
+	switch(isbegin_quest(12482)){		
+	case 0:
+		if (Baselevel < 170) {
+			mes "[Irene]";
+			mes "Im sorry I find stronger warrior to help me";
+			close;
+		}
+		mes "[Irene]";
+		mes "Fuck! Sorry. It's not a ghost,";
+		mes "It's not a monster! I didn't mean to surprise you!";
+		next;
+		select("I am surprised. What is this!");
+		mes "[Irene]";
+		mes "Please don't point your weapon at me and listen to me. Please!";
+		next;
+		select("Your mind seems steady. Let's see.");
+		mes "[Irene]";
+		mes "Thank you. My name is Irene, a general guild member of the Priest Guild of Prontera. Ah, there is something wrong with this appearance now.";
+		next;
+		select("Did you die while hunting?");
+		mes "[Irene]";
+		mes "Yes.. I found this suspicious crack while looking for a training place with 4 other members.";
+		next;
+		mes "[Irene]";
+		mes "Please. I would like you to inform our guild leader of the current situation. She is recruiting near the Prontera Cathedral. I need to stay here to guard the portal for all the members to get out of here.";
+		next;
+		switch(select("I'm sorry but I can't:Sure I'll help")){
+			case 1:
+				mes "[Irene]";
+				mes "Please find someone to help me.";
+				close;
+			case 2:
+				break;
+		}
+		setquest 12482;
+		showevent QTYPE_NONE, 0;
+		mes "[Irene]";
+		mes "Thank you! I will leave a seperate memo for the location of the guild leader!";
+		next;
+		select("You go outside at once.");
+		close2;
+		warp "prt_fild01",136,364;
+		end;
+	case 1:
+		mes "[Irene]";
+		mes "I will leave a seperate memo for the location of the guild leader!";
+		close;
+	case 2:
+		mes "[Irene]";
+		mes "You bring Esmeralda here! Talk to her quickly.";
+		close;
+	}	
+OnInit:
+	setunittitle getnpcid(0),"<Priest Class>";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "Baselevel >= 170 && isbegin_quest(12482) == 0";
+	end;
+}
+
+prt_maze01,97,26,5	script	Anes#illusionlabyrinth	10312,{
+	switch(isbegin_quest(12489)){
+	case 1:
+		mes "[Anes]";
+		mes "Thank you for saving me!";
+		next;
+		mes "[Anes]";
+		mes "Talk to Andrea to join our guild member!";
+		close;
+	case 2:
+		switch(checkquest(12491,PLAYTIME)){
+		case -1:
+		case 2:
+			mes "[Anes]";
+			mes "There is 1 weekly quest that you can get in duration of a week. Would you like to take the quest?";
+			next;
+			switch(select("Cancel:Recieve 1 weekly quest.")){
+			case 1:
+				end;
+			case 2:
+				mes "[Anes]";
+				mes "I pray that God's blessing will be with you this week as well.";
+				for (.@l = 0; .@l < 4; .@l++){
+					if(isbegin_quest(.q2[.@l]) == 1)
+						erasequest .q2[.@l];
+				}
+				setquest rand(12478,12481);
+				if(isbegin_quest(12491) == 1)
+					erasequest 12491;
+				setquest 12491;
+				end;
+			}
+		case 0:
+		case 1:
+			mes "[Anes]";
+			mes "You just get 1 weekly quest, talk to me again this weekend, to recieve new quest!";
+			mes "If you have finished the quest talk to Silvano to get the prize.";
+			end;
+		}
+	close;
+	}
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	setarray .q2[0],12478,12479,12480,12481;
+	questinfo QTYPE_EVENT, QMARK_YELLOW, "isbegin_quest(12489) == 2 && isbegin_quest(12491)== 0 || checkquest(12491,PLAYTIME) == 2";
+	setunittitle getnpcid(0),"<Priesthood Newcomer>";
+	end;
+}
+
+prt_maze01,97,20,7	script	Andrea#illusionlabyrinth	10310,{		
+	switch(isbegin_quest(12489)){
+	case 1:
+		mes "[Andrea]";
+		mes "I heard the story from Leader Esmeralda that you are the one who saved us!";
+		next;
+		select("It is really not anything huge.");
+		mes "[Andrea]";
+		mes "What a humble person you are. I even almost couldn't be revived. Thank you so much.";
+		next;
+		select("Where does Esmeralda go?");
+		mes "[Andrea]";
+		mes "Ahh as the Guild Leader, she returned to the Guild Garrison for a while saying she had a few things to prepare. She said that she would come back to this labyrinth entrance directly.";
+		next;
+		mes "[Andrea]";
+		mes "And she command me to in charge as a Guild Leader for a moment.";
+		next;
+		mes "[Andrea]";
+		mes "We have to run practically, are like this now. We are lacking of manpower to raise funds for the resurrection, so we kinda need a hand.";
+		next;
+		mes "[Andrea]";
+		mes "If we can attack this newly revealed twisted crack, there will be a spark that will revive our guild, but it can be done by experienced person only and you are the one that we can trust right now.";
+		next;
+		mes "[Andrea]";
+		mes "Would you like to join as an active member of our guild and help us?";
+		next;
+		switch(select("Let me think of it:What is the benefit of it?")){
+		case 1:
+			mes "[Andrea]";
+			mes "Sure, let me know when you change your mind!";
+			end;
+		case 2:
+			break;
+		}
+		mes "[Andrea]";
+		mes "Although we are in the state of spirit, we have many knowledge gained by wandering through this twisted labyrinth.";
+		next;
+		mes "[Andrea]";
+		mes "We are going to give you various quests related to the inside of the twisted labyrinth that you are going to explore and we will give you appropriate rewards","Would you like to work as a guest guild member?";
+		next;
+		switch(select("I am sorry but I am to busy right now:Sign me in.")){
+		case 1:
+			mes "[Andrea]";
+			mes "Sure, let me know when you change your mind!";
+			end;
+		case 2:
+			break;
+		}
+		mes "[Andrea]";
+		mes "Thank you so much. Now on behalf of the guild, we will ask you to request a quest related to this twisted labyrinth.";
+		close2;
+		completequest 12489;
+		cloakoffnpc "Esmeralda#illusionlabyrinth_2",getcharid(0);
+		end;
+	case 2:
+		if(checkquest(12490,PLAYTIME) == 2) {
+			erasequest 12490;
+			labyrinth_quest = 0;
+		}
+		if(checkquest(12490,PLAYTIME) == 0) {
+			mes "[Andrea]";
+			mes "You already get all quest today. Talk to me again after 4 AM.";
+			end;
+		}
+		mes "[Andrea]";
+		mes "I have a lot of quests for you.";
+		mes "Do you want to take it all?";
+		next;
+		switch(select("Cancel:Recieve All")){
+		case 1:
+			mes "[Andrea]";
+			mes "Talk to me when you are ready.";
+			end;
+		case 2:
+			for (.@a = 0; .@a < 8; .@a++){
+				if(isbegin_quest(.q[.@a]) == 1) {
+					mes "[Andrea]";
+					mes "Current in progress quest will be erased do you still want to continue?";
+					next;
+					if(select("Yes","Wait a second") == 2) {
+						mes "[Andrea]";
+						mes "Good luck";
+						close;
+					}
+					break;
+				}
+			}
+			mes "Please do your best today! thank you in advance!";
+			setquest 12490;
+			for (.@a = 0; .@a < 8; .@a++){
+				if(isbegin_quest(.q[.@a]) == 1)
+					erasequest .q[.@a];
+				setquest .q[.@a];
+			}
+			end;
+		}
+	close;
+	}
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	setarray .q[0],12470,12471,12472,12473,12474,12475,12476,12477;
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(12489) == 2 && isbegin_quest(12490) == 0 || checkquest(12490,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(12489) == 1";
+	setunittitle getnpcid(0),"<Priesthood Newcomer>";
+}
+
+prt_maze01,101,26,3	script	Silvano#illusionlabyrinth	10314,{
+	for (.@a = 0; .@a < 12; .@a++) {
+		if(checkquest(.q3[.@a],HUNTING) == 2 || checkquest(.q4[.@a],HUNTING) == 2){
+			mes "[ Silvano ]";
+			mes "If you have completed a quest, you should recieve a reward. Would you like to recieve it now?";
+			next;
+			switch(select("Wait a bit:Recieve it now")){
+			case 1:
+				mes "[ Silvano ]";
+				mes "Talk to me when you are ready";
+				close;
+			case 2:
+				set .@f,getarraysize(.txt$);		
+				set .@z,0;
+				while(.@z != .@f) {
+					if(checkquest(.q3[.@z],HUNTING) == 2){
+						mes .txt$[.@z]+"^000000 is completed.";
+						next;
+						getitem .pr[.@z], 1;
+						getexp 2730000,1774500;
+						erasequest .q3[.@z];
+					}
+					set .@z,.@z + 1;
+				}
+				for (.@a = 0; .@a < 4; .@a++){
+					if(checkquest(.q4[.@a],HUNTING) == 2){
+						mes .txt1$[.@a]+"^000000 is completed.";
+						next;
+						getitem .pr1[.@a], 3;
+						getexp 2500000,1625000;
+						erasequest .q4[.@a];
+						end;
+					}
+				}
+				end;
+			}
+		end;
+		}
+	}
+	mes "[ Silvano ]";
+	mes "If you have completed a quest and want to get the prize, you can talk to me adventurer.";
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	setarray .q3[0],12470,12471,12472,12473,12474,12475,12476,12477;
+	setarray .q4[0],12478,12479,12480,12481;
+	setarray .pr[0],25271,25271,25271,25271,25781,25782,25783,25784;
+	setarray .pr1[0],25781,25782,25783,25784;
+	setarray .txt1$[0],"^0000FFFighting Andrea","^0000FFExtermination of Anes","^0000FFFighting Silvano","^0000FFEradication of Cecilia";
+	setarray .txt$[0],"^0000FFDefeat Chaos Baphomet Junior","^0000FFCrushing the Chaos Ghostring","^0000FFKill Chaos Hunterfly","^0000FFKill Chaos Killer Mantis","^0000FFKill Chaos Mantis","^0000FFKill Chaos Poporing","^0000FFKill Chaos Sidewinder","^0000FFTreat the Chaos Stemworm";
+	setunittitle getnpcid(0),"<Priesthood Newcomer>";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW,"checkquest(12470,HUNTING) == 2 || checkquest(12471,HUNTING) == 2 || checkquest(12472,HUNTING) == 2";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW,"checkquest(12475,HUNTING) == 2 || checkquest(12474,HUNTING) == 2 || checkquest(12473,HUNTING) == 2";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW,"checkquest(12476,HUNTING) == 2 || checkquest(12477,HUNTING) == 2 || checkquest(12478,HUNTING) == 2";
+	questinfo QTYPE_QUEST2, QMARK_YELLOW,"checkquest(12479,HUNTING) == 2 || checkquest(12480,HUNTING) == 2 || checkquest(12481,HUNTING) == 2";
+	end;
+}
+
+prt_maze01,101,20,1	script	Cecilia#illusionlabyrinth	10316,{
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	setunittitle getnpcid(0),"<Priesthood Newcomer>";
+}
+
+prt_maze01,99,23,5	script	Twisted Crack#illusionlabyrinth	111,12,12,{
+	if (isbegin_quest(12483) == 2) {
+		mes "Beyond this twisted crack the unfamiliar labyrinth is unfolding.";
+		mes "^FF0000If you step in, you may not be able to get out.^000000";
+		next;
+		switch(select("Stay here:Go inside the labyrinth")){
+		case 1:
+			mes "You choose to stay.";
+			close;
+		case 2:
+			warp "prt_mz03_i",99,31;
+			close2;
+		}
+	}
+	mes "Beyond this twisted crack the unfamiliar labyrinth is unfolding.";
+	close;
+OnTouch:
+	OnPCLoadMapEvent:
+		if(strcharinfo(3) == strnpcinfo(4)){
+			if (Baselevel > 170) {
+				specialeffect 513,AREA,"Twisted Crack#illusionlabyrinth";
+				specialeffect 74,AREA,"Twisted Crack#illusionlabyrinth";
+			}
+			if(isbegin_quest(12488) > 0)
+				classchange( HIDDEN_WARP_NPC, "Irene#illusionlabyrinth", bc_self );
+			if(isbegin_quest(12483) == 1 || isbegin_quest(12488) == 1) 
+				classchange( 4_geffen_09, "Esmeralda#illusionlabyrinth_1", bc_self );
+			if(isbegin_quest(12489) > 0) {
+				for (.@n = 0; .@n < 4; .@n++)
+					cloakoffnpc .name$[.@n]+"#illusionlabyrinth",getcharid(0);
+			}
+		}
+	end;
+OnInit:
+	setarray .name$[0],"Cecilia","Andrea","Anes","Silvano";
+	questinfo QTYPE_CLICKME, QMARK_YELLOW, "checkquest(12484) == 1";
+}
+
+prt_maze01,101,26,3	script	Esmeralda#illusionlabyrinth_1	HIDDEN_WARP_NPC,{
+	switch(isbegin_quest(12483)){
+	case 1:
+		mes "[Esmeralda]";
+		mes "Irene stop crying and get yourself together.";
+		next;
+		mes "[Esmeralda]";
+		mes "Fortunately, your guardian relic is still in the guild, so the resurrection will happen somehow.";
+		next;
+		mes "[Irene]";
+		mes "I'm sorry...";
+		next;
+		mes "[Esmeralda]";
+		mes "This troublemaker seems to be in a hurry to ressurect, so I'll send you back to the guild first.";
+		next;
+		mes "[Esmeralda]";
+		mes "I have to say thank you, but since you have helped me, may I ask you one more thing?";
+		next;
+		switch(select("You really don't care.:Uh.. That's right.")){
+		case 1:
+			mes "[Esmeralda]";
+			mes "Ahh, okay.";
+			end;
+		case 2:
+			break;
+		}
+		mes "[Esmeralda]";
+		mes "Irene made a soul pact with the Guardian Relic a long time ago, so it doesn't seem like there will be any problems with the resurrection.";
+		next;
+		mes "[Esmeralda]";
+		mes "There are 4 more people missing. These guys don't sign a contract with a Guardian Relic, so they don't appear even in spirit state. Haahh.. Really...";
+		next;
+		select("Is this soul pact like insurance or something?");
+		mes "[Esmeralda]";
+		mes "Yes, since out guild is made up of only Priests, it is unexpectedly unlikely that there will be fatalities, but is is very frequent.";
+		next;
+		mes "[Esmeralda]";
+		mes "As soon as you join, you sign a contract with a guardian relic, and perform an insurance ceremony that perfectly resurrects your soul and body even after death.";
+		next;
+		mes "[Esmeralda]";
+		mes "The problem is that 4 people who disappeared today are not even going through that process.";
+		next;
+		select("Shall I resurrect them?");
+		mes "[Esmeralda]";
+		mes "Ah.. Well, even the smallest traces of the body are fine. The more intact you are, the cheaper the resurrection price will be, but you have to save them first.";
+		next;
+		select("(It feels like furniture repair)");
+		mes "[Esmeralda]";
+		mes "Priests practice inside that crack. There are many things that are not quite beautiful inside the crack.";
+		next;
+		switch(select("Well, It looks dangerous, so..:Ahh Its Okay!")){
+		case 1:
+			mes "[Esmeralda]";
+			mes "Ahh, okay.";
+			end;
+		case 2:
+			break;
+		}
+		mes "[Esmeralda]";
+		mes "Thank you. I have found the traces of 4 Members inside the crack, just follow the traces!";
+		completequest 12483;
+		setquest 12484;
+		setquest 12485;
+		setquest 12486;
+		setquest 12487;
+		end;
+	case 2:	
+		if(isbegin_quest(12488) == 1){
+			mes "[Esmeralda]";
+			mes "Ohh thank you, I was about giving up, but You did it! You save them all!";
+			next;
+			select("(Are they really newcomers...)");
+			mes "[Esmeralda]";
+			mes "Thank you once again, first, I need to gather all the souls of the guild members nearby. It looks like this place will be better than revive the in the city.";
+			next;
+			mes "[Esmeralda]";
+			mes "Ahh the prosess of gathering the souls is a bit difficult to conduct if there are outsiders arround, so could you please go outside from this place for a moment?";
+			next;
+			switch(select("Can I just watch?:That's right.")){
+			case 1:
+				mes "[Esmeralda]";
+				mes "Ahh It's difficult to show it to outsiders.";
+				close;
+			case 2:
+				mes "[Esmeralda]";
+				mes "Thank you for your consideration! Then I'll send you outside for a while.";
+				close2;
+				hideoffnpc "Esmeralda#illusionlabyrinth";
+				completequest 12488;
+				setquest 12489;
+				classchange( HIDDEN_WARP_NPC, "Esmeralda#illusionlabyrinth_1", bc_self );
+				warp "prt_fild01",136,364;
+				end;
+			}
+		}
+		mes "[Esmeralda]";
+		mes "Just follow the traces inside the crack!";
+		mes "Please be careful. I will waiting here.";
+		close;
+	}
+OnInit:
+	setunittitle getnpcid(0),"<Priesthood Guild>";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12483) == 1 || isbegin_quest(12488) == 1";
+	end;
+}	
+
+// Illusion Labyrinth
+prt_mz03_i,182,25,5	script	Traces of Cecilia#illusionlabyrinth_1	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(12487) == 1){
+		mes "^0000FFYou found Traces of Cecilia. Would you to ressurect Cecilia?^000000";
+		next;
+		switch(select("Ignore:Ressurect")){
+		case 1:
+			mes "^0000ffYou ignoring the body.^000000";
+			close;
+		case 2:
+			progressbar "ffff00", 5;
+			completequest 12487;
+			if(isbegin_quest(12484) == 2 && isbegin_quest(12485) == 2 && isbegin_quest(12486) == 2) {
+				setquest 12488;
+			}
+			specialeffect 568,AREA,"Traces of Cecilia#illusionlabyrinth_1";
+			showevent QTYPE_NONE, 0;
+			classchange( HIDDEN_WARP_NPC, "Traces of Cecilia#illusionlabyrinth_1", bc_self );
+			close;
+		}
+	}
+OnTouch:
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == strnpcinfo(4)){
+		if (isbegin_quest(12487) == 1) {
+			classchange( 10317, "Traces of Cecilia#illusionlabyrinth_1", bc_self );
+		}
+	}
+	end;
+OnInit:
+	questinfo QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12487) == 1";
+	end;
+}
+
+prt_mz03_i,106,103,5	script	Traces of Silvano#illusionlabyrinth_1	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(12486) == 1){
+		mes "^0000FFYou found Traces of Silvano. Would you to ressurect Silvano?^000000";
+		next;
+		switch(select("Ignore:Ressurect")){
+		case 1:
+			mes "^0000ffYou ignoring the body.^000000";
+			close;
+		case 2:
+			progressbar "ffff00", 5;
+			completequest 12486;
+			if(isbegin_quest(12484) == 2 && isbegin_quest(12485) == 2 && isbegin_quest(12487) == 2){
+				setquest 12488;
+			}
+			specialeffect 568,AREA,"Traces of Silvano#illusionlabyrinth_1";
+			showevent QTYPE_NONE, 0;
+			classchange( HIDDEN_WARP_NPC, "Traces of Silvano#illusionlabyrinth_1", bc_self );
+			close;
+		}
+	}
+OnTouch:
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == strnpcinfo(4)){
+		if (isbegin_quest(12486) == 1) {
+			classchange( 10315, "Traces of Silvano#illusionlabyrinth_1", bc_self );
+		}
+	}
+	end;
+OnInit:
+	questinfo QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12486) == 1";
+	end;
+}
+
+prt_mz03_i,12,20,3	script	Traces of Anes#illusionlabyrinth_1	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(12485) == 1){
+		mes "^0000FFYou found Traces of Anes. Would you to ressurect Anes?^000000";
+		next;
+		switch(select("Ignore:Ressurect")){
+		case 1:
+			mes "^0000ffYou ignoring the body.^000000";
+			close;
+		case 2:
+			progressbar "ffff00", 5;
+			completequest 12485;
+			if(isbegin_quest(12484) == 2 && isbegin_quest(12487) == 2 && isbegin_quest(12486) == 2){
+				setquest 12488;
+			}
+			specialeffect 568,AREA,"Traces of Anes#illusionlabyrinth_1";
+			showevent QTYPE_NONE, 0;
+			classchange( HIDDEN_WARP_NPC, "Traces of Anes#illusionlabyrinth_1", bc_self );
+			close;
+		}
+	}
+OnTouch:
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == strnpcinfo(4)){
+		if (isbegin_quest(12485) == 1) {
+			classchange( 10313, "Traces of Anes#illusionlabyrinth_1", bc_self );
+		}
+	}
+	end;
+OnInit:
+	questinfo QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12485) == 1";
+	end;
+}
+
+prt_mz03_i,135,68,3	script	Traces of Andrea#illusionlabyrinth_1	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(12484) == 1){
+		mes "^0000FFYou found Traces of Andrea. Would you to ressurect Andrea?^000000";
+		next;
+		switch(select("Ignore:Ressurect")){
+		case 1:
+			mes "^0000ffYou ignoring the body.^000000";
+			close;
+		case 2:
+			progressbar "ffff00", 5;
+			completequest 12484;
+			if(isbegin_quest(12487) == 2 && isbegin_quest(12485) == 2 && isbegin_quest(12486) == 2){
+				setquest 12488;
+			}
+			specialeffect 568,AREA,"Traces of Andrea#illusionlabyrinth_1";
+			showevent QTYPE_NONE, 0;
+			classchange HIDDEN_WARP_NPC, "Traces of Andrea#illusionlabyrinth_1", bc_self;
+			end;
+		}
+	}
+OnTouch:
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == strnpcinfo(4)){
+		if (isbegin_quest(12484) == 1) {
+			classchange 10311, "Traces of Andrea#illusionlabyrinth_1", bc_self;
+		}
+	}
+	end;
+OnInit:
+	questinfo QTYPE_CLICKME, QMARK_YELLOW, "isbegin_quest(12484) == 1";
+	end;
+}
+
+prontera,214,319,3	script	Esmeralda#illusionlabyrinth	4_geffen_09,5,5,{
+	switch(isbegin_quest(12482)){
+	case 1:
+		mes "[Esmeralda]";
+		mes "Huh?, What's going on? From what I can see, you seems to be going a different path than our guild.";
+		next;
+		select("You inform her about what happen");
+		mes "[Esmeralda]";
+		mes "Our newcomers are missing? Ha...";
+		mes "What could possibly happen to them?";
+		next;
+		mes "[Esmeralda]";
+		mes "Thank you for telling me this. I am their leader. I have to go doing some cleaning. May God's blessing be with you.";
+		close2;
+		completequest 12482;
+		hideonnpc strnpcinfo(0);
+		classchange( 4_geffen_09, "Esmeralda#illusionlabyrinth_1", bc_self );
+		setquest 12483;
+		showevent QTYPE_NONE, 0;
+		end;
+	case 2:
+		if (isbegin_quest(12483) == 2){
+			mes "[Esmeralda]";
+			mes "Thanks for saving my friends";
+			mes "Im waiting for you outside the labyrinth to over you something interesting";
+			close;
+		}
+		mes "[Esmeralda]";
+		mes "Dear Lord! Say no more, let's go to ^ff0000Irene^000000.";
+		close;
+	case 0:
+		mes "[Esmeralda]";
+		mes "Keep the good work!";
+		close;
+	}
+OnTouch:
+	npctalk "Hello.. Our Social Guild that is guided by the light is recruiting a new members.";
+OnInit:
+	setunittitle getnpcid(0),"<Priesthood Guild>";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(12482) == 1";
+	end;			
+}
+
+prt_fild01,141,367,3	script	Esmeralda#illusionlabyrinth_2	4_geffen_09,{
+	switch(isbegin_quest(12492)){
+	case 0:
+		mes "[ Esmeralda ]";
+		mes "Ahh, We seperated without saying goodbye","Do you decive to work as a member of our guest guild?";
+		next;
+		switch(select("Somehow it happen:I don't think it's a big deal for me.")){
+		case 1:
+		case 2:
+			break;
+		}
+		mes "[ Esmeralda ]";
+		mes "It's a good choice, they will be very helpful to each other.";
+		next;
+		select("Why don't you send the guild members back?");
+		mes "[ Esmeralda ]";
+		mes "There are some conditions for that.","They didn't sign a contract with a guardian relic. It's like you don't have any insurance.","If you get an exorcism while wandering around the village, you will be completely destroyed.";
+		next;
+		mes "[ Esmeralda ]";
+		mes "I think it's safe to stay here for the time being, so I've been instructed to hide and appear only in the eyes of you who helped me.";
+		next;
+		mes "[ Esmeralda ]";
+		mes "First of all, since the guild doesn't have enough funds, I think it will take quite a while for them to fully revive. So I'm going to stop running the guild for a while and do business here.";
+		next;
+		select("What kind of business?");
+		mes "[ Esmeralda ]";
+		mes "As you know, it appears all over the continent these days. In unknown dungeons, things called illusion stones appear. That.. It's a very valuable item in this world.";
+		next;
+		mes "[ Esmeralda ]";
+		mes "I heard that there is a guild that started exploring this dungeon first. And I also got information that an "+getitemname(25271)+" is coming out.";
+		next;
+		mes "[ Esmeralda ]";
+		mes "I am thinking of doing something about upgrading equipment here. Of course, I'm going to recieve a Illusion Stone and various materials as the prize.";
+		next;
+		mes "[ Esmeralda ]";
+		mes "If you work hard for a few months, you will probably have enough funds to revive the guild members.","This would be the best for now.";
+		next;
+		select("Is it just that?");
+		mes "[ Esmeralda ]";
+		mes "Well... Because there are countless other places where money can talk. I will omit explaining them one by one.";
+		next;
+		mes "[ Esmeralda ]";
+		mes "Anyway, next time you come with your guests, will you see me as trader? I wish you all the best in the future.";
+		setquest 12492;
+		close;
+	case 1:
+		mes "[ Esmeralda ]";
+		mes "Hi, we meet again, remember the last time we talk. You will see me as trader.";
+		completequest 12492;
+		close;
+	case 2:
+		callshop "IllusionLabyrinth";
+		end;
+	}
+OnInit:	
+	cloakonnpc strnpcinfo(0);
+	setunittitle getnpcid(0),"<Priesthood Guild>";
+	end;
+}
+

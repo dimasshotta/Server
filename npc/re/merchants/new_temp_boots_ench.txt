@@ -1,0 +1,159 @@
+glast_01,222,265,4	script	TESTING3	2_SLOT_MACHINE,{
+	disable_items;
+	if (MaxWeight - Weight < 1000) {
+		mes "Your bag is too heavy. Reduce some weight and come back.";
+		close;
+	}
+	setarray .@shoes[0],22000,22001,22002,22003,22004,22005,22107,22108,22109,22110,22111,22112;
+	setarray .@s_shoes[0],22006,22007,22008,22009,22010,22011,22113,22114,22115,22116,22117,22118;
+	setarray .@enchant_2[0],4875,4876,4877,4878,4879,4880;// Bear's_Power		Runaway_Magic	Speed_Of_Light	Muscle_Fool 	Hawkeye 				Lucky_Day
+	setarray .@enchant_3[0],4822,4835,4826,4862,4881,4755;// Fighting_Spirit7	Expert_Archer4	Spell5			MHP2			DelayafterAttack4Lv		Luck6
+	setarray .@enchant_cost[0],1,4,15,30,10;
+
+	.@part = EQI_SHOES;
+	.@item = getequipid(EQI_SHOES);
+	.@refine = getequiprefinerycnt(EQI_SHOES);
+	.@card0 = getequipcardid(EQI_SHOES,0);
+	.@card1 = getequipcardid(EQI_SHOES,1);
+	.@card2 = getequipcardid(EQI_SHOES,2);
+	.@card3 = getequipcardid(EQI_SHOES,3);
+	.@material1 = 6608;
+	.@valor1 = 100;
+	.@valor2 = 150;
+	.@material2 = 6755;
+	.@valor3 = 50;
+	.@material3 = 7925;
+	.@valor4 = 1;
+	.@zeny = 5000000;
+	.@zeny1 = 15000000;
+	.@ison = 0;
+	
+	for(.@i = 0; .@i < 12; .@i++) {
+		if(.@shoes[.@i]==.@item) {
+			.@ison = 1;
+		}
+	}
+	
+	for(.@i = 0; .@i < 12; .@i++) {
+		if(.@s_shoes[.@i]==.@item) {
+			.@ison = 2;
+		}
+	}
+	if(.@card2 != 0) {
+		mes "<ITEM>["+getequipname(EQI_SHOES)+"]<INFO> "+getequipid(EQI_SHOES)+" </INFO> </ITEM>";
+		mes "Your accessory has already reached the enchancement limit.";
+		close;
+	}
+	if(.@ison == 0) {
+		mes "[TEMPORAL BOOTS]";
+		mes "You do not wear a correct slotet/unslotet shoes.";
+		mes "Wear one of the following list!";
+		next;
+		mes "<ITEM>"+getitemname(22000)+"<INFO> 22000 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22001)+"<INFO> 22001 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22002)+"<INFO> 22002 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22003)+"<INFO> 22003 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22004)+"<INFO> 22004 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22005)+"<INFO> 22005 </INFO> </ITEM>";
+		next;
+		mes "<ITEM>"+getitemname(22107)+"<INFO> 22107 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22108)+"<INFO> 22108 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22109)+"<INFO> 22109 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22110)+"<INFO> 22110 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22111)+"<INFO> 22111 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(22112)+"<INFO> 22112 </INFO> </ITEM>";
+		close;
+	}
+	if( .@ison == 1 ) {
+		mes "<ITEM>["+getequipname(EQI_SHOES)+"]<INFO> "+getequipid(EQI_SHOES)+" </INFO> </ITEM>";
+		mes "=====[Reinforcement Material]=====";
+		mes "5.000.000,-				                zeny";
+		mes "<ITEM>["+getitemname(6608)+"]<INFO> 6608 </INFO> </ITEM>	      100pcs";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+		if(Zeny < 5000000) { 
+			mes "^FF0000* Insufficient Zeny!^000000"; 
+			enable_items; 
+			close; 
+		} else if(countitem(6608) < 100) { 
+			mes "^FF0000* You need 100x "+getitemname(6608)+"!^000000";
+			enable_items;
+			close; 
+		}
+		goto Enchants;
+	}
+	if( .@ison == 2 ) {
+		mes "<ITEM>["+getequipname(EQI_SHOES)+"]<INFO> "+getequipid(EQI_SHOES)+" </INFO> </ITEM>";
+		mes "=====[Reinforcement Material]=====";
+		mes "15.000.000,-				                          zeny";
+		mes "<ITEM>["+getitemname(6608)+"]<INFO> 6608 </INFO> </ITEM>	                   150pcs";
+		mes "<ITEM>["+getitemname(6755)+"]<INFO> 6755 </INFO> </ITEM>	               50pcs";
+		mes "<ITEM>["+getitemname(7925)+"]<INFO> 7925 </INFO> </ITEM>1pcs";
+		if(select("Cancel","Proceed") - 2) close;
+		next;
+		if(Zeny < 15000000) { 
+			mes "^FF0000* Insufficient Zeny!^000000"; 
+			enable_items; 
+			close; 
+		} else if(countitem(6608) < 150) { 
+			mes "^FF0000* You need 150x "+getitemname(6608)+"!^000000";
+			enable_items;
+			close; 
+		} else if(countitem(6755) < 50) { 
+			mes "^FF0000* You need 50x "+getitemname(6755)+"!^000000";
+			enable_items;
+			close; 
+		} else if(countitem(7925) < 1) { 
+			mes "^FF0000* You need 1x "+getitemname(7925)+"!^000000";
+			enable_items;
+			close; 
+		}
+		goto Enchants;
+	}
+Enchants:
+	mes "<ITEM>["+getequipname(EQI_SHOES)+"]<INFO> "+getequipid(EQI_SHOES)+" </INFO> </ITEM>";
+	mes "Select the enchancement!";
+	if(.@card3 == 0) {
+		for ( set .@e,0; .@e < getarraysize(.@enchant_3); set .@e,.@e + 1)
+		set .@e_m$,.@e_m$ + "> "+getitemname(.@enchant_3[.@e])+ ( (.@enchant_3[.@e+1] != 0)?":":"");
+		set .@rune,select(.@e_m$) - 1;
+		next;
+		mes "<ITEM>["+getequipname(EQI_SHOES)+"]<INFO> "+getequipid(EQI_SHOES)+" </INFO> </ITEM>";
+		mes "Selected Enchantment: "+getitemname(.@enchant_3[.@rune]);
+		mes "Proceed?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		goto enchant;
+	}
+	if(.@card2 == 0) {
+		for ( set .@e,0; .@e < getarraysize(.@enchant_2); set .@e,.@e + 1)
+		set .@e_m$,.@e_m$ + "> "+getitemname(.@enchant_2[.@e])+ ( (.@enchant_2[.@e+1] != 0)?":":"");
+		set .@rune,select(.@e_m$) - 1;
+		next;
+		mes "<ITEM>["+getequipname(EQI_SHOES)+"]<INFO> "+getequipid(EQI_SHOES)+" </INFO> </ITEM>";
+		mes "Selected Enchantment: "+getitemname(.@enchant_2[.@rune]);
+		mes "Proceed?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		goto enchant;
+	}
+enchant:
+	if( .@ison == 1 ) {
+		set Zeny,Zeny-.@zeny;
+		delitem .@material1,.@valor1;
+	}
+	if( .@ison == 2 ) {
+		set Zeny,Zeny-.@zeny1;
+		delitem .@material1,.@valor2;
+		delitem .@material2,.@valor3;
+		delitem .@material3,.@valor4;
+	}
+	delequip .@part;
+	if(!.@card3) .@card3 = .@enchant_3[.@rune];
+	else if(!.@card2) .@card2 = .@enchant_2[.@rune];
+	getitem2 .@item, 1, 1, .@refine,0, .@card0, .@card1, .@card2, .@card3;
+	enable_items; 
+	specialeffect2 154;
+	dispbottom "The enchantment success";
+close;
+}

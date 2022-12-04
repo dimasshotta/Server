@@ -1,0 +1,55 @@
+//===== rAthena Script ======================================= 
+//= Illusion Of Twins Mob Spawn
+//===== By: ================================================== 
+//= [ ROmaniac ]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//============================================================ 
+
+ant_d02_i,0,0	monster	Diligent Andre 	21386,30,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Diligent Soldier Andre 	21387,15,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Diligent Andre Larva	21388,20,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Diligent Deniro 	21389,30,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Diligent Piere 	21390,30,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Mushy Ant Egg 	21391,20,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Gutsy Gierth 	21392,15,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Gutsy Familiar 	21393,25,5000,0,"ant_d02_i::OnMyMobDead"
+ant_d02_i,0,0	monster	Diligent Vitata 	21394,15,5000,0,"ant_d02_i::OnMyMobDead"
+
+
+ant_d02_i,0,0,0	script	ant_d02_i	-1,{
+	end;
+	
+OnMyMobDead:
+	if (.mvp_twin == 1){
+		end;
+	}
+	if (.mvp_twin == 0){
+		$Ill_TW_MVP++;
+		if($Ill_TW_MVP == 3000){ 
+			monster "ant_d02_i",.@x,.@y,"--en--",21395,1, "ant_d02_i::OnMyMVPDead";
+			mapannounce "ant_d02_i","Briashen... Briashen... Where are you?!",bc_map;
+			.mvp_twin = 1;
+			$Ill_TW_MVP = 0;
+		}
+	}
+	end;
+	
+OnMyMVPDead:
+	.mvp_twin = 0;
+	mapannounce "ant_d02_i","MVP has been defeated by "+strcharinfo(0),bc_map;
+	end;
+	
+OnInit:
+	addmonsterdrop 21386,25271,8000;
+	addmonsterdrop 21387,25271,8000;
+	addmonsterdrop 21388,25271,8000;
+	addmonsterdrop 21389,25271,8000;
+	addmonsterdrop 21390,25271,8000;
+	addmonsterdrop 21391,25271,8000;
+	addmonsterdrop 21392,25271,8000;
+	addmonsterdrop 21393,25271,8000;
+	addmonsterdrop 21394,25271,8000;
+	addmonsterdrop 21395,25271,8000;
+	end;
+}

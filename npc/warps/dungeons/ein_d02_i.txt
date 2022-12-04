@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Illusion Teddy Bear Warp
+//===== By: ==================================================
+//= [ROManiac]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+ein_dun01,189,87,4	script	Distorted Space#teddybear_1	4_ENERGY_BLUE,{
+	if(illusionteddybearquest >= 3){
+		warp "ein_d02_i",168,196;
+		end;
+	}
+	mes "- You can't enter yet -";
+    end;
+}
+
+ein_d02_i,161,188,4	script	Distorted Space#teddybear_2	4_ENERGY_BLUE,{
+	warp "ein_dun01",190,77;
+	end;
+}

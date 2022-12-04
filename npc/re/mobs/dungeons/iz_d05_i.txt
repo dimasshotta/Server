@@ -1,0 +1,48 @@
+//===== rAthena Script ======================================= 
+//= Illusion Underwater (kRO Servers)
+//===== By: ================================================== 
+//= [ROmaniac]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//============================================================ 
+// iz_d04_i - Illusion Underwater f2
+//============================================================ 
+
+iz_d05_i,0,0	monster	Deep Sea Sedora	20806,25,5000,0,"iz_d05_i::OnMyMobDead"
+iz_d05_i,0,0	monster	Deep Sea Swordfish	20807,25,5000,0,"iz_d05_i::OnMyMobDead"
+iz_d05_i,0,0	monster	Deep Sea Strouf	20808,22,5000,0,"iz_d05_i::OnMyMobDead"
+iz_d05_i,0,0	monster	Deep Sea Phen	20809,22,5000,0,"iz_d05_i::OnMyMobDead"
+iz_d05_i,0,0	monster	Deep Sea King Dramoh	20810,10,5000,0,"iz_d05_i::OnMyMobDead"
+
+
+iz_d05_i,0,0,0	script	iz_d05_i	-1,{
+	end;
+	
+OnMyMobDead:
+	if (.mvp_underwater2 == 1){
+		end;
+	}
+	if (.mvp_underwater2 == 0){
+		$Ill_UW_MVP2 += 1;
+		if($Ill_UW_MVP2 == 2000){ 
+			monster "iz_d05_i",.@x,.@y,"--en--",20843,1, "iz_d05_i::OnMyMVPDead";
+			mapannounce "iz_d05_i","The Deep Sea Witch approaches!",bc_map;
+			$Ill_UW_MVP2 = 0;
+			.mvp_underwater2 = 1;
+		}
+	}
+	end;
+	
+OnMyMVPDead:
+	.mvp_underwater2 = 0;
+	end;
+
+OnInit:
+	addmonsterdrop 20806,25271,8000;
+	addmonsterdrop 20807,25271,8000;
+	addmonsterdrop 20808,25271,8000;
+	addmonsterdrop 20809,25271,8000;
+	addmonsterdrop 20810,25271,8000;
+	addmonsterdrop 20843,25271,8000;
+	end;
+}

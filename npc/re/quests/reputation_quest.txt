@@ -1,0 +1,728 @@
+//===============================================================
+//= Reputation System Quest                           
+//===== Current Version: ========================================
+//= 1.0 Initial Version                                          
+//===============================================================
+//= Translated from Kro [ROManiac]                                      
+//===============================================================
+
+moc_para01,53,38,3	script	City Merchant Association	4_m_oilman,{
+	if(isbegin_quest(12370) == 1){
+		mes "[City Merchant Association Manager]";
+		mes "If you do not want to work as a member of the City Merchant Association or want to join another association for personal reasons, you may leave. And of course re-entry is free.";
+		next;
+		mes "[City Merchant Association Manager]";
+		mes "^FF0066You cannot obtain the Union's Emblem^000000 even if you hunt monsters while leaving the alliance.";
+		next;
+		switch(select("I don't think about that yet:Where do the investors?:I have work, so I'm leaving for a while.")){
+		case 1:
+			mes "[City Merchant Association Manager]";
+			mes "Okay Let me know when you change your mind.";
+			end;
+		case 2:
+			mes "[City Merchant Association Manager]";
+			mes "^0000FFProntera, Geffen, Morroc, Payon, Yuno, Lightalzen^000000 invest in 9 cities in Einbroch Lime Baines find an officer.";
+			next;
+			mes "[City Merchant Association Manager]";
+			mes "Manager each city handles different equipment items, so please carefully consider wheter to invest or not.";
+			end;
+		case 3:
+			mes "[City Merchant Association Manager]";
+			mes "Well you are free to come back again joining the Alliance.";
+			erasequest 12370;
+			end;
+		}
+	}
+	mes "[City Merchant Association Manager]";
+	mes "You are not a member of the Midgard City Merchants Association.";
+	next;
+	mes "[City Merchant Association Manager]";
+	mes "If you join the City Association, you will be able to invest in several cities. Also, by that investment you can produce several pieces of equipment in the city.";
+	next;
+	mes "[City Merchant Association Manager]";
+	mes "We are selling the equipment to those who have joined the Association and have been active. How about that? Are you interested to join?";
+	next;
+	If(select("I don't think about that yet:I'll sign up right now") == 1){
+		mes "[City Merchant Association Manager]";
+		mes "Okay Let me know when you change your mind.";
+		end;
+	}
+	mes "[City Merchant Association Manager]";
+	mes "While you are a member of our association, ^FF0066there is a certain probability that you will recieve a token of association when hunting monsters.^000000";
+	next;
+	mes "[City Merchant Association Manager]";
+	mes "The token of the Alliance is a real currency that can be invested in each city. So keep it safe!";
+	next;
+	mes "[City Merchant Association Manager]";
+	mes "You can also recieve various missions that reward the Union's Emblem through the ^0000FFUrban Merchant Association^000000 bulletin board next to me.";
+	next;
+	mes "[City Merchant Association Manager]";
+	mes "Well, first of all, rather than talking about each city, It would be a good idea to meet with an investment officer and see what's going on in the city.";
+	setquest 12370;
+	end;
+}
+
+prontera,59,339,3	script	Subjugation Notice	4_BOARD3,{
+	if(isbegin_quest(21255) == 1 || isbegin_quest(21268)== 1){
+		mes "[Regular Monster Subjugation Notice]";
+		mes "The Knight of Prontera have regular subjugation to prevent ^0000FFOrcs^000000 and ^0000FFGoblins^000000 from expanding their territory into the area near Prontera.";
+		mes "";
+		mes "Anyone can participate in the event or subjugation of the Knights, and the participants follow the instruction of the leader of each subjugation group.";
+		mes "";
+		mes "Location: Prontera Soenam Oak and";
+		mes "          Goblin Heart";
+		mes "Classification: Level 40 or Higher.";
+		end;
+	}
+	mes "[Regular Monster Subjugation Notice]";
+	mes "The Knight of Prontera have regular subjugation to prevent ^0000FFOrcs^000000 and ^0000FFGoblins^000000 from expanding their territory into the area near Prontera.";
+	mes "";
+	mes "Anyone can participate in the event or subjugation of the Knights, and the participants follow the instruction of the leader of each subjugation group.";
+	mes "";
+	mes "Location:","- Orc Village";
+	mes "- Goblin Heart";
+	mes "Classification: Level 40 or Higher.";
+	next;
+	mes "What will I do?";
+	next;
+	if(select("Participate in the event:Do not participate.") == 2){
+		mes "- You do not participate -.";
+		end;
+	}
+	if(Baselevel < 40){
+		mes "- I guess I need to be stronger -.";
+		end;
+	}
+	npctalk "Are you joining the subjugation team??","Knight's Clerk";
+	mes "I decided to participate in the subjugation group event.";
+	mes "I seem have to meet the leader of the ^0000FFsubjugation group^000000 in the ^0000FFOrc Village^000000.";
+	setquest 21255;
+	end;
+OnInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12370) == 1 && isbegin_quest(21255) == 0";
+	end;
+}
+	
+
+prontera,62,339,3	script	Knight's Clerk	4_F_HUWOMAN,{
+	if(checkquest(21268,PLAYTIME) == 2){
+		mes "[Knight's Clerk]";
+		mes "Are you going to orc village with the subjugation team? Good for you.";
+		next;
+		mes "[Knight's Clerk]";
+		mes "^0000FFJust like you usually do^000000, you can deliver this to the subjugation leader in Orc Village.";
+		next;
+		if(select("Okay:I dont like it.") == 2){
+			mes "[Knight's Clerk]";
+			mes "Well, I can't help it.","Let's find someone else.";
+			end;
+		}
+		erasequest 21268;
+		setquest 21266;
+		getitem 25077,1;
+		mes "[Knight's Clerk]";
+		mes "Then, please. As the event is getting longer, there are a lot of medical supplies. It would be insufficient.";
+		end;
+	}
+	if(isbegin_quest(21266) == 1 || isbegin_quest(21268) == 1){
+		mes "[Knight's Clerk]";
+		mes "You can deliver the supplies to the subjugation leader in the orc village.";
+		next;
+		if(select("I know:I've lost it.") == 2) {
+			npctalk "I'm afraid that it's over budget.";
+			mes "[Knight's Clerk]";
+			mes "Do you take this mission seriously...? Don't make such a scary joke. It sounds like a rip off on your budget.";
+			end;
+		}
+		mes "[Knight's Clerk]";
+		mes "If you lose it, you will have to ask for it, so be careful.";
+		end;
+	}
+	if(isbegin_quest(21255) == 1){
+		mes "[Knight's Clerk]";
+		mes "Are you going to orc village with the subjugation team? Good for you.";
+		next;
+		mes "[Knight's Clerk]";
+		mes "I have ^0000FFsupplies^000000 to send to the subjugation group, and a suitable person just appeared.";
+		mes "Please pass this on to the subjugation leader.";
+		next;
+		if(select("Okay:I dont like it.") == 2){
+			mes "[Knight's Clerk]";
+			mes "Well, I can't help it.","Let's find someone else.";
+			end;
+		}
+		setquest 21266;
+		getitem 25077,1;
+		mes "[Knight's Clerk]";
+		mes "Then, please. Orcs monster are in Prontera.","Go west and then go down south to get there.";
+		end;
+	}
+OnInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(21255) == 1 && isbegin_quest(21266) == 0 && checkquest(21268,PLAYTIME) == 2";
+	end;
+}	
+	
+gef_fild10,78,340,3	script	Subjugation Leader	4_m_knight_black,{
+	if(isbegin_quest(21266) == 1){
+		mes "[Subjugation Leader]";
+		mes "Okay? What, joining the subjugation group? Are you the guy from ^0000FFParadise^000000? No, it doesn't matter anyway.";
+		next;
+		mes "[Subjugation Leader]";
+		mes "Oh is it a supply?","Some food and first aid. If that's the case, that's fine.";
+		changequest 21266,21267;
+		end;
+	}
+	if(isbegin_quest(21255) == 1) {
+		mes "[Subjugation Leader]";
+		mes "Whoa, that's a good look.";
+		mes "Now, shall we go hunting in earnest?";
+		mes "Let's choose one according to your taste.";
+		next;
+		.@q = (select("Orc, one-shot operation:That damn Orc:Greedy:About Supplies:Quit") - 1);
+		if(.@q == 3){
+			if(isbegin_quest(21268) == 1) {
+				mes "[Subjugation Leader]";
+				mes "If supplies are continuously procured, the amount of time you can stay on the battlefield will be longer.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "Well, as long as there are no serious injuries, we can survive.","If you are in hurry there is also a kafra.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "However, they are holding on here until they recieve supplies.","The reason is","First, the safety of city dwellers.","Second, the skill improvement of those guys.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "Supplies are a day or two late. Training robbers are rushing in.","Hahahahaha.";
+				end;
+			}
+			mes "[Subjugation Leader]";
+			mes "All that's left is to send the Goblins to the one that dealt with them?. Ill bring you some.";
+			next;
+			mes "[Subjugation Leader]";
+			mes "Just go south from here is a goblin village, Bring it to the ^0000FFSubjugation Vice Leader^000000.";
+			end;
+		}
+		if(.@q == 4){
+			mes "[Subjugation Leader]";
+			mes "What, are you giving up?";
+			mes "Ha ha! Are you afraid of orcs, aren't you?";
+			mes "If you fall down here, you won't be able to do anything in the future.";
+			end;
+		}
+		switch(checkquest(.rep_delay[.@q],PLAYTIME)){
+		case 0:
+		case 1:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Leader]";
+				mes "... Why fo you think your skills are improving?","This subjugation also has the meaning of training.";
+				end;
+			case 1:
+				mes "[Subjugation Leader]";
+				mes "I've been struggling. Are you more talented than you think you are?","Let's finish today's schedule and get some rest.";
+				end;
+			case 2:
+				mes "[Subjugation Leader]";
+				mes "Have you been well? You know all the hunting loot. You can handle it.","You did a great job, well done.","Rest in a safe place.";
+				end;
+			}
+		case 2:
+			erasequest .rep_delay[.@q];
+			break;
+		}
+		switch(checkquest(.rep_quest[.@q],HUNTING)){
+		case -1:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Leader]";
+				mes "Good, let's try to eradicate the orcs this time!";
+				next;
+				mes "[Subjugation Leader]";
+				mes "There are Orcs type which are ^0000FFWarrior, Lady, and Baby^000000.","In order to stop them from expanding, let's reduce their population by hunting them here.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "So are you ready?";
+				next;
+				if(select("I'm Ready.:I'm not ready.") == 2){
+					mes "[Subjugation Leader]";
+					mes "Get ready before I kick your ass with my shoes!";
+					end;
+				}
+				mes "[Subjugation Leader]";
+				mes "Good! The spirit is definately in!","With that momentum, Let's hunt Orc Warior, Orc Lady, and Orc Baby.";
+				break;
+			case 1:
+				mes "[Subjugation Leader]";
+				mes "There is an underground toggle in Orc's Village.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "The reason the orcs keep expanding their territory around them is probably because of the underground toggle.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "I don't know if it's the intention of burying dead orcs.","Underground toggles are teeming with undead orcs.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "This time, we have to deal with ^0000FFUndead Orc Zombie and Orc Skeleton^000000.","Then are you ready?";
+				next;
+				if(select("I'm Ready.:I'm not ready.") == 2){
+					mes "[Subjugation Leader]";
+					mes "Are you afraid of the undead too?","Among the guys I know, I'm fine when I see someone who is frozen tight to face them.";
+					next;
+					mes "[Subjugation Leader]";
+					mes "I don't know where you are and what are you doing right now. Anyway comeback when you are ready.";
+					end;
+				}
+				mes "[Subjugation Leader]";
+				mes "Even the orcs that died because there were not enough living orcs, It's hard to come out, so Let's get it clean.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "Do you see the building near the kafra girl right there?","There is a drow leads you to the underground","Enter the basement to fight ^0000FFUndead Orc Zombie and Orc Skeleton.^000000";
+				next;
+				mes "[Subjugation Leader]";
+				mes "Let's swipe lightly. Then go safely!";
+				break;
+			case 2:
+				mes "[Subjugation Leader]";
+				mes "Well, being greedy is about Zenorc. It appears to be a type of orc that has been transformed from the underground toggle..";
+				next;
+				mes "[Subjugation Leader]";
+				mes "They have a strong appetite and picks up everything.","Even if it's like this or that, it's just a troublesome enemy from our point of view.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "If you go the the 2nd floor of the underground, you will see the Zenorcs","Are you ready?";
+				next;
+				if(select("I'm Ready.:I'll come later.") == 2){
+					mes "[Subjugation Leader]";
+					mes "Okay, I'll wait",".. By the way I don't know if the vice-captain doing well.";
+					end;
+				}
+				mes "[Subjugation Leader]";
+				mes "You are a well-prepared friend.";
+				mes "The place where Zenorc is in the 2nd floor of the underground toogle.","It's connected to a hous in Orc Village.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "You might find a quick way.","You can slowly enter the basement.","Anyway, our goal this time is ^0000FF20 Zenorcs^000000.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "If you see an Orc Lord, avoid it immediately.","Then I wish you luck.";
+				break;
+			}
+			setquest .rep_quest[.@q];
+			end;
+		case 0:
+		case 1:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Leader]";
+				mes "Good! The spirit is definately in!","With that momentum, Let's hunt Orc Warior, Orc Lady, and Orc Baby.";
+				end;
+			case 1:
+				mes "[Subjugation Leader]";
+				mes "Do you see the building near the kafra girl right there?","There is a drow leads you to the underground","Enter the basement to fight ^0000FFUndead Orc Zombie and Orc Skeleton.^000000";
+				next;
+				mes "[Subjugation Leader]";
+				mes "Let's swipe lightly. Then go safely!";
+				end;
+			case 2:
+				mes "[Subjugation Leader]";
+				mes "The place where Zenorc is in the 2nd floor of the underground toogle.","Our goal this time is ^0000FF20 Zenorcs^000000.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "If you see an Orc Lord, avoid it immediately.","Then I wish you luck.";
+				end;
+			}
+		case 2:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Leader]";
+				mes "Brilliant Achievement. Let the rest of the niggas take care of it, stop for today and rest.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "... Why fo you think your skills are improving?","This subjugation also has the meaning of training.";
+				mes "^FF0000The Orc's Vigilance has Risen.^000000";
+				mes "^0000FFThe Goblin Reputation has Risen.^000000";
+				.@r1 = get_reputation_points(1);
+				.@r2 = get_reputation_points(2);
+				set_reputation_points(1,.@r1+10);
+				set_reputation_points(2,.@r2-5);
+				break;
+			case 1:
+				mes "[Subjugation Leader]";
+				mes "So, how do you feel about being there? Aren't you tired of seeing each other?.";
+				next;
+				mes "[Subjugation Leader]";
+				mes "I've been struggling. Are you more talented than you think you are?","Let's finish today's schedule and get some rest.";
+				mes "^0000FFThe Orc's Trouble has been resolved.^000000";
+				mes "^0000FFThe Goblin Reputation has Risen.^000000";
+				.@r1 = get_reputation_points(1);
+				.@r2 = get_reputation_points(2);
+				set_reputation_points(1,.@r1+10);
+				set_reputation_points(2,.@r2-5);
+				break;
+			case 2:
+				mes "[Subjugation Leader]";
+				mes "Have you been well? You know all the hunting loot. You can handle it.","You did a great job, well done.","Rest in a safe place.";
+				mes "^0000FFThe Orc's Trouble has been resolved.^000000";
+				mes "^0000FFThe Goblin Reputation has Risen.^000000";
+				.@r1 = get_reputation_points(1);
+				.@r2 = get_reputation_points(2);
+				set_reputation_points(1,.@r1+10);
+				set_reputation_points(2,.@r2-5);
+				break;
+			}
+			erasequest .rep_quest[.@q];
+			setquest .rep_delay[.@q];
+			end;
+		}
+	}
+	mes "[Subjugation Leader]";
+	mes "Oh is it a supply?","Some food and first aid. If that's the case, that's fine.";
+	end;
+OnInit:
+	setarray .rep_quest[0],21256,21258,21260;
+	setarray .rep_delay[0],21257,21259,21261;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(21266) == 1 || checkquest(21256,HUNTING) == 2 || checkquest(21258,HUNTING) == 2 || checkquest(21260,HUNTING) == 2";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(21256,HUNTING) == -1 && checkquest(21257,PLAYTIME) == 2|| checkquest(21258,HUNTING) == -1 && checkquest(21259,PLAYTIME) == 2 || checkquest(21260,HUNTING) == -1 && checkquest(21261,PLAYTIME) == 2";
+	end;
+}
+
+gef_fild11,128,351,3	script	Subjugation Vice Leader	4_m_job_knight1,{
+	if(isbegin_quest(21255) == 1 || isbegin_quest(21268)){
+		mes "[Subjugation Vice Leader]";
+		mes "It's gloomy and humid here isn't it?";
+		mes "Whether it's a subjugation or training, I want to finish quickly and go back.";
+		next;
+		.@q = (select("Ferocious Goblin Clearance:Sleek Goblin Cleanup:Bad Guys:Delivery Supplies") - 1);
+		if(.@q == 3){
+			if(isbegin_quest(21268) == 1) {
+				mes "[Subjugation Vice Leader]";
+				mes "Umm. I'll let you know that the supplies are well recieved. I'll leave it... Supplies, huh..";
+				close2;
+				npctalk "Where do you hear the training period getting longer...";
+				end;
+			}
+			if(isbegin_quest(21267) == 1 && countitem(25077) > 0){
+				mes "[Subjugation Vice Leader]";
+				mes "Did you leave out all the necessary items for Orc Village? Well that's enough.","Thank you for bring it to me this far.";
+				erasequest 21267;
+				setquest 21268;
+				delitem 25077,1;
+				end;
+			}
+			mes "[Subjugation Vice Leader]";
+			mes "Supplies?";
+			mes "What do you write when it comes?","If you don't come, you'll be back soon.","I hope it doesn't get wet.";
+			end;
+		}
+		switch(checkquest(.rep_delay[.@q],PLAYTIME)){
+		case 0:
+		case 1:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Vice Leader]";
+				mes "Before the Goblin Leader pays attention to this, let's hit it moderately.","You did a good job today.";
+				end;
+			case 1:
+				mes "[Subjugation Vice Leader]";
+				mes "That's all for today, thank you for your effort.";
+				end;
+			case 2:
+				mes "[Subjugation Vice Leader]";
+				mes "There is no safe zone in our side. If you need a break, go to Orc Village. Take a break. Thank you for your effort.";
+				end;
+			}
+		case 2:
+			erasequest .rep_delay[.@q];
+			break;
+		}
+		switch(checkquest(.rep_quest[.@q],HUNTING)){
+		case -1:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Vice Leader]";
+				mes "Goblin guys.","Goblin with axes and clans are pretty ferocious but...";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "It's not that difficult to deal with though. Because it is the type that pushes with force.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "Beware of Goblin Leader and Riders. Let's face the one with axes and with flail once.";
+				next;
+				if(select("Leave it to me.:I'm not ready.") == 2){
+					mes "[Subjugation Vice Leader]";
+					mes "That's all.","Then come when you are ready.","I'll do it right for you.";
+					end;
+				}
+				mes "[Subjugation Vice Leader]";
+				mes "So, let's deal with ^0000FFGoblins Axe and Goblins Flail^000000... Shall we?";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "I have to press hard here.","We do not extend to other regions. What are you doing?","Go ahead and deal with it.";
+				break;
+			case 1:
+				mes "[Subjugation Vice Leader]";
+				mes "Among the Goblins, they are the most difficult ones to deal with...","They have daggers and move quickly.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "If the accuracy is low, it can be difficult to counter.","Anyway, you have to face a goblin with a dagger and a goblin with a hammer.","Are you okay?";
+				next;
+				if(select("Leave it to me.:I'm not ready.") == 2){
+					mes "[Subjugation Vice Leader]";
+					mes "Then come back as soon as you are ready.","I'll let you know in moderation.";
+					end;
+				}
+				mes "[Subjugation Vice Leader]";
+				mes "So let's deal with ^0000FF10 goblin with a dagger and hammer^000000, shall we.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "The attribute of the type is probably neutral, be careful!","They are aggressive.";
+				break;
+			case 2:
+				mes "[Subjugation Vice Leader]";
+				mes "The realm of the Goblin is not only here, but they already crossed the borders of Prontera.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "If you go east from here, there are more goblins hordes. Among them, the most dangerous are the ^0000FFgoblin archer and the goblin morning star^000000.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "Aside from Goblin Rider and Panzer Goblin those are the one that we are going to deal with","Are you ready?";
+				next;
+				if(select("Leave it to me.:I'm not ready.") == 2){
+					mes "[Subjugation Vice Leader]";
+					mes "Then come back as soon as you are ready.","I'll let you know in moderation.";
+					end;
+				}
+				mes "[Subjugation Vice Leader]";
+				mes "So let's deal with ^0000FFGoblin Archer and Goblin Morning Star^000000.. Hunt ^0000FF10 of them^000000 shall we?";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "There guys can be found by going ^0000FFeast^000000 from here.","The reason why we shouldn't let the area expand anymore...";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "Beyond that is already Prontera zone so then please go.";
+				break;
+			}
+			setquest .rep_quest[.@q];
+			end;
+		case 0:
+		case 1:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Vice Leader]";
+				mes "So, let's deal with ^0000FFGoblins Axe and Goblins Flail^000000... Shall we?";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "I have to press hard here.","We do not extend to other regions. What are you doing?","Go ahead and deal with it.";
+				end;
+			case 1:
+				mes "[Subjugation Vice Leader]";
+				mes "So let's deal with ^0000FF10 goblin with a dagger and hammer^000000, shall we.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "The attribute of the type is probably neutral, be careful!","They are aggressive.";
+				end;
+			case 2:
+				mes "[Subjugation Vice Leader]";
+				mes "Those goblins can be found by going ^0000FFeast^000000 from here.","The reason why we shouldn't let the area expand anymore...";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "Beyond that is already Prontera zone so then please go.";
+				end;
+			}
+		case 2:
+			switch(.@q){
+			case 0:
+				mes "[Subjugation Vice Leader]";
+				mes "Ho, this makes the return of our knights even more. It'll be faster.","Didn't you know that goblins are pretty weak?";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "Before the Goblin Leader pays attention to this, let's hit it moderately.","You did a good job today.";
+				mes "^FF0000The Goblin's Vigilance has Risen.^000000";
+				mes "^0000FFThe Orc Reputation has Risen.^000000";
+				.@r1 = get_reputation_points(1);
+				.@r2 = get_reputation_points(2);
+				set_reputation_points(2,.@r2+10);
+				set_reputation_points(1,.@r1-5);
+				break;
+			case 1:
+				mes "[Subjugation Vice Leader]";
+				mes "Are you good at fighting?","It's been a big help. It would be nice if the prosecutors you want to join should have as much skill as you.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "That's all for today, thank you for your effort.";
+				mes "^FF0000The Goblin's Vigilance has Risen.^000000";
+				mes "^0000FFThe Orc Reputation has Risen.^000000";
+				.@r1 = get_reputation_points(1);
+				.@r2 = get_reputation_points(2);
+				set_reputation_points(2,.@r2+10);
+				set_reputation_points(1,.@r1-5);
+				break;
+			case 2:
+				mes "[Subjugation Vice Leader]";
+				mes "How have you been? It looks like you got the goblins out of the way. Even the Goblins wouldn't think of going over that forest for a while.";
+				next;
+				mes "[Subjugation Vice Leader]";
+				mes "There is no safe zone in our side. If you need a break, go to Orc Village. Take a break. Thank you for your effort.";
+				mes "^FF0000The Goblin's Vigilance has Risen.^000000";
+				mes "^0000FFThe Orc Reputation has Risen.^000000";
+				.@r1 = get_reputation_points(1);
+				.@r2 = get_reputation_points(2);
+				set_reputation_points(2,.@r2+10);
+				set_reputation_points(1,.@r1-5);
+				break;
+			}
+			erasequest .rep_quest[.@q];
+			setquest .rep_delay[.@q];
+			end;
+		}
+	}
+	mes "[Subjugation Vice Leader]";
+	mes "It's gloomy and humid here isn't it?";
+	end;
+OnInit:
+	setarray .rep_quest[0],21262,21264,21269;
+	setarray .rep_delay[0],21263,21265,21270;	
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(21267) == 1 || checkquest(21262,HUNTING) == 2 || checkquest(21264,HUNTING) == 2 || checkquest(21269,HUNTING) == 2";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(21255) == 1 && checkquest(21262,HUNTING) == -1 && checkquest(21263,PLAYTIME) == 2 || isbegin_quest(21255) == 1 && checkquest(21264,HUNTING) == -1 && checkquest(21265,PLAYTIME) == 2 || isbegin_quest(21255) == 1 && checkquest(21269,HUNTING) == -1 && checkquest(21270,PLAYTIME) == 2";
+	end;
+}
+
+gef_fild11,249,246,3	script	Goblin Herbalist	Goblin_Archer,{
+	.@r = get_reputation_points(2);
+	if(.@r > 10){
+		mes "^0000FFGoblin Herbalist is staring at you with wary eyes.^000000";
+		end;
+	}
+	if(.@r > 999)
+		callshop "reput4",1;
+	if(.@r > 1999)
+		callshop "reput5",1;
+	if(.@r > 2999)
+		callshop "reput6",1;
+	npctalk "Kik...";
+	end;
+}
+
+gef_fild11,247,253,3	script	Goblin Leader	GOBLIN_LEADER,{
+	.@r = get_reputation_points(2);
+	if(.@r > 10){
+		mes "[Goblin Leader]";
+		mes "Geek?";
+		mes "What's going on with the bare face?";
+		mes "Bare face! Are you here to harass goblins?";
+		mes "Bare face! Oak! Bully the Orcs!";
+		next;
+	} else {
+		mes "[Goblin Leader]";
+		mes "It's a merciless bare face!";
+		mes "Goblin is not going to Prontera!";
+		mes "Don't bully us!";
+		next;
+	}
+	switch(select("Step back:Hand ou Orc Warrior Card:Present the Orc Warrior's token")){
+	case 1: 
+		mes "[Goblin Leader]";
+		mes "Go bully the orcs with your bare face!";
+		end;
+	case 2:
+		mes "^0000FFIf you have <ITEM>[Orc Warrio Card]<INFO>4066</INFO></ITEM> give 1 card to Goblin Leader.^000000";
+		next;
+		if(select("Continue:Cancel") == 1){
+			if(countitem(4066) >= 1){
+				mes "[Goblin Leader]";
+				mes "Aaaaaaa, it's exciting whenever you recieve it Orc Warrior Card!!! This is the sincerity of the bare face that tormented the goblins like kicking stone that was standing still...!";
+				next;
+				.@r = get_reputation_points(2);
+				set_reputation_points(2,.@r+50);
+				delitem 4066,1;
+				mes "^0000FFThe Goblin Leader will re-evaluate you.";
+				end;
+			}
+		}
+		mes "[Goblin Leader]";
+		mes "These days, the orcs are harassing the goblins!!";
+		mes "Bare face scolds orc warriors, If you have <ITEM>[Orc Warrio Card]<INFO>4066</INFO></ITEM>";
+		mes "I'll make a goblin for you.";
+		end;
+	case 3:
+		if(.@p == 1) {
+			mes "[Goblin Leader]";
+			mes "These days, the orcs are harassing the goblins!!";
+			mes "But, you just gave me that token today.";
+			mes "Give me those token again tomorrow.";
+			end;
+		}
+		mes "^0000FFIf you have <ITEM>["+getitemname(931)+"]<INFO>931</INFO></ITEM> give 100 card to Goblin Leader.^000000";
+		next;
+		if(select("Continue:Cancel") == 1){
+			if(countitem(931) >= 100){
+				mes "Aaaaaaa, it's exciting whenever you recieve it Orc's Token!!! This is the sincerity of the bare face that tormented the goblins like kicking stone that was standing still...!";
+				next;
+				.@r = get_reputation_points(2);
+				set_reputation_points(2,.@r+30);
+				delitem 931,100;
+				.@p = 1;
+				end;
+			}
+		}
+		mes "[Goblin Leader]";
+		mes "These days, the orcs are harassing the goblins!!";
+		mes "Bare face scolds orc warriors, If you have  <ITEM>["+getitemname(931)+"]<INFO>931</INFO></ITEM>";
+		mes "I'll make a goblin for you.";
+		end;
+	}
+}
+	
+in_orcs01,106,177,5	script	Orc Lord	ORC_LORD,{
+	.@r = get_reputation_points(1);
+	if(.@r > 10){
+		mes "[Orc Lord]";
+		mes "Human, what are you looking at.";
+		next;
+	} else {
+		mes "[Orc Lord]";
+		mes "What's going on in the realm of an evil civilian orc?.","If you come to subjugate us, we won't let you go.";
+		next;
+	}
+	if(select("Step back:Hand out a goblin card") == 1){
+		mes "[Orc Lord]";
+		mes "Ha ha ha ha! Well thought! Still, your life is precious you know!!!";
+		end;
+	}
+	mes "^0000FFIf you have <ITEM>[Goblin Card]<INFO>4060</INFO></ITEM> give 1 card to Orc Lord.^000000";
+	next;
+	if(select("Continue:Cancel") == 1){
+		if(countitem(4060) >= 1){
+			mes "[Orc Lord]";
+			mes "Goblin Card!!! You have proven that you kill them! Ha ha ha ha!";
+			.@r = get_reputation_points(1);
+			set_reputation_points(2,.@r+50);
+			delitem 4060,1;
+			end;
+		}
+	}
+	mes "[Orc Lord]";
+	mes "The goblins are annoying lately. Kill them and bring me a <ITEM>[Goblin Card]<INFO>4060</INFO></ITEM> as proof.";
+	next;
+	mes "[Orc Lord]";
+	mes "So what's the benefit? Can't we see the wicked human being a little less wicked? Ha ha ha ha!!";
+	end;
+}
+
+in_orcs01,116,179,3	script	Orc Herbalist	4_orcwarrior,{
+	.@r = get_reputation_points(1);
+	npctalk "Crackle...";
+	if(.@r > 999)
+		callshop "reput1",1;
+	if(.@r > 1999)
+		callshop "reput2",1;
+	if(.@r > 2999)
+		callshop "reput3",1;
+	end;
+}
+
+-	shop	reput1	FAKE_NPC,no,507:1000,508:2500;
+-	shop	reput2	FAKE_NPC,no,507:800,508:2000,509:3000;
+-	shop	reput3	FAKE_NPC,no,507:400,508:700,509:2000,510:7000;
+-	shop	reput4	FAKE_NPC,no,1033:4000,1032:4000;
+-	shop	reput5	FAKE_NPC,no,1033:3000,1032:3000,576:3000;
+-	shop	reput6	FAKE_NPC,no,1033:2000,1032:2000,576:2000,6217:20000;

@@ -1,0 +1,132 @@
+//===== rAthena Script ======================================= 
+//= Zonda Teleportation Services
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//= 1.1 Additional Portal NPC (KRO) [ROManiac]
+//===== Description: ========================================= 
+// Texts from this script were translated according to KRO
+//============================================================
+
+-	script	ZondaTeleportationServices	HIDDEN_NPC,{
+	cutin "zonda_do01", 2;
+	mes "[Zonda Employee]";
+	mes "Welcome.";
+	mes "Our team is always working to exceed your expectations regarding quality of service.";
+	mes "Do you want to summon space mover?.";
+	next;
+	@m = select( "North Bifrost", "Eclage", "Splendide", "Midgard Camp", "Manuk", "Kamidal Mountain", "Listen to Explanation","Cancel.") - 1;
+	if(@m == 6){
+		mes "[Zonda Employee]";
+		mes "If you say your destination, a space mover will be spawn and you need to pay a certain amount of zeny or you can use Malangdo Can.";
+		next;
+		mes "[Zonda Employee]";
+		mes "We are always striving to ensure the best services for our customers.";
+		mes "Thank you for using our services.";
+		close3;
+	} else if (@m == 7){
+		mes "[Zonda Employee]";
+		mes "We are always striving to ensure the best services for our customers.";
+		mes "Thank you for using our services.";
+		close3;
+	}	mes "[Zonda Employee]";
+	mes "Wait a minute...";
+	mes "Space Mover is being summoned.";
+	close2;
+	cutin "", 255;
+	calldynamic ("Space Mover#0"+@m,"Space Mover","0"+@m+"_"+getcharid(0));
+	end;
+}
+	
+prontera,0,0,0	script	Space Mover#00	PORTAL,{
+	callfunc "F_Portal2",1;
+}
+	
+prontera,0,0,0	script	Space Mover#01	PORTAL,{
+	callfunc "F_Portal2",2;
+}
+
+prontera,0,0,0	script	Space Mover#02	PORTAL,{
+	callfunc "F_Portal2",3;
+}
+
+prontera,0,0,0	script	Space Mover#03	PORTAL,{
+	callfunc "F_Portal2",4;
+}
+
+prontera,0,0,0	script	Space Mover#04	PORTAL,{
+	callfunc "F_Portal2",5;
+}
+
+prontera,0,0,0	script	Space Mover#05	PORTAL,{
+	callfunc "F_Portal2",6;
+}
+
+function	script	F_Portal2	{	
+	.@tele = getarg(0);
+	
+	switch(.@tele){
+	case 1:
+		callsub( S_Zone,"North Bifrost", 17000,850, 7213); // Teleport value not confirmed
+		warp "bif_fild02",160,230; // Unverified Coordinates
+		end;
+	case 2:
+		callsub( S_Zone,"Eclage", 17000,850, 11311);
+		warp "eclage",111,39;
+		end;
+	case 3:
+		callsub( S_Zone,"Splendide", 17000,850, 10078);
+		warp "splendide",171,115;
+		end;
+	case 4:
+		callsub( S_Zone,"Midgard Expedition Camp", 19000,950, 10078);
+		warp "mid_camp",210,288;
+		end;
+	case 5:
+		callsub( S_Zone,"Manuk", 22000,1100, 10078);
+		warp "manuk",263,177;
+		end;
+	case 6:
+		callsub( S_Zone,"Outskirts of Kamidal Mountain", 24000,1200, 7184);
+		warp "dic_fild01",188,187;
+		end;
+	}
+	
+S_Zone:
+	.@zeny_req = getarg(1);
+	.@item_req = getarg(2);
+	mes "[Space Mover]";
+	mes getarg(0) + " is available for ^ff0000" + .@zeny_req + " Zenys^000000 or ^ff0000" + .@item_req + " Malang Sp Can^000000.";
+	next;
+	switch( select( .@zeny_req + " Zeny", .@item_req + " Malang Sp Can", "Cancel" ) ) {
+	case 1:
+		if (Zeny < .@zeny_req)
+			break;
+		Zeny -= .@zeny_req;
+		return;
+	case 2:
+		if (countitem(12636) < .@item_req)
+			break;
+		delitem 12636,.@item_req; // Malang_Sp_Can
+		return;
+	case 3:
+		mes "[Space Mover]";
+		mes "Can you tell me about other areas of service?";
+		close;
+	}
+	mes "[Space Mover]";
+	mes "Sir! You do not have enough value that we are asking for.";
+	mes "Please check back again.";
+	end;
+}
+
+alberta,35,239,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#alberta	4_M_DRZONDA01
+aldebaran,138,122,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#aldebaran	4_M_DRZONDA01
+einbroch,248,205,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#einbroch	4_M_DRZONDA01
+geffen,117,66,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#geffen	4_M_DRZONDA01
+lighthalzen,169,103,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#lighthalzen	4_M_DRZONDA01
+morocc,157,257,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#morocc	4_M_DRZONDA01
+payon,178,104,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#payon	4_M_DRZONDA01
+prontera,145,87,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#prontera	4_M_DRZONDA01
+rachel,118,139,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#rachel	4_M_DRZONDA01
+veins,198,133,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#veins	4_M_DRZONDA01
+yuno,145,184,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#yuno	4_M_DRZONDA01

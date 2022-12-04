@@ -1,0 +1,119 @@
+glast_01,222,268,4	script	TESTING2	2_SLOT_MACHINE,{
+	
+	setArray .@accEnchant1,4702,4703,4704,4732,4733,4734,4742,4743,4744,4712,4713,4714,4722,4723,4724,4752,4753,4754;
+	setArray .@accEnchant2,4821,4822,4812,4826,4843,4844,4835,4836,4864,4865;
+	setArray .@accEnchant3,29587,29588,29589,29590,29591,29592;
+
+	.@part = EQI_ACC_L;
+	.@item = getequipid(EQI_ACC_L);
+	.@refine = getequiprefinerycnt(EQI_ACC_L);
+	.@card0 = getequipcardid(EQI_ACC_L,0);
+	.@card1 = getequipcardid(EQI_ACC_L,1);
+	.@card2 = getequipcardid(EQI_ACC_L,2);
+	.@card3 = getequipcardid(EQI_ACC_L,3);
+	.@material1 = 25740;
+	.@valor1 = 50;
+	.@material2 = 6755;
+	.@valor2 = 200;
+	.@material3 = 7925;
+	.@valor3 = 3;
+	.@zeny = 30000000;
+	
+	if(.@item < 32228 || .@item > 32233) {
+		mes "[King Schmidt's Insignias]";
+		mes "You do not wear a correct accessory.";
+		mes "Wear one of the following list!";
+		next;
+		mes "<ITEM>"+getitemname(32228)+"<INFO> 32228 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32229)+"<INFO> 32229 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32230)+"<INFO> 32230 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32231)+"<INFO> 32231 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32232)+"<INFO> 32232 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32233)+"<INFO> 32233 </INFO> </ITEM>";
+		close;
+	}
+
+	disable_items; 
+	mes "<ITEM>["+getequipname(EQI_ACC_L)+"]<INFO> "+getequipid(EQI_ACC_L)+" </INFO> </ITEM>";
+	mes "=====[Reinforcement Material]=====";
+	mes "30.000.000,-				                         zeny";
+	mes "<ITEM>["+getitemname(25740)+"]<INFO> 25740 </INFO> </ITEM>	       50pcs";
+	mes "<ITEM>["+getitemname(6755)+"]<INFO> 6755 </INFO> </ITEM>	             200pcs";
+	mes "<ITEM>["+getitemname(7925)+"]<INFO> 7925 </INFO> </ITEM>3pcs";
+	if(select("Cancel","Proceed") - 2) close;
+	next;
+	if(.@card1 != 0) {
+		mes "<ITEM>["+getequipname(EQI_ACC_L)+"]<INFO> "+getequipid(EQI_ACC_L)+" </INFO> </ITEM>";
+		mes "Your accessory has already reached the enchancement limit.";
+		close;
+	}
+	mes "<ITEM>["+getequipname(EQI_ACC_L)+"]<INFO> "+getequipid(EQI_ACC_L)+" </INFO> </ITEM>";
+	mes "Select the enchancement!";
+	if(.@card3 == 0) {
+		for ( set .@e,0; .@e < getarraysize(.@accEnchant1); set .@e,.@e + 1)
+		set .@e_m$,.@e_m$ + "> "+getitemname(.@accEnchant1[.@e])+ ( (.@accEnchant1[.@e+1] != 0)?":":"");
+		set .@rune,select(.@e_m$) - 1;
+		next;
+		mes "<ITEM>["+getequipname(EQI_ACC_L)+"]<INFO> "+getequipid(EQI_ACC_L)+" </INFO> </ITEM>";
+		mes "Selected Enchantment: "+getitemname(.@accEnchant1[.@rune]);
+		mes "Proceed?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		goto enchant;
+	}
+	if(.@card2 == 0) {
+		for ( set .@e,0; .@e < getarraysize(.@accEnchant2); set .@e,.@e + 1)
+		set .@e_m$,.@e_m$ + "> "+getitemname(.@accEnchant2[.@e])+ ( (.@accEnchant2[.@e+1] != 0)?":":"");
+		set .@rune,select(.@e_m$) - 1;
+		next;
+		mes "<ITEM>["+getequipname(EQI_ACC_L)+"]<INFO> "+getequipid(EQI_ACC_L)+" </INFO> </ITEM>";
+		mes "Selected Enchantment: "+getitemname(.@accEnchant2[.@rune]);
+		mes "Proceed?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		goto enchant;
+	}
+	if(.@card1 == 0) {
+		for ( set .@e,0; .@e < getarraysize(.@accEnchant3); set .@e,.@e + 1)
+		set .@e_m$,.@e_m$ + "> "+getitemname(.@accEnchant3[.@e])+ ( (.@accEnchant3[.@e+1] != 0)?":":"");
+		set .@rune,select(.@e_m$) - 1;
+		next;
+		mes "<ITEM>["+getequipname(EQI_ACC_L)+"]<INFO> "+getequipid(EQI_ACC_L)+" </INFO> </ITEM>";
+		mes "Selected Enchantment: "+getitemname(.@accEnchant3[.@rune]);
+		mes "Proceed?";
+		if(select("- Yes:- No") - 1) close;
+		next;
+		goto enchant;
+	}
+enchant:
+	if(Zeny < 30000000) { 
+		mes "^FF0000* Insufficient Zeny!^000000"; 
+		enable_items; 
+		close; 
+	} else if(countitem(25740) < 50) { 
+		mes "^FF0000* You need 50x "+getitemname(25740)+"!^000000";
+		enable_items;
+		close; 
+	} else if(countitem(6755) < 200) { 
+		mes "^FF0000* You need 200x "+getitemname(6755)+"!^000000";
+		enable_items;
+		close; 
+	} else if(countitem(7925) < 5) { 
+		mes "^FF0000* You need 5x "+getitemname(7925)+"!^000000";
+		enable_items;
+		close; 
+	}
+	set Zeny,Zeny-.@zeny;
+	delitem .@material1,.@valor1;
+	delitem .@material2,.@valor2;
+	delitem .@material3,.@valor3;
+	delequip .@part;
+	if(!.@card3) .@card3 = .@accEnchant1[.@rune];
+	else if(!.@card2) .@card2 = .@accEnchant2[.@rune];
+	else if(!.@card1) .@card1 = .@accEnchant3[.@rune];
+	getitem2 .@item, 1, 1, .@refine,0, .@card0, .@card1, .@card2, .@card3;
+	enable_items; 
+	specialeffect2 154;
+	dispbottom "The enchantment success";
+close;
+}

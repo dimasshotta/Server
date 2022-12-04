@@ -1,0 +1,1195 @@
+//===== rAthena Script ======================================= 
+//= Illusion Underwater (kRO Servers)
+//===== By: ================================================== 
+//= [ROmaniac]
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//===== Additional Comments: ================================= 
+// - Walkthrough Conversion [ROmaniac]
+//============================================================
+
+izlude,129,49,4	script	Soup#uwt3	1_M_02,{	
+	mes "[ Soup ]";
+	mes "Hello I am Soup, My friend Sirud is missing.";
+	next;
+	mes "[ Soup ]";
+	mes "Sirud, Lake, Gein and myself used to enjoy fishing together.";
+	next;
+	mes "[ Soup ]";
+	mes "On the day that storm happened. I didn't stop Sirud from going fishing.","I have been feeling remorse ever since.";
+	next;
+	mes "[ Soup ]";
+	mes "When his fishing rod was found I rushed out and came here right away.";
+	next;
+	mes "[ Soup ]";
+	mes "This must be finally the clue right? The Rod?";
+	end;
+}
+
+izlude,135,51,4	script	Lake#uwt3	1_F_MERCHANT_01,{
+	mes "[ Lake ]";
+	mes "It's already been 3 months since Sirud went missing";
+	next;
+	mes "[ Lake ]";
+	mes "And we just found Sirud's fishing rod.";
+	next;
+	mes "[ Lake ]";
+	mes "It's just as I thought.";
+	next;
+	select("What are you thinking?");
+	mes "[ Lake ]";
+	mes "Why It's just been discovered now?","Isn't this a massage from him?";
+	next;
+	select("It doesn't make any sense.");
+	mes "[ Lake ]";
+	mes "Perhaps this is my delution, I miss him so much you know. Especially on this day.";
+	end;
+}
+
+izlude,133,49,5	script	Gein#uwt3	97,{
+	if( BaseLevel < 140 ){
+		mes "[ Gein ]";
+		mes "It looks like you are not strong enough to enter here. Please return after you are ^0000FFLevel 140^000000 or more.";
+		close;
+	}
+	switch(isbegin_quest(3407)){
+	case 0:
+		mes "[ Gein ]";
+		mes "Huh.. Why is this discovered now??","This is impossible...";
+		next;
+		select("What's going on?");
+		mes "[ Gein ]";
+		mes "Ahh... Hello!";
+		next;
+		mes "- He is very restless with a fishing rod in his hand. From the looks of it, it doesnt look like he came for fishing. -";
+		next;
+		mes "[ Gein ]";
+		mes "This fishing rod belongs to my friend ^0000FFSirud^000000, who disappeared 3 months ago.","I found it on the sea, Right here!!!";
+		next;
+		select("Dissapeared?");
+		mes "[ Gein ]";
+		mes "Yes.. Sirud is a huge fishing fanatic, and he came here to fish whenever he had a chance.";
+		next;
+		mes "[ Gein ]";
+		mes "Because of him, we also fell in love with fishing, and the four of us often had a good time.";
+		next;
+		mes "[ Gein ]";
+		mes "Sirud's passion for fishing was so strong that makes us go fishing even it is raining so hard.";
+		next;
+		mes "[ Gein ]";
+		mes "The disappearance of Sirud happened long time ago and it was that stormy day. He put on a rain coat and went fishing.";
+		next;
+		mes "[ Gein ]";
+		mes "We suggested him to be inside the house with us but he refused. It was a very bad weather.";
+		next;
+		mes "[ Gein ]";
+		mes "Sirud went out fishing alone like that, and we haven't seen him ever since.";
+		next;
+		mes "[ Gein ]";
+		mes "I should have stopped him from going out...";
+		next;
+		mes "- Gein wiped away his tears for a while and then continue the story. -";
+		next;
+		mes "[ Gein ]";
+		mes "The news of Sirud's disappearance went viral through out Izlude, and a large scal of investigation was carried out,","consuming a lot of time and manpower, but the search ended without finding any clues.";
+		next;
+		mes "[ Gein ]";
+		mes "After that, we gathered together to find Sirud.","I went all over the place to find him, but it's a bumpmer, and I was about to give up.";
+		next;
+		mes "[ Gein ]";
+		mes "But just now!!!";
+		next;
+		mes "[ Gein ]";
+		mes "We back here after 3 months!!!";
+		next;
+		mes "[ Gein ]";
+		mes "I found his belongings floating on this sea when the last time I saw him. I mean, His stuff was never found before.";
+		next;
+		select("Calm down, are you sure that's his fishing rod?");
+		mes "[ Gein ]";
+		mes "I am sure! It's the same fishing rod that he used back then.";
+		next;
+		mes "[ Gein ]";
+		mes "This fishing rod is the only fishing rod made by Sirud himself. You can also see the initials on the handle here. S.R.D!!!";
+		next;
+		select("Ohh, you are right. But why now?");
+		mes "[ Gein ]";
+		mes "I am so shocked and confused right now, I dont know what to do.";
+		next;
+		mes "- But when I look closely at the fishing rod, I feel something strange. Although this wooden fishing rod has been submerged in the deep sea for 3 months, it is still in its original shape. Besides, It also has a slight of shimmering luster... -";
+		next;
+		select("This fishing rod is a bit strange isn't it?");
+		mes "[ Gein ]";
+		mes "What do you mean?";
+		next;
+		mes "[ Gein ]";
+		mes "hmmm.....";
+		next;
+		mes "[ Gein ]";
+		mes "hmmm..... ???";
+		next;
+		mes "[ Gein ]";
+		mes "Even after being submerged in the water for 3 whole months... It didn't corrode at all... There is no damage??";
+		next;
+		mes "[ Gein ]";
+		mes "Ummm... And I think there's a subtle glow in it... It's like the rod is coated with something";
+		next;
+		mes "- Suddenly, A man who appeared to be Gein's friend listening to the story and starts talking. -";
+		next;
+		mes "[ Lake ]";
+		mes "Where, I want to se it! Show me!! What's the problem??";
+		next;
+		mes "[ Gein ]";
+		mes "This fishing rod.. I found it here, and it was submerged in the water for  3 months, but I found it in its original form.. No.. Glistening even.";
+		next;
+		mes "[ Lake ]";
+		mes "Ummm.....";
+		next;
+		mes "[ Lake ]";
+		mes "hmmm.....";
+		next;
+		mes "- Lake looked at the fishing rod, gently and then talk to Gein. -";
+		next;
+		mes "[ Lake ]";
+		mes "I don't know what happened.. how is it possible?";
+		next;
+		mes "[ Gein ]";
+		mes "Of course not!! Do you have any idea?";
+		next;
+		mes "[ Lake ]";
+		mes "Ummm... But I think I know someone who might know about this rod.";
+		next;
+		mes "[ Gein ]";
+		mes "Who is it?";
+		next;
+		select("Who is it?");
+		mes "[ Lake ]";
+		mes "He is Oceanographer ^0000FFJerrymon^000000. My father and him are close friend, so I have seen him often with my Dad few times. I know he is currently in the East Library of Prontera.";
+		next;
+		mes "[ Gein ]";
+		mes "What a coinsidence... Then.. you are adventurer right? Sorry I know it is out of the box, but Sirud is my important friend, but can I ask you a favor? We can't get out od Izlude for some reason..";
+		next;
+		mes "[ Gein ]";
+		mes "Please go there and find Jerrymon. Show him this fishing rod. I wish we had a little bit of information.";
+		next;
+		switch(select("No problem, I'll go.:Sorry, I am a bit busy right now...")) {
+		case 1:
+			break;
+		case 2:
+			mes "[ Gein ]";
+			mes "Ahh it's okay";
+			close;
+		}
+		mes "[ Gein ]";
+		mes "Uhhh... Thank you!!!";
+		next;
+		mes "[ Gein ]";
+		mes "<NAVI>[ Jerrymon ]<INFO>prt_in,157,66,0,101,0</INFO></NAVI> should be still in the Library at Prontera.";
+		next;
+		mes "[ Gein ]";
+		mes "Okay, bring this fishing rod, please take a good care of it, its a keepsake of Sirud!";
+		next;
+		mes "[ Lake ]";
+		mes "What keepsake?? Sirud is probably still alive!!!";
+		next;
+		mes "[ Gein ]";
+		mes "Well, Sorryy my bad.. Okay this is the fishing rod that Sirud left. Thank you in advance.";
+		next;
+		mes "[ Lake ]";
+		mes "Well, I'll let my father know about this, so that Jerrymon knows about it from my father.";
+		next;
+		mes "[ Gein, Lake and Soup ]";
+		mes "See you then.. Thank you!!!";
+		getitem 25898,1;
+		setquest 3407;
+		end;
+	case 1:
+		if(Illusion_underwater == 1) {
+			mes "[ Gein ]";
+			mes "Ahh!! You are here!";
+			next;
+			mes "[ Gein ]";
+			mes "Do you any information about Sirud?";
+			next;
+			mes "- I told Gein what I heard from Jerrymon. -";
+			next;
+			mes "[ Gein ]";
+			mes "Oh, I see. This is the firt time you heard of Haegu.";
+			next;
+			mes "[ Gein ]";
+			mes "There's a trench so big and deep near Izlude.";
+			next;
+			mes "[ Gein ]";
+			mes "Ohh, By the way, is there anything else you need to come back here?";
+			next;
+			select("I was wondering if there was anything else you found besides the fishing rod?");
+			next;
+			mes "[ Gein ]";
+			mes "Ohh right!!";
+			next;
+			mes "[ Gein ]";
+			mes "It is a lump that was pulled out with a shovel near the place where the fishing rod was found.";
+			next;
+			mes "- This lump is just like what Jerrymon said. It seems that the essence of the abyss is unmistakeable. -";
+			next;
+			mes "[ Gein ]";
+			mes "Something a bit shiny sticking on the fishing rod, so I keep it for now. Could this chunk helps?";
+			next;
+			select("Yes, that will be a great help, thank you.");
+			next;
+			mes "[ Gein ]";
+			mes "Are you going back to Jerrymon? Please be carefull.";
+			getitem 25899,1;
+			completequest 3407;
+			setquest 3408;
+			end;
+		}
+		mes "[ Gein ]";
+		mes "<NAVI>[ Jerrymon ]<INFO>prt_in,157,66,0,101,0</INFO></NAVI> should be still in the Library at Prontera.";
+		next;
+		mes "[ Gein ]";
+		mes "Show the fishing rod I gave you earlier to him, and I wish we had a little bit of information.";
+		end;
+	case 2:
+		if(isbegin_quest(3408) == 2){
+			mes "[ Gein ]";
+			mes "Oh... Ohh.. Welcome back adventurer. I'm so tired now, I can't barely move.";
+			end;
+		}
+		if(Illusion_underwater == 1) {
+			if(countitem(25899) < 1) {
+				mes "[ Gein ]";
+				mes "Ohh no, you lost the thing that I gave you, T.T here, fortunately I found another one, please don't lose it again!";
+				getitem 25899,1;
+				end;
+			}
+			mes "[ Gein ]";
+			mes "Do you need anything else? that is the only thing that I've found besides the fishing rod! Please be safe!";
+			end;
+		}
+		if(Illusion_underwater == 2 || Illusion_underwater == 3){
+			mes "[ Gein ]";
+			mes "Thank you for saving and found Sirud for us, I can't thank you enough, if you want to go to the trench again just talk to Jerrymon again";
+			end;
+		}
+	}
+OnInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(3407) && BaseLevel > 139";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "Illusion_underwater == 1 && isbegin_quest(3407) == 1";
+	end;
+}
+
+prt_in,157,66,5	script	Jerrymon#uwt3	1_M_01,{
+	switch(isbegin_quest(3407)){
+	case 0:
+		mes "[ Jerrymon ]";
+		mes "Yess.... Sorry I am kinda busy observing something.";
+		close;
+	case 1:
+		if(Illusion_underwater == 1) {
+			mes "[ Jerrymon ]";
+			mes "It may be troublesome, but please. I'll be waiting here.";
+			end;
+		}
+		disable_items;
+		mes "[ Jerrymon ]";
+		mes "Hm... Hmmm....";
+		next;
+		mes "[ Jerrymon ]";
+		mes "What a surprise!!!";
+		next;
+		mes "[ Jerrymon ]";
+		mes "What is going on, am a little busy right now.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Perhaps, you are the person that Lake told me before. I have been waiting for you.","Can you show me the fishing rod?";
+		next;
+		mes "- Jerrymon begins to observe the fishing rod. -";
+		next;
+		mes "..";
+		next;
+		mes "....";
+		next;
+		mes "......";
+		next;
+		mes "[ Jerrymon ]";
+		mes "That's it... That's right, no mistaken...","That's the substance that I discovered a while ago..";
+		next;
+		select("What substance you are talking about?");
+		mes "[ Jerrymon ]";
+		mes "It's in the deepest place in the sea, you have been there before?";
+		next;
+		select("Hmm, well...??");
+		mes "[ Jerrymon ]";
+		mes "It's called Haegu. Simply put it like this, you can think of it as a deep cliff in the sea, like trench.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "It is known that there are hundreds of different types of trenches in the ocean.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Among the trenches, the Bahia Trench near Izlude is known as the widest and deepest trench.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Rumor says that at the bottom of the trench lives rare creatures, so may Marine Scientists like me have shown a great interest in it and have been searching for it.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "However, shallow trenches can be explored to some extent";
+		next;
+		mes "[ Jerrymon ]";
+		mes "In the case of the Bahia Trench, the scientific calculations of the scholars were that no living things could exist becouse it is incredibly deep.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "But recently I discovered that life exist in the Bahia Trench.";
+		next;
+		select("How do you know that?");
+		next;
+		mes "[ Jerrymon ]";
+		mes "You can tell by this stone that contains my magical power.";
+		next;
+		select("This have you powers?");
+		mes "[ Jerrymon ]";
+		mes "Yes, I am actualy a wizard that turned into oceanologist.","I learned magic for it.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "That time I cast a spell on a large stone and plunge it into the water surface where tranches exist.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "The magical power applied to the missing stone is connected to me, so you can measure the depth by measuring the distance.";
+		mes "You can get a little idea of what's going on near the rocks.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "So let me tell you what I've found..";
+		next;
+		mes "[ Jerrymon ]";
+		mes "There is almost no difference in composition between the normal and deep seawater.","But Bahia Trench is different.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "It is like water and oil. There is a section where they don't mix to each other.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "A strong boundary was formed where they meet each other, and it felt as if the deep seawater in that section was desperately blocking the seawater coming down from above.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "The water preasure is also much lower than that of normal seawater, so it speculated that it has a favorable environment for living things to live in.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "We call it the seawater of the abyss, and I have it.";
+		next;
+		select("Does this have anything to do with what we're talking about?");
+		mes "[ Jerrymon ]";
+		mes "Yes!! It does!! I've discovered the existence of abysmal seawater deep in the Bahia Trench and it was very difficult to obtain a sample.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Can you give the fishing rod to me?, If this seawater is extracted and made into purified water, I think I can figure something out.";
+		next;
+		delitem 25898,1;
+		mes "[ Jerrymon ]";
+		mes "Oh, and I heard that this fishing rod was found today. Can i ask you a favor? Please check is there any other material floating in the water nearby?";
+		next;
+		switch(select("No problem, I'll go.:Sorry, I am a bit busy right now...")) {
+		case 1:
+			break;
+		case 2:
+			mes "[ Jerrymon ]";
+			mes "Ahh it's okay...";
+			close;
+		}
+		mes "[ Jerrymon ]";
+		mes "Thank you!! I will be waiting here..";
+		Illusion_underwater = 1;
+		enable_items;
+		end;
+	case 2:
+		if(isbegin_quest(3408) == 1){
+			disable_items;
+			mes "[ Jerrymon ]";
+			mes "Ah Welcome Adventurer!!!";
+			next;
+			mes "[ Jerrymon ]";
+			mes "The Investigation is proceeding smoothly.","Now, take a look at this!";
+			next;
+			mes "[ Jerrymon ]";
+			mes "See those two little water bottles here?";
+			next;
+			mes "[ Jerrymon ]";
+			mes "This one is a plain seawater, but the other one is containing the Abyssmal Essence from the fishing rod","Now, let's mix those two together.";
+			next;
+			mes "- Jerrymon put both type of water in one bottle and started shaking them. -";
+			next;
+			mes "[ Jerrymon ]";
+			mes "Now look! As I said before, it doesn't mix at all, right?";
+			next;
+			mes "[ Jerrymon ]";
+			mes "These... These!!!";
+			next;
+			mes "[ Jerrymon ]";
+			mes "If you shake it at a crazy speed!!!";
+			next;
+			mes "[ Jerrymon ]";
+			mes "^FF3399Shake, shake, shake, shake, shake!!!^000000";
+			next;
+			mes "[ Jerrymon ]";
+			mes "^FF3399Chk, chk, wooaahhh!!!^000000";
+			next;
+			mes "[ Jerrymon ]";
+			mes "^FF3399Shrk, shrk, blup, blup, blup..^000000";
+			next;
+			mes "[ Jerrymon ]";
+			mes "OMG!! Woahh.. Finally a got it...";
+			next;
+			select("What happened? Are you okay??");
+			mes "[ Jerrymon ]";
+			mes "Woah.. woah.. Woah.. It's okay, I am fine now..";
+			next;
+			mes "- I look into the bottle Jerrymon is holding, the shape of vortex-like pattern is clearly visible. -";
+			next;
+			mes "[ Jerrymon ]";
+			mes "Now you can see it? A vortex.","This is the passage that connect to the bottom of Bahia Trench.";
+			next;
+			select("???.. Isn't that just a vortex created by shaking??");
+			mes "[ Jerrymon ]";
+			mes "No, this is my magic. It's the stone, let's see this.";
+			next;
+			mes "- Jerrymon put a stone inside the bottle, and the stone is sucked into the vortex and disappeared without any trace. -";
+			next;
+			select("No, how can this be?");
+			mes "[ Jerrymon ]";
+			mes "Did I ever say that the stone with my magic can measure its distance from me?";
+			next;
+			mes "[ Jerrymon ]";
+			mes "It feels just like the last time I put the stone into Bahia Trench. If you follow the whirlpool you might find the owner of the fishing rod.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "The problem is, The amount of essence on the fishing rod, is not enough to make a large vortex that can fit a human being.";
+			next;
+			select("Will this be okay with such amount?");
+			if(countitem(25899) < 1) {
+				mes "- I am about to show Him the Abyssal Essence that I got from Gein, but somehow I don't find it anywhere (Did I sell it?). -";
+				close2;
+				enable_items;
+				end;
+			}
+			mes "- I show to Jerrymon the Abyssal Essence that I got from Gein. -";
+			next;
+			mes "[ Jerrymon ]";
+			mes "ahh, just realize that you have it already.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "With this amount I think it can create a Vortex that can be entered by human being, You can hand it over me!";
+			delitem 25899,1;
+			next;
+			mes "[ Jerrymon ]";
+			mes "This place is to small to do it here. So let's do it in Izlude. See u there then!";
+			completequest 3408;
+			setquest 3409;
+			enable_items;
+			end;
+		}
+		if(isbegin_quest(3409) == 1){
+			mes "[ Jerrymon ]";
+			mes "Let's go and do it in Izlude. I'll see u there!";
+			end;
+		}
+		if(Illusion_underwater == 2){
+			mes "[ Jerrymon ]";
+			mes "Now the mistery is solved, thanks for your help Adventurer, you might go to the Bahia trench again just talk to me there in Izlude!";
+			end;
+		}
+	}
+OnInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3407) == 1 || isbegin_quest(3408) == 1";
+	end;
+}
+	
+izlude,132,54,4	script	Jerrymon#iz	HIDDEN_WARP_NPC,5,5,{
+	if(isbegin_quest(3409) == 1){
+		mes "[ Jerrymon ]";
+		mes "You are here already!!";
+		next;
+		mes "[ Jerrymon ]";
+		mes "While you are here, the preparations are all done.";
+		next;
+		mes "- Gein gasps and greets others. -";
+		next;
+		mes "[ Gein ]";
+		mes "Ha, ha ha ha ha... ha ha ha.. Hi Adventurer, you are back.";
+		next;
+		mes "[ Gein ]";
+		mes "I don't know what the plan is, but I shake it hard just like Jerrymon-sama told me!!";
+		next;
+		mes "[ Lake and Soup ]";
+		mes "Ohh, ha.. hahaha.. Hi everyone!";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Now, shall we start?";
+		specialeffect 687,AREA,"Jerrymon#iz";
+		specialeffect 688,AREA,"Jerrymon#iz";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Hold my hand when I give you a signal!";
+		next;
+		select("No, wait. Are you doing it right now?");
+		mes "[ Jerrymon ]";
+		mes "Yes, just do what i said. Trust me!";
+		next;
+		mes "[ Jerrymon ]";
+		mes "While you are here, the preparations are all done.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Now!! Take my hand!";
+		specialeffect 12,AREA,"Jerrymon#iz";
+		specialeffect 837,AREA,"Jerrymon#iz";
+		sleep2 1500;
+		warp "iz_d04_i",131,227;
+		Illusion_underwater = 2;
+		end;
+	}
+	if(Illusion_underwater == 3){
+		mes "[ Jerrymon ]";
+		mes "Hello!!";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Thanks to you, It was a very new experience for me traveling to the trench.";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Would you like to go back to the deep sea? I will follow you too!!!";
+		next;
+		switch(select("Please, let's go:Wait, I'll go next time")){
+		case 1:
+			mes "[ Jerrymon ]";
+			mes "All right!";
+			specialeffect 687,AREA,"Jerrymon#iz";
+			specialeffect 688,AREA,"Jerrymon#iz";
+			sleep2 1000;
+			specialeffect 12,AREA,"Jerrymon#iz";
+			specialeffect 837,AREA,"Jerrymon#iz";
+			sleep2 1500;
+			warp "iz_d04_i",131,227;
+			end;
+		case 2:
+			mes "[ Jerrymon ]";
+			mes "Okay then, tell me when you are ready!";
+			end;
+		}
+	}
+	mes "[ Jerrymon ]";
+	mes "Now, shall we start?";
+	specialeffect 687,AREA,"Jerrymon#iz";
+	specialeffect 688,AREA,"Jerrymon#iz";
+	next;
+	mes "[ Jerrymon ]";
+	mes "Hold my hand when I give you a signal!";
+	next;
+	select("No, wait. Are you doing it right now?");
+	mes "[ Jerrymon ]";
+	mes "Yes, just do what i said. Trust me!";
+	next;
+	mes "[ Jerrymon ]";
+	mes "While you are here, the preparations are all done.";
+	next;
+	mes "[ Jerrymon ]";
+	mes "Now!! Take my hand!";
+	specialeffect 12,AREA,"Jerrymon#iz";
+	specialeffect 837,AREA,"Jerrymon#iz";
+	sleep2 1500;
+	warp "iz_d04_i",131,227;
+	Illusion_underwater = 2;
+	end;
+OnTouch:
+	if(isbegin_quest(3409) > 0)
+		classchange( 1_M_01, "Jerrymon#iz", bc_self );
+	else 
+		classchange( HIDDEN_WARP_NPC, "Jerrymon#iz", bc_self );
+	end;	
+OnInit:
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3409) == 1";
+	end;
+}
+
+izlude,126,53,4	script	Sirud#iz	HIDDEN_WARP_NPC,5,5,{
+OnTouch:
+	if(Illusion_underwater == 3)
+		classchange( 1_M_04, "Sirud#iz", bc_self );
+	else
+		classchange( HIDDEN_WARP_NPC, "Sirud#iz", bc_self );
+	end;
+}
+
+
+//==========================================================================
+//F1 DAILY QUEST
+//==========================================================================
+iz_d04_i,127,228,4	script	Jerrymon#uw1	47,{
+	for(.@m = 0; .@m<2; .@m++) {
+		set .@i, getd ("uwquest"+.@m);
+		if(.@i == 0) {
+			.quest$[.@m] = "";
+			.color$[.@m] = "^000000";
+		}
+		if(.@i == 1) {
+			.colors$ = "^000000";
+			.color$[.@m] = "^666666";
+			.quest$[.@m] = "- Progress";
+			set .@a, getd ("cooldownuw"+.@m);
+			if(.@a == 1) 
+				.quest$[.@m] = "- Cooldown";
+		}
+	}
+	switch(isbegin_quest(3410)){
+	case 0:
+		end;
+	case 1:
+		if(Illusion_underwater == 2) {
+			mes "[ Jerrymon ]";
+			mes "Wow!! the purple sea!! It's Fantastic!";
+			next;
+			mes "[ Jerrymon ]";
+			mes "How amazing we can breath down here and even the marine creature that I have never seen before!";
+			next;
+			mes "[ Jerrymon ]";
+			mes "We need to investigate this place! I am so thrilled, this is the most moving moment in my entire life as an Oceanographer.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "Huu.. Lalala~~";
+			next;
+			select("Oh man, I come here to find Sirud");
+			mes "[ Jerrymon ]";
+			mes "Ohh man, I almost forget, that should be a priority!";
+			next;
+			mes "[ Jerrymon ]";
+			mes "But the thing is, to bring back Sirud to the surface you need Abyssal Essence.","The question is, how do you get that thing?";
+			next;
+			mes "[ Jerrymon ]";
+			mes "I've been paying close attention to the deep sea creatures here, and i have seen some of them glow with the Abyssal Essence. Besides they don't look so friendly to us.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "In that case, will you hunt them down? Perhaps you may get the Abyssal Essence from them.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "Hunt 10 ^4d4dffDeep Sea Sropho^000000, 10 ^4d4dffDeep Sea Deviace^000000 and 10 ^4d4dffDeep Sea Marse^000000.";
+			next;
+			switch(select("Okay I will:I'll do it next time.")){
+			case 1:
+				mes "[ Jerrymon ]";
+				mes "Okay, I am waiting here.";
+				completequest 3410;
+				setquest 3411;
+				next;
+			case 2:
+				mes "[ Jerrymon ]";
+				mes "Okay, talk to me when you are ready!";
+				end;
+			}
+		}
+	case 2:	
+		if(isbegin_quest(3412) == 1){
+			if(countitem(25899) > 9){
+				mes "[ Jerrymon ]";
+				mes "You did it! Good Job! You have collected 10 Abyssal Essence.";
+				next;
+				mes "[ Jerrymon ]";
+				mes "Would you like to go to the surface now?.";
+				next;
+				switch(select("Okay bring me back to the surface:Wait I'll go sight seing first.")){
+				case 1:
+					mes "[ Jerrymon ]";
+					mes "By the way I found the stone again while waiting for you, now take this!";
+					next;
+					mes "[ Jerrymon ]";
+					mes "Okay let's go up!";
+					next;
+					mes "[ Jerrymon ]";
+					mes "Ughh!!";
+					next;
+					mes "[ Jerrymon ]";
+					mes "Now Adventure-sama and Sirud-sama!! Can you help me? Whoaa!!";
+					specialeffect 687,AREA,"Jerrymon#uw1";
+					specialeffect 688,AREA,"Jerrymon#uw1";
+					next;
+					mes "- A huge vortex is created in front Jerrymon. -";
+					next;
+					mes "[ Jerrymon ]";
+					mes "I will go first, please follow carefully!";
+					close2;
+					completequest 3412;
+					getexp 111046500,77732500;
+					getitem 25271,2;
+					delitem 25899,10;
+					specialeffect 12,AREA,"Jerrymon#uw1";
+					specialeffect 837,AREA,"Jerrymon#uw1";
+					sleep2 1000;
+					warp "izlude",128,54;
+					Illusion_underwater = 3;
+					end;
+				case 2:
+					mes "[ Jerrymon ]";
+					mes "Okay, talk to me when you are ready!";
+					end;
+				}
+			}
+			mes "[ Jerrymon ]";
+			mes "Now go on collect 10 Abyssal Essence and be safe.";
+			end;
+		}
+		switch(checkquest(3411,HUNTING)){
+		case 0:
+		case 1:
+			mes "[ Jerrymon ]";
+			mes "Hunt 10 ^4d4dffDeep Sea Sropho^000000, 10 ^4d4dffDeep Sea Deviace^000000 and 10 ^4d4dffDeep Sea Marse^000000. I am waiting here.";
+			end;
+		case 2:
+			if(countitem(25899) > 1) {
+				mes "[ Jerrymon ]";
+				mes "You did a really good job! You even bring abyssal essence. My prediction was correct";
+				next;
+			}
+			mes "[ Jerrymon ]";
+			mes "You did a really good job! And my prediction was correct";
+			next;
+			mes "[ Jerrymon ]";
+			mes "It seems that you only need 10 Abyssal Essence to brung Sirud back to the surface.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "If you collect them, I will create a vortex for you.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "Ohh and this is what I have been looking for, Here, take and keep the stone that I told you earlier. I think an Adventure like you need this kind of stone.";
+			next;
+			mes "[ Jerrymon ]";
+			mes "Please be carefull this time.";
+			getitem 25271,2;
+			getexp 111046500,77732500;
+			erasequest 3411;
+			setquest 3412;
+			end;
+		}
+	}
+	if(Illusion_underwater == 3){
+		for (.@a = 0; .@a < 2; .@a++) {
+			if(checkquest(.ill_uw_delay[.@a],PLAYTIME) == 2){
+				erasequest .ill_uw_delay[.@a];
+				setd "cooldownuw"+.@a, 0;
+				setd "uwquest"+.@a, 0;
+			}
+		}
+		mes "[ Jerrymon ]";
+		mes "Hello! Research is going smoothly";
+		next;
+		mes "[ Jerrymon ]";
+		mes "Hopefully we can make the vortex that connects here and Izlude go on forever!";
+		next;
+		mes "[ Jerrymon ]";
+		mes "So I mean, can you help me a little more?";
+		next;
+		mes "[ Jerrymon ]";
+		mes "We need more Abyssal Essence, also, I would like you to deal with the deep-sea creatures that interfere with research.";
+		next;
+		switch(select("Okay.:I'll do it next time.:I want to return to Izlude.")){
+		case 1:
+			mes "[ Jerrymon ]";
+			mes "Thank you! what would you do?";
+			next;
+			.@q = select(.color$[0]+"Collect Abyssal Essence. "+.quest$[0]+.colors$,.color$[1]+"Defeat Deep Sea Creatures."+.quest$[1]+.colors$,"Maybe next time") - 1;
+			mes "[ Jerrymon ]";
+			if(.@q == 2) {
+				mes "Sure, take your time!";
+				close;
+			}	
+			set .@a, getd ("cooldownuw"+.@q);
+			if(.@a == 1){
+				mes "Let's come back again tomorrow for more exploation.";
+				end;
+			}
+			if(.@q == 0) {
+				if(10 > countitem(25899) && isbegin_quest(.ill_uw[.@q]) == 1){
+					mes "^0000FFAbyssal Essence^000000 can be obtained all creatures here.","I need 10 right now.";
+					close;
+				}
+				if(isbegin_quest(.ill_uw[.@q]) == 0) { // Quest: Collect Abyssal Essence
+					mes "^0000FFAbyssal Essence^000000 can be obtained all creatures here.","I need 10 right now.";
+					setquest .ill_uw[.@q];
+					setd "uwquest"+.@q, 1;
+					end;
+				}
+				mes "You did it! Good Job! You have collected 10 Abyssal Essence.";
+				next;
+				mes "[ Jerrymon ]";
+				mes "By the way I found the stone again while waiting for you, now take this!";
+				delitem 25899,10;
+				getexp 111046500,77732500;
+				erasequest .ill_uw[.@q];
+				setquest .ill_uw_delay[.@q];
+				setd "uwquest"+.@q, 1;
+				setd "cooldownuw"+.@q, 1;
+				getitem 25271,1;
+				end;
+			}	
+			switch(checkquest(.ill_uw[.@q],HUNTING)) {
+			case -1:
+				switch(.@q) {
+				case 1: // Quest: Defeat Deep Sea Creatures in the Upper Layers
+					mes "Please hunt 10 ^0000FFDeep Sea Srophos^000000, 10 ^0000FFDeep Sea Deviaces^000000 and 10 ^0000FFDeep Sea Marse^000000";
+					next;
+					mes "[ Jerrymon ]";
+					mes "Then go carefully";
+					break;
+				}			
+				setquest .ill_uw[.@q];
+				setd "uwquest"+.@q, 1;
+				end;
+			case 0:
+			case 1:
+				mes "Please hunt 10 ^0000FFDeep Sea Srophos^000000, 10 ^0000FFDeep Sea Deviaces^000000 and 10 ^0000FFDeep Sea Marse^000000";
+				next;
+				mes "[ Jerrymon ]";
+				mes "Then go carefully";
+				end;
+			case 2:
+				switch(.@q) {
+				case 1:		
+					mes "You did a really good job! And my prediction was correct";
+					next;
+					mes "[ Jerrymon ]";
+					mes "Now take this ^0000ffIllusion Stone^000000.";
+					getitem 25271, 1;
+					erasequest .ill_uw[.@q];
+					setquest .ill_uw_delay[.@q];
+					setd "uwquest"+.@q, 1;
+					setd "cooldownuw"+.@q, 1;
+					getexp 111046500,77732500;
+					end;
+				}
+			}
+		case 2:
+			mes "[ Jerrymon ]";
+			mes "Sure! Take your time!";
+			end;
+		case 3:
+			specialeffect 687,AREA,"Jerrymon#uw1";
+			specialeffect 688,AREA,"Jerrymon#uw1";
+			sleep2 1000;
+			specialeffect 12,AREA,"Jerrymon#uw1";
+			specialeffect 837,AREA,"Jerrymon#uw1";
+			sleep2 1500;
+			warp "izlude",128,54;
+			end;
+		}
+	}
+OnInit:
+	setarray .ill_uw[0],3413,3415;
+	setarray .ill_uw_delay[0],3414,3416;
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(3410) == 1";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Illusion_underwater == 3 && isbegin_quest(3413) == 0 && isbegin_quest(3414) == 0|| Illusion_underwater == 3 && isbegin_quest(3415) == 0 && isbegin_quest(3416) == 0";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3414,PLAYTIME) == 2 || checkquest(3416,PLAYTIME) == 2";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "(10 < countitem(25899) && isbegin_quest(3413) == 1) || (checkquest(3415,HUNTING) == 2)";
+	end;
+}
+
+iz_d04_i,134,223,3	script	Jane#uw1	1_F_01,{
+	mes "[ Jane ]";
+	mes "Hello. I don't think you've been here long... I haven't seen you around.";
+	next;
+	mes "[ Jane ]";
+	mes "How are you? Isn't this a pretty attractive place, too?";
+	next;
+	mes "[ Jane ]";
+	mes "I have to head back home, but...";
+	end;
+}
+
+iz_d04_i,142,216,3	script	Sun#uw1	4_F_03,{
+	mes "[ Sun ]";
+	mes "Everyone here has arrived at different times and settled down.";
+	next;
+	mes "[ Sun ]";
+	mes "You can see sign of civilization. But you can also see that all of these people were once outsiders.";
+	next;
+	mes "[ Sun ]";
+	mes "Don't worry you'll get used to it all soon.";
+	next;
+	mes "[ Sun ]";
+	mes "Sea monsters attack sometimes, but I can handle them.";
+	end;
+}
+
+iz_d04_i,146,226,3	script	Nick#uw1	2_m_sage_b,{
+	mes "[ Nick ]";
+	mes "What do you think? How's your stay so far?.";
+	next;
+	mes "[ Nick ]";
+	mes "This is deeper than anything else I know. It's amazing that I'm alive! I don't know how that's possible.";
+	end;
+}
+
+iz_d04_i,124,226,5	script	Sirud#uw1	1_M_04,5,5,{
+	switch(isbegin_quest(3409)){
+	case 0:
+		end;
+	case 1:
+		if(Illusion_underwater == 2) {
+			mes .nm$;
+			mes "Helo! Adventure.";
+			next;
+			mes .nm$;
+			mes "- Sirud greets you as if he had been waiting for you. -";
+			next;
+			mes .nm$;
+			mes "The message I sent must have reached Izlude... Thank God...";
+			next;
+			mes .nm$;
+			mes "Was it three months ago? I went fishing in a rainy day.";
+			next;
+			mes .nm$;
+			mes "After catching my first fish, I tripped and fell into the water.";
+			next;
+			mes .nm$;
+			mes "I was trying to get out with all of my might, but I felt something was pulling me deeper into the water.";
+			next;
+			mes .nm$;
+			mes "It felt like a whirlpool.. I thought I was going to die but, when I woke up I found myself lost in this place.";
+			next;
+			mes .nm$;
+			mes "I don't know why, I can breathe down here and I don't feel hungry.";
+			next;
+			mes .nm$;
+			mes "Furthermore, as I look around here. I could see a little vortex-like forming from time to time.";
+			next;
+			mes .nm$;
+			mes "I could feel that, It was the same vortex that swept me away the first time.";
+			next;
+			mes .nm$;
+			mes "It took me two months just to send out my fishing rod with a name on it. There was never much time before the vortexes closed shut.";
+			next;
+			mes .nm$;
+			mes "I've been waiting for someone to find it.. And me...";
+			next;
+			mes .nm$;
+			mes "Now you are here with a fishing rod of mine, It's a clue right?";
+			next;
+			select("Right");
+			mes .nm$;
+			mes "Oh, Thank Goodness! When you return to the surface, I would appreciate it if you could take me with you.";
+			next;
+			mes .nm$;
+			mes "- It's probably the best to talk to Jerry about the work to send Sirud ashore. -";
+			completequest 3409;
+			setquest 3410;
+			end;
+		}
+	case 2:
+		mes .nm$;
+		mes "Adventure-sama! Please.. I would appreciate it if you could take me with you.";
+		end;
+	}		
+OnTouch:
+	if(Illusion_underwater > 2)
+		classchange( HIDDEN_WARP_NPC, "Sirud#uw1", bc_self );
+	end;
+OnInit:
+	.nm$ = "[ Sirud ]";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "Illusion_underwater == 2 && isbegin_quest(3409) == 1";
+	end;
+}
+
+//NPC to go back and forth Floor 1
+iz_d05_i,141,190,5	script	Izlude Guard#uwt	417,{
+	if(Illusion_underwater == 2)
+		.@goout$ = "Go back to izlude";
+	mes "[Izlude Guard]";
+	mes "What do you want to do?";
+	next;
+	.@menu = select("Go to Floor 1:"+.@goout$+":Nothing yet");	
+	next;
+	switch(.@menu){
+	case 1:
+		mes "Come on then, there will be Professor Sirood.";
+		close2;
+		warp "iz_d04_i",130,228;
+		end;
+	case 2:
+		warp "izlude",128,54;
+		end;
+	case 3:
+		mes "Come back here if you need my help aGein..";
+		close;
+	}
+}
+
+//NPC para acceder al segundo piso y volver
+iz_d04_i,129,232,5	script	Izlude Guard#uwt1	417,{
+	mes "[Izlude Guard]";
+	if( BaseLevel < 180 ){
+		mes "You cannot go deeper until you reach a minimum level of ^0000FFLevel 180^000000.";
+		close;
+	}
+	mes "What do you want to do?";
+	next;
+	.@menu = select("Go to Floor 2:Nothing yet");	
+	next;
+	switch(.@menu){
+	case 1:
+		mes "Let's go then. The Explorers are going to be there!!.";
+		close2;
+		warp "iz_d05_i",141,186;
+		end;
+
+	case 2:
+		mes "Come back here if you need my help aGein..";
+		close;
+	}
+}
+
+//==================================================
+//F2 DAILY QUEST
+//==================================================
+iz_d05_i,138,186,5	script	Kane#uw2	4_M_02,{
+	for(.@m = 0; .@m<2; .@m++) {
+		set .@i, getd ("uwquestII"+.@m);
+		if(.@i == 0) {
+			.quest$[.@m] = "";
+			.color$[.@m] = "^000000";
+		}
+		if(.@i == 1) {
+			.colors$ = "^000000";
+			.color$[.@m] = "^666666";
+			.quest$[.@m] = "- Progress";
+			set .@a, getd ("cooldownuwII"+.@m);
+			if(.@a == 1) 
+				.quest$[.@m] = "- Cooldown";
+		}
+		if(checkquest(.ill_uw_delay2[.@m],PLAYTIME) == 2){
+			erasequest .ill_uw_delay2[.@m];
+			setd "cooldownuwII"+.@m, 0;
+			if(isbegin_quest(.ill_uw2[.@m] == 0))
+				setd "uwquestII"+.@m, 0;
+		}	
+	}
+	mes "[ Kane ]";
+	mes "Hello! Adventurer!";
+	next;
+	mes "[ Kane ]";
+	mes "I've heard that there are so many dangerous deep-sea creatures down here.";
+	next;
+	mes "[ Kane ]";
+	mes "A long time ago, a living creature from the upper floor came down here and there was a lot of commotion.";
+	next;
+	mes "[ Kane ]";
+	mes "Now the number of them are increasing. May I ask you for help, Adventure-sama?";
+	next;
+	switch(select("Yes:No")){
+	case 1:
+		break;
+	case 2:
+		mes "[ Kane ]";
+		mes "Ahh Okay.. I hope the number is not increasing anymore.. Bye~";
+		close;
+	}
+	mes "[ Kane ]";
+	mes "Thank you, We would be grateful if you could help us dealing with the deep sea creatures or fishmen.";
+	next;
+	mes "[ Kane ]";
+	mes "What would you like to do?";		
+	next;	
+	.@q2 = select(.color$[0]+"Defeat Deep Sea Creatures. "+.quest$[0]+.colors$,.color$[1]+"Defeat Deep Sea Fishmen. "+.quest$[1]+.colors$,"Maybe next time") - 1;
+	mes "[ Kane ]";
+	if(.@q2 == 2) {
+		mes "Sure, take your time!";
+		close;
+	}	
+	set .@a, getd ("cooldownuwII"+.@q2);
+	if(.@a == 1){
+		mes "You did a really good job today!";
+		next;
+		mes "[ Kane ]";
+		mes "If you have time, please come back tomorrow. I'll be waiting for you.";
+	}
+	switch(checkquest(.ill_uw2[.@q2],HUNTING)) {
+	case -1:
+		switch(.@q2) {
+		case 0: // Quest: Defeat Deep Sea Creatures
+			mes "Please hunt 10 ^4d4dffDeep Sea Swordfish^000000, 10 ^4d4dffDeep Sea Phen^000000 and 10 ^4d4dffDeep Sea King Dramoh^000000.";
+			next;
+			mes "[ Kane ]";
+			mes "There are quite a few ferocious monsters, so be carefull";
+			next;
+			mes "[ Kane ]";
+			mes "Thank you.";
+			break;	
+		case 1: // Quest: Defeat Deep Sea Fishmen
+			mes "Please hunt 15 ^4d4dffDeep Sea Sedora^000000 and 15 ^4d4dffDeep Sea Strouf^000000";
+			next;
+			mes "[ Kane ]";
+			mes "They are quite anoying, so be carefull";
+			break;
+		}			
+		setquest .ill_uw2[.@q2];
+		setd "uwquestII"+.@q2, 1;
+		end;
+	case 0:
+		switch(.@q) {
+		case 0:
+			mes "Please hunt 10 ^4d4dffDeep Sea Swordfish^000000, 10 ^4d4dffDeep Sea Phen^000000 and 10 ^4d4dffDeep Sea King Dramoh^000000.";
+			next;
+			mes "[ Kane ]";
+			mes "There are quite a few ferocious monsters, so be carefull";
+			close;
+		case 1:
+			mes "[ Kane ]";
+			mes "Please hunt 15 ^4d4dffDeep Sea Sedora^000000 and 15 ^4d4dffDeep Sea Strouf^000000";
+			next;
+			mes "[ Kane ]";
+			mes "They are quite anoying, so be carefull";
+			close;
+		}
+	case 2:
+		switch(.@q2) {
+		case 0:
+		case 1:	
+			mes "You have killed all the creatures. You did a really good job!";
+			next;
+			mes "[ Kane ]";
+			mes "If you have time, please come back tomorrow. I'll be waiting for you.";
+			getitem 25271, 1;
+			erasequest .ill_uw2[.@q2];
+			setquest .ill_uw_delay2[.@q2];
+			setd "uwquestII"+.@q2, 1;
+			setd "cooldownuwII"+.@q2, 1; 
+			getexp 502687500,351881250;
+			end;
+		}
+	}
+OnInit:
+	setarray .ill_uw2[0],3417,3419;
+	setarray .ill_uw_delay2[0],3418,3420;
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "checkquest(3418,PLAYTIME) == 2 || checkquest(3420,PLAYTIME) == 2";
+	questinfo QTYPE_DAILYQUEST, QMARK_YELLOW, "isbegin_quest(3417) == 0 && checkquest(3418,PLAYTIME) == -1 || isbegin_quest(3419) == 0 && checkquest(3420,PLAYTIME) == -1 ";
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "(checkquest(3417,HUNTING) == 2) || (checkquest(3419,HUNTING) == 2)";
+	end;
+}
+
+//==================================================
+//UNDERWATER SHOP
+//==================================================
+iz_d04_i,134,229,3	script	Mysterious Forgemaster#iiz	704,{
+
+    if (checkweight(1201,1) == 0) {
+        mes "Leave some stuff behind in your storage and come back here..";
+        close;
+    }
+
+	if (MaxWeight - Weight < 10000) {
+        mes "I can't work when there's so much clutter in your inventory.";
+        close;
+    }
+	
+	mes "[Mysterious Forgemaster]";
+	mes "Hello stranger, here im the master at crafting the good stuff.";
+	switch(select("Show me what you got","Sorry i am just passing by...")){
+	case 1:
+		npctalk "Here are the lists";
+		callshop "UNDERWATER";
+		end;
+	case 2:
+		end;
+	}
+}

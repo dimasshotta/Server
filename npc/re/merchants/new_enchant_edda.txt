@@ -1,0 +1,470 @@
+//============================================================
+//====== start npc
+//============================================================
+yuno,210,340,3	script	enchant	105,{
+	setArray .@weapons[0],21051,21052,32023,1333,16092,28138,28765,28766,28044,28042,26158,2055,2056,26161,16095,18185,18187,18186,32350,32024,32025,32351,16093,16094,28767,28768,18184,28633,26159,26160,1865,1866,16096,18188,26212,26213,32107,32108;
+	setArray .@enchant1[0],4832,4833,4834,4808,4820,4821,4818,4817,4816,4863,4864,4865,4815,4814,4813;
+	setArray .@enchant2[0],29594,29595,29596,29598,29599,29600,29601,29602,29603,29604,29605,29606,29607;
+	
+	.@isEdda = 0;
+	
+	mes "[Edda bio enchants]";
+	.@weap = getequipid(EQI_HAND_R);
+	.@refine = getequiprefinerycnt(EQI_HAND_R);
+	.@card0 = getequipcardid(EQI_HAND_R,0);
+	.@card1 = getequipcardid(EQI_HAND_R,1);
+	.@card2 = getequipcardid(EQI_HAND_R,2);
+	.@card3 = getequipcardid(EQI_HAND_R,3);
+	.@material1 = 25786; 
+	.@material2 = 25787;
+	.@amount1 = 50;
+	.@amount2 = 500;
+	.@amount3 = 5000;
+	.@amount4 = 10000;
+	.@amount5 = 25000;
+	.@amount6 = 3000;
+	.@amount7 = 100;
+	.@amount8 = 7500;
+	.@amount9 = 1000;
+	
+	for(.@i = 0; .@i < 38; .@i++) {
+		if(.@weapons[.@i] == .@weap) {
+			.@isEdda = 1;
+		} 
+	}
+	
+	if(.@isEdda == 0) {
+		mes "Wear one of the following list!";
+		next;
+		mes "<ITEM>"+getitemname(21051)+"<INFO> 21051 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(21052)+"<INFO> 21052 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32023)+"<INFO> 32023 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(1333)+"<INFO> 1333 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(16092)+"<INFO> 16092 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28138)+"<INFO> 28138 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28765)+"<INFO> 28765 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28766)+"<INFO> 28766 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28044)+"<INFO> 28044 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28042)+"<INFO> 28042 </INFO> </ITEM>";
+		next;
+		mes "<ITEM>"+getitemname(26158)+"<INFO> 26158 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(2055)+"<INFO> 2055 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(2056)+"<INFO> 2056 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(26161)+"<INFO> 26161 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(16095)+"<INFO> 16095 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(18185)+"<INFO> 18185 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(18187)+"<INFO> 18187 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(18186)+"<INFO> 18186 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32350)+"<INFO> 32350 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32024)+"<INFO> 32024 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32025)+"<INFO> 32025 </INFO> </ITEM>";
+		next;
+		mes "<ITEM>"+getitemname(32351)+"<INFO> 32351 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(16093)+"<INFO> 16093 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(16094)+"<INFO> 16094 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28767)+"<INFO> 28767 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28768)+"<INFO> 28768 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(18184)+"<INFO> 18184 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(28633)+"<INFO> 28633 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(26159)+"<INFO> 26159 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(26160)+"<INFO> 26160 </INFO> </ITEM>";
+		next;
+		mes "<ITEM>"+getitemname(1865)+"<INFO> 1865 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(1866)+"<INFO> 1866 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(16096)+"<INFO> 16096 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(18188)+"<INFO> 18188 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(26212)+"<INFO> 26212 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(26213)+"<INFO> 26213 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32107)+"<INFO> 32107 </INFO> </ITEM>";
+		mes "<ITEM>"+getitemname(32108)+"<INFO> 32108 </INFO> </ITEM>";
+		close;
+		end;
+	}
+	
+	if(.@card2 != 0 && .@card3 != 0) {
+		mes "Which slot you want to reroll the enchantment?";
+		next;
+		switch(select("4rd", "3th", "cancel")){
+			case 1:
+				mes "[General Re-Enchant]";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*35% chance to fail!*^000000";
+				mes "^FF0000*5% chance to break!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "50pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+				mes "50pcs";
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "unenchanted extra copy";
+				mes "==============================";
+				mes "[Advanced Re-Enchant]";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*10% chance to fail!*^000000";
+				mes "^FF0000*No chance of break your weapon!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "500pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+				mes "500pcs";
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "unenchanted extra copy";
+				mes "==============================";
+				mes "[Fragment Re-Enchant]";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*5% chance to fail!*^000000";
+				mes "^FF0000*No chance of break your weapon!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";        
+				mes "100pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+				mes "10000pcs";
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";	 
+				mes "unenchanted extra copy";
+				next;
+				switch(select("[General Re-Enchant]","[Advanced Re-Enchant]","[Fragment Re-Enchant]")) {
+					case 1:
+						if(countitem(25786) < .@amount1 || countitem(25787) < .@amount1 ) {
+							mes "You dont have the materials";
+							end;
+						} else if ( countitem2(getequipid(EQI_HAND_R),1,0,0,0,0,0,0)  < 1) {
+							mes "I need a copy of your equip";
+							end;
+						} else if(rand(100) <= 35) {
+							specialeffect2 1607;
+							specialeffect2 1609;
+							delitem 25786,.@amount1;
+							delitem 25787,.@amount1;
+							delitem2 getequipid(EQI_HAND_R),1,1,0,0,0,0,0,0;
+							mes "Too bad...";
+							end;	
+						} else if(rand(5) == 1){
+							specialeffect2 1607;
+							specialeffect2 1609;
+							delitem2 getequipid(EQI_HAND_R),1,1,0,0,0,0,0,0;
+							delequip EQI_HAND_R;
+							delitem 25786,.@amount1;
+							delitem 25787,.@amount1;
+							mes "Something happened to your weapon!";
+							end;
+						}
+						specialeffect2 1607;
+						specialeffect2 1608;
+						delitem 25786,.@amount1;
+						delitem 25787,.@amount1;
+						delitem2 getequipid(EQI_HAND_R),1,1,0,0,0,0,0,0;
+						.@card3 = .@enchant1[rand(14)];
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						mes "Enchant Success";
+						mes "1. enchanted with "+getitemname(.@card3)+".";
+						end;
+					case 2:
+						if(countitem(25786) < .@amount2 || countitem(25787) < .@amount2) {
+							mes "You dont have the items";
+							end;
+						} else if ( countitem2(getequipid(EQI_HAND_R),1,0,0,0,0,0,0)  < 1) {
+							mes "I need at least one of unenchanted extra copy of your equiped weapon";
+							end;
+						} else if(rand(100) <= 10) {
+							specialeffect2 1607;
+							specialeffect2 1609;
+							delitem 25786,.@amount2;
+							delitem 25787,.@amount2;
+							delitem2 getequipid(EQI_HAND_R),1,1,0,0,0,0,0,0;
+							mes "Too bad...";
+							end;	
+						}
+						specialeffect2 1607;
+						specialeffect2 1608;
+						delitem 25786,.@amount2;
+						delitem 25787,.@amount2;
+						delitem2 getequipid(EQI_HAND_R),1,1,0,0,0,0,0,0;
+						.@card3 = .@enchant1[rand(14)];
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						mes "Enchant Success";
+						mes "1. enchanted with "+getitemname(.@card3)+".";
+						end;
+					case 3:
+						if(countitem(25786) < .@amount7 || countitem(25787) < .@amount4) {
+							mes "You dont have the items";
+							end;
+						}
+						if ( countitem2(getequipid(EQI_HAND_R),1,0,0,0,0,0,0)  < 1) {
+							mes "I need at least one of unenchanted extra copy of your equiped weapon";
+							end;	
+						} else if(rand(100) <= 5) {
+							specialeffect2 1607;
+							specialeffect2 1609;
+							delitem 25786,.@amount4;
+							delitem 25787,.@amount7;
+							delitem2 getequipid(EQI_HAND_R),1,1,0,0,0,0,0,0;
+							mes "Too bad...";
+							end;	
+						}		
+						specialeffect2 1607;
+						specialeffect2 1608;
+						delitem 25786,.@amount4;
+						delitem 25787,.@amount7;
+						delitem2 getequipid(EQI_HAND_R),1,1,0,0,0,0,0,0;
+						.@card3 = .@enchant1[rand(14)];
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						mes "Enchant Success";
+						mes "1. enchanted with "+getitemname(.@card3)+".";
+						end;
+				}
+			case 2:
+				mes "[Determined General Re-Enchant]";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*10% chance to fail!*^000000";
+				mes "^FF0000*No chance of break your weapon!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "3000pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";            
+				mes "7500pcs";
+				mes "Selectable Special Enchant";
+				mes "==============================";
+				mes "[Determined Fragment Re-Enchant]";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*10% chance to fail!*^000000";
+				mes "^FF0000*No chance of break your weapon!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "25000pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+				mes "1000pcs";
+				mes "Selectable Special Enchant";
+				mes "==============================";
+				next;
+				switch(select("[Determined General Re-Enchant]","[Determined Fragment Re-Enchant]")) {
+					case 1:
+						if(countitem(25786) < .@amount6 || countitem(25787) < .@amount8) {
+							mes "You dont have the items";
+							end;
+						}
+						mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+						mes "Now select the special enchant";
+						for ( set .@e,0; .@e < getarraysize(.@enchant2); set .@e,.@e + 1)
+							set .@e_m$,.@e_m$ + "> "+getitemname(.@enchant2[.@e])+ ( (.@enchant2[.@e+1] != 0)?":":"");
+						set .@rune,select(.@e_m$) - 1;
+						next;
+						mes "Selected Enchantment: "+getitemname(.@enchant2[.@rune]);
+						specialeffect2 1607;
+						specialeffect2 1608;
+						.@card2 = .@enchant2[.@rune];
+						delitem 25786,.@amount6;
+						delitem 25787,.@amount8;
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						mes "Enchant Success";
+						end;
+					case 2:
+						if(countitem(25786) < .@amount5 || countitem(25787) < .@amount9) {
+							mes "You dont have the items";
+							end;
+						}
+						mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+						mes "Now please select the Enchantment:";
+						next;
+						for ( set .@e,0; .@e < getarraysize(.@enchant2); set .@e,.@e + 1)
+							set .@e_m$,.@e_m$ + "> "+getitemname(.@enchant2[.@e])+ ( (.@enchant2[.@e+1] != 0)?":":"");
+						set .@rune,select(.@e_m$) - 1;
+						mes "Selected Enchantment: "+getitemname(.@enchant2[.@rune]);
+						if (rand(100) <= 20) {
+							specialeffect2 1607;
+							specialeffect2 1609;
+							delitem 25786,.@amount5;
+							delitem 25787,.@amount9;
+							mes "Too bad...";
+							end;	
+						}
+						specialeffect2 1607;
+						specialeffect2 1608;
+						.@card2 = .@enchant2[.@rune];
+						delitem 25786,.@amount5;
+						delitem 25787,.@amount9;
+						delequip EQI_HAND_R;
+						getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+						mes "Enchant Success";
+						end;
+				}
+			case 3:end;
+		}		
+		end;
+	}
+	//@item 2056
+
+	mes "Select the enchant system you want to do!";
+	next;
+	switch(select("General Enchant","Advanced Enchant","Determined Enchant")){
+		case 1:
+			if(countitem(25786) < .@amount1 || countitem(25787) < .@amount1) {
+				mes "you dont have the enough materials";
+				mes "=====[Reinforcement Material]=====";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "50pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+				mes "50pcs";
+				end;
+			} else if(.@card3 == 0 && .@card2 == 0) {
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*35% chance to fail!*^000000";
+				mes "^FF0000*5% chance to break the weapon!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "50pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+				mes "50pcs";
+			} else if(.@card3 != 0 && .@card2 == 0) {
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*70% chance to fail!*^000000";
+				mes "^FF0000*20% chance to break the weapon!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "50pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+				mes "50pcs";
+			}
+			.@safe = 0;
+			goto enchant;
+		case 2:
+			if (countitem(25786) < 500 || countitem(25787) < 500) {
+				mes "you dont have the enough materials";
+				mes "=====[Reinforcement Material]=====";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "500pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+	            mes "500pcs";				
+				end;
+			} else if(.@card3 == 0 && .@card2 == 0) {
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*10% chance to fail!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "500pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+	            mes "500pcs";	
+			} else if(.@card3 != 0 && .@card2 == 0) {
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*30% chance to fail!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "500pcs";
+				mes "<ITEM>["+getitemname(25787)+"]<INFO> 25787 </INFO> </ITEM>";
+	            mes "500pcs";				
+			}
+			.@safe = 1;
+			goto enchant;
+		case 3:
+			if(.@card3 == 0) {
+				mes "^FF0000*Only for 3rd Slot*^000000";
+				close;
+			} else if(countitem(25786) < .@amount3) {
+				mes "you dont have the enough materials";
+				mes "=====[Reinforcement Material]=====";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "5000pcs";	
+				end;
+			} else {
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "=====[Reinforcement Material]=====";
+				mes "^FF0000*0% chance to fail!*^000000";
+				mes "<ITEM>["+getitemname(25786)+"]<INFO> 25786 </INFO> </ITEM>";
+				mes "5000pcs";		
+				for ( set .@e,0; .@e < getarraysize(.@enchant2); set .@e,.@e + 1)
+				set .@e_m$,.@e_m$ + "> "+getitemname(.@enchant2[.@e])+ ( (.@enchant2[.@e+1] != 0)?":":"");
+				set .@rune,select(.@e_m$) - 1;
+				next;
+				mes "<ITEM>["+getequipname(EQI_HAND_R)+"]<INFO> "+getequipid(EQI_HAND_R)+" </INFO> </ITEM>";
+				mes "Selected Enchantment: "+getitemname(.@enchant2[.@rune]);		 
+				.@safe = 2;
+				goto enchant;
+			}
+	}
+enchant:
+	switch(select("Proceed?","Cancel")) {
+	next;
+	case 1:
+	if(.@safe == 0) {
+		// 5% of the player loses the weapon 35% chance will fail the enchance;
+		if(rand(100) <= 35) {
+			specialeffect2 155;
+			delitem .@material1,.@amount1; 
+			delitem .@material2,.@amount1;
+			mes "Too bad...";
+			end;
+		} else if (rand(100) <= 5) { 
+			delequip EQI_HAND_R; 
+			specialeffect2 155;
+			mes "I am so sorry the weapon is broken...";
+			delitem .@material1,.@amount1; 
+			delitem .@material2,.@amount1;
+			end;
+		// 20% of the player loses the weapon 70% chance will fail the enchance;
+		} else if (rand(100) <= 70 && .@card3 != 0) {
+			mes "Too bad...";
+			delitem .@material1,.@amount1; 
+			delitem .@material2,.@amount1;
+			specialeffect2 155;
+			end;
+		} else if (rand(100) <= 20 && .@card3 != 0) { 
+			delequip EQI_HAND_R; 
+			delitem .@material1,.@amount1; 
+			delitem .@material2,.@amount1;
+			specialeffect2 155;
+			mes "I am so sorry the weapon is broken...";
+			end;
+		}
+		specialeffect2 154;
+		delitem .@material1,.@amount1; 
+		delitem .@material2,.@amount1;
+		if (!.@card3) .@card3 = .@enchant1[rand(14)];
+		else if (!.@card2 && rand(150) <= 30)
+			.@card2 = .@enchant2[rand(13)];
+		else 
+			.@card2 = .@enchant1[rand(14)];
+		delequip EQI_HAND_R;
+		getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+		mes "Enchant Success";
+		end;
+	} else if(.@safe == 1 ) {		
+		// 10% chance will fail the enchance;
+		if (rand(100) <= 10) {
+			specialeffect2 155;
+			delitem .@material1,.@amount2; 
+			delitem .@material2,.@amount2;
+			mes "You are Failed";
+			end;
+		// 30% chance will fail the enchance;
+		} else if(rand(100) <= 30 && .@card3 != 0) {
+			mes "You are Failed";
+			delitem .@material1,.@amount2; 
+			delitem .@material2,.@amount2;
+			specialeffect2 155;
+			end;
+		}
+		specialeffect2 154;
+		delitem .@material1,.@amount2; 
+		delitem .@material2,.@amount2;
+		if (!.@card3) .@card3 = .@enchant1[rand(14)];
+		else if (!.@card2 && rand(100) <= 70)
+			.@card2 = .@enchant2[rand(13)];
+		else
+			.@card2 = .@enchant1[rand(14)];
+		delequip EQI_HAND_R;
+		getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;		
+		mes "Enchant Success";
+		end;
+	} else if (.@safe == 2 ) {
+		specialeffect2 154;
+		delitem .@material1,.@amount3; 
+		.@card2 = .@enchant2[.@rune];
+		delequip EQI_HAND_R;
+		getitem2 .@weap,1,1,.@refine,0,.@card0,.@card1,.@card2,.@card3;
+		mes "Enchant Success";
+		mes "1. slot 4th ["+getitemname(.@card3)+"]";
+		mes "1. slot 3rd ["+getitemname(.@card2)+"]";
+		end;
+	}
+	case 2: 
+		end;
+	}
+}

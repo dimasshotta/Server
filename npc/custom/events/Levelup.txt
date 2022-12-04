@@ -1,0 +1,20 @@
+-	script	LevelUpQuotes	-1,{
+end;
+
+OnInit:
+	setarray .q$,"I have advanced forward!","I'll get stronger and stronger.","I know I can do it!!","Dont Quit!","Speed!!","I have to learn from the past!","No pain no gain.","It's time to be strong!","Dont Quit!","There's no stopping me now!","Look at me go!","There's more where that came from.","This isn't even my final form!";
+	.num1 = getarraysize(.q$);
+	setarray .maxq$,"I've made it!","I never thought I'd become this strong...","What's Next","I have reached my final form.";
+	.num2 = getarraysize(.maxq$);
+	end;
+
+OnPCBaseLvUpEvent:
+	if( BaseLevel == 100) setquest 3470;
+	if( BaseLevel > 174 && getstatus(SC_ITEMBOOST) == 0 ) { sc_start SC_ITEMBOOST,1800000,200; }
+	if( BaseLevel > 174 && getstatus(SC_EXPBOOST) == 0 ) { sc_start SC_EXPBOOST,1800000,200; }
+	if( BaseLevel == 250 ) { .@r = rand(.num2); showscript strcharinfo(0)+" : "+.maxq$[.@r]; }
+	else { .@r = rand(.num1); showscript strcharinfo(0)+" : "+.q$[.@r]; }
+	if( !getstatus(SC_INCREASEAGI) ) { sc_start SC_INCREASEAGI,240000,10; specialeffect2 EF_INCAGILITY; }
+	if( !getstatus(SC_BLESSING) ) { sc_start SC_BLESSING,240000,10; specialeffect2 EF_BLESSING; }
+	end;
+}

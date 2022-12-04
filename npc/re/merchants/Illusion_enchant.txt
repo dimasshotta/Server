@@ -1,0 +1,377 @@
+//===== rAthena Script ======================================= 
+//= Illusion Enchanter 'Episode 17.1'  (kRO Servers)
+//===== By: ================================================== 
+//= NotKappa#2400 - https://rathena.org/board/profile/18391-notkappa/
+//===== Current Version: ===================================== 
+//= 1.0 (Initial release)
+//===== Additional Comments: ================================= 
+// -
+//============================================================
+
+prontera,88,113,5	script	Illusion Merchant#prontera	CLEAR_NPC,{
+	mes "[Illusion Merchant]";
+	mes "I am selling 2 kinds of random option weapon grant scrolls that I made by hand. Please use the payment method you like.";
+	next;
+	.@s = select("Buy with zeny.:Buy with Illusion stone.");
+	switch (.@s){
+	case 1:
+	case 2:
+		mes "[Illusion Merchant]";
+		mes "I hope you like it.";
+		close2;
+		callshop "illusion_merchant_"+.@s;
+		end;
+	}
+OnInit:
+	setunitdata getnpcid(0), UNPC_CLASS, JOB_MAGE;
+	setunitdata getnpcid(0), UNPC_SEX, SEX_FEMALE;
+	setunitdata getnpcid(0), UNPC_HAIRSTYLE, 2;
+	setunitdata getnpcid(0), UNPC_HEADTOP, 142;
+	setunitdata getnpcid(0), UNPC_HEADMIDDLE, 12;
+	end;
+}
+
+-	marketshop	illusion_merchant_1	HIDDEN_NPC,100003:2000000:-1,100004:2000000:-1;
+
+prontera,90,115,5	script	Illusion Enchanter#prontera	677,{
+	disable_command;
+	disable_items;
+	.@npc$ = "[ ^0000FFIllusion Enchanter^000000 ]";
+	if(!metIlluEnchant){
+		mes .@npc$,
+		"Oh, did you bring illusion equipment?";
+		next;
+		select("I don't know what those are...");
+		mes .@npc$,
+		"I was in a hurry, I should have explained that first.";
+		next;
+		mes .@npc$,
+		"I am an alchemist who studies a substance called Illusion Stone. It has been circulating among the adventurers lately.";
+		next;
+		mes strcharinfo(0);
+		mes "Is this an illusion?";
+		next;
+		mes .@npc$,
+		"We don't know yet, but it's pretty interesting.";
+		next;
+		mes strcharinfo(0);
+		mes "That's amazing!";
+		next;
+		mes .@npc$,
+		"I guess you've heard of strange spaces that have opened up around the world. Illusion stones are rare occurrences that appear within these spaces.";
+		next;
+		mes .@npc$,
+		"Its atomic structure is not consistent with any mineral I have found so far...";
+		next;
+		mes strcharinfo(0);
+		mes "Tell me more!";
+		next;
+		mes .@npc$,
+		"To cut off the chase, if you bring me illusion stones, I can upgrade certain equipment for you.";
+		next;
+		mes strcharinfo(0);
+		mes "What's the catch?";
+		next;
+		mes .@npc$,
+		"There is no danger to the enchanting process. You cannot break your items unless you choose to reset the enchantments.";
+		next;
+		mes .@npc$,
+		"Keep studying these Illusion dungeons so I can create even more powerful equipment!";
+		next;
+		mes .@npc$,
+		"However, maybe I should have mentioned this before... This is not a free service, you need Zeny and Illusion Stones.";
+		next;
+		mes .@npc$,
+		"Will you get all that?";
+		next;
+		mes strcharinfo(0);
+		mes "Yes!";
+		next;
+		metIlluEnchant = 1;
+		mes .@npc$,
+		"Alright then! Let's get started.";
+		close; 
+	}
+	mes .@npc$,"Only enchant gear you've gotten by trading Illusion Stones.";
+	next;
+	switch(select("What do I need to enchant?","Enchant Illusion Gear","Reset Illusion Gear")){ 
+		case 1: // What do I need to enchant?
+			mes .@npc$,"Remember, only enchant gear you've gotten from trading Illusion Stones.";
+			next;
+			mes .@npc$,"You can enchant each item twice, paying 5 Illusion Stones per enchantment.";
+			next;
+			mes .@npc$,"There is no chance of failure when enchanting, but there is a chance of failure when you reset the item. Here's how the process works.";
+			next;
+			mes .@npc$,"Some Zeny has a hard time resetting enchantments, but the chance of success depends on how much Zeny you give me. Give it a shot.";
+			close; 
+		case 2: // Enchant Illusion equipment
+			for(.@i=0;.@i<10;.@i++){
+				if (!getequipisequiped(.@i))
+					continue;
+				.@eqId = getequipid(.@i);
+				if (inarray(.MeleeWeaponIds,.@eqId) == -1 && 
+					inarray(.RangeWeaponIds,.@eqId) == -1 && 
+					inarray(.MagicWeaponIds,.@eqId) == -1 && 
+					inarray(.AccessoryIds,.@eqId) == -1 && 
+					inarray(.ArmorIds,.@eqId) == -1)
+					continue;
+				.@eqSlots[getarraysize(.@eqSlots)] = .@i;
+				.@cItems[getarraysize(.@cItems)] = .@eqId;
+				.@menu$ += getitemname(.@eqId) + ":";
+				.@count++;
+			}
+			if(.@count == 0){
+				mes .@npc$,"You do not have any Illusion gear equipped.";
+				close;			
+			}
+			.@s = select(.@menu$) - 1;
+			.@slot = .@eqSlots[.@s];
+			.@equip_id = .@cItems[.@s];
+			.@equip_name$ = getitemname(.@equip_id);
+			setarray .@card[0],
+				getequipcardid(.@slot,0),
+				getequipcardid(.@slot,1),
+				getequipcardid(.@slot,2),
+				getequipcardid(.@slot,3);
+			copyarray .@equip_card[0], .@card[0], 4;	// for final check
+			.@equip_refine = getequiprefinerycnt(.@slot);
+			
+			if (.@card[3] > 0) {
+				mes .@npc$;
+				mes .@equip_name$ + " They've already passed the enchanting limit. We can't charm them anymore.";
+				close;
+			}
+			if(.@card[2] == 0)
+				.@cardSlot = 2;
+			else if(.@card[3] == 0)
+				.@cardSlot = 3;
+				
+			if (.@card[.@cardSlot] == 0) {
+				.@cost = .costStones;
+				mes .@npc$;
+				mes "I want to enchant ^0000FF"+.@equip_name$+"^000000?";
+				mes "To do it, you need ^0000FF"+.@cost+"^000000 Illusion Stones.";
+				next;
+				.@s2 = select( "Cancel", "Enchant") - 2;
+				if (.@s2 == -1) {
+					mes .@npc$;
+					mes "Ok come back when you're ready.";
+					close;
+				}
+				if (inarray(.MeleeWeaponIds,.@equip_id) != -1)
+					.@card[.@cardSlot] = .MeleeWeaponEn[rand(0,getarraysize(.MeleeWeaponEn)-1)];
+				else if (inarray(.RangeWeaponIds,.@equip_id) != -1)
+					.@card[.@cardSlot] = .RangeWeaponEn[rand(0,getarraysize(.RangeWeaponEn)-1)];
+				else if (inarray(.MagicWeaponIds,.@equip_id) != -1)
+					.@card[.@cardSlot] = .MagicWeaponEn[rand(0,getarraysize(.MagicWeaponEn)-1)];
+				else if (inarray(.AccessoryIds,.@equip_id) != -1)
+					.@card[.@cardSlot] = .AccessoryEnchants[rand(0,getarraysize(.AccessoryEnchants)-1)];
+				else if (inarray(.ArmorIds,.@equip_id) != -1)
+					.@card[.@cardSlot] = .ArmorEnchants[rand(0,getarraysize(.ArmorEnchants)-1)];
+				.@string$ = "enchantment number ^630000"+(.@cardSlot - 1)+"^000000.";
+			}
+			
+			if (.@cost > countitem(25271)){
+				mes .@npc$;
+				mes "Hmm, you are missing " + (.@cost - countitem(25271)) + " Illusion Stones. Go get more, and then we can talk about more enchantments.";
+				close;
+			}
+			
+			specialeffect2 EF_REPAIRWEAPON;
+			delitem 25271,.@cost;// Illusion Stones
+			
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@slot, .@equip_id) || callfunc("F_IsEquipCardHack", .@slot, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || 
+				callfunc("F_IsEquipRefineHack", .@slot, .@equip_refine))
+				close;
+				
+			delequip .@slot;
+			mes .@npc$;
+			mes "Trying "+.@string$;
+			getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+			close;
+		case 3: // Reset Illusion equipment
+			for(.@i=0;.@i<10;.@i++){
+				if (!getequipisequiped(.@i))
+					continue;
+				.@eqId = getequipid(.@i);
+				if (inarray(.MeleeWeaponIds,.@eqId) == -1 && 
+					inarray(.RangeWeaponIds,.@eqId) == -1 && 
+					inarray(.MagicWeaponIds,.@eqId) == -1 && 
+					inarray(.AccessoryIds,.@eqId) == -1 && 
+					inarray(.ArmorIds,.@eqId) == -1)
+					continue;
+				.@eqSlots[getarraysize(.@eqSlots)] = .@i;
+				.@cItems[getarraysize(.@cItems)] = .@eqId;
+				.@menu$ += getitemname(.@eqId) + ":";
+				.@count++;
+			}
+			
+			if(.@count == 0){
+				mes .@npc$,"You do not have any Illusion gear equipped.";
+				close;			
+			}
+			
+			.@s = select(.@menu$) - 1;
+			.@slot = .@eqSlots[.@s];
+			.@equip_id = .@cItems[.@s];
+			.@equip_name$ = getitemname(.@equip_id);
+			setarray .@card[0],
+				getequipcardid(.@slot,0),
+				getequipcardid(.@slot,1),
+				getequipcardid(.@slot,2),
+				getequipcardid(.@slot,3);
+			copyarray .@equip_card[0], .@card[0], 4;	// for final check
+			.@equip_refine = getequiprefinerycnt(.@slot);
+			
+			if (.@card[2] == 0) {
+				mes .@npc$;
+				mes .@equip_name$+" It doesn't have any enchantment...";
+				close;
+			}
+
+			mes .@npc$,"So you want to reset all slots...";
+			next;
+			mes .@npc$,"How much are you going to pay me to restore the item for you?";
+			next;
+			.@p = select("100,000 zeny", "200,000 zeny", "300,000 zeny", "400,000 zeny", "500,000 zeny", "5 Illusion Stones");
+			.@chance = 0;
+			if(.@p < 6){
+				.@amt = .@p * 100000;
+				if(.@p < 5){
+					mes .@npc$,"Only " + F_InsertComma(.@amt) + " zeny...";
+					.@chance = 40 + (.@p*10);
+				}else{
+					.@chance = 100;
+					mes .@npc$,"W-wow, " + F_InsertComma(.@amt) + " zeny!";
+					next;
+					mes .@npc$,"I've never seen so much before.";
+				}
+			}else {
+				.@amt = 5;
+				.@chance = 100;
+				mes .@npc$,"Illusion Stones!!";
+				emotion ET_SPARK,getnpcid(0,"Illusion Enchanter#prontera");
+			}
+			next;
+			mes .@npc$,"The chance of success is "+.@chance+"%";
+			next;
+			if(.@chance != 100){
+				mes .@npc$,"There is a chance that the item will break and you may lose the item and the cards!";
+				next;
+				mes .@npc$,"Are you sure you want to continue?";
+				next;
+				if(select("No, Cancel.", "Yes, I'm sure.") == 1){
+				mes .@npc$,"Very good, come back when you're confident.";
+					close;
+				}
+			}
+			
+			mes .@npc$,"This cost:";
+			if(.@p == 6)
+				mes .@amt + " Illusion Stones.";
+			else
+				mes F_InsertComma(.@amt) + " Zeny";
+			next;
+			
+			if(select("Cancel.", "Continue.") == 1){
+				mes .@npc$,"Very good, come back when you're confident.";
+				close; 
+			}
+			
+			if(.@p == 6){
+				if(.@amt > countitem(25271)){
+					mes .@npc$,"You do not have "+.@amt+" Illusion Stones.";
+					close;
+				}
+				delitem 25271,.@amt;
+			}else{
+				if(.@amt > Zeny){
+					mes .@npc$,
+						"Insufficient Zeny.",
+						"You need " + F_InsertComma(.@amt) + " zeny";
+					close;
+				}
+				Zeny -= .@amt;
+			}
+			
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@slot, .@equip_id) || callfunc("F_IsEquipCardHack", .@slot, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || 
+				callfunc("F_IsEquipRefineHack", .@slot, .@equip_refine))
+				close;
+				
+			.@c = rand(100);
+			if(.@chance >= .@c){
+				specialeffect2 EF_REPAIRWEAPON;
+				delequip .@slot;
+				mes .@npc$;
+				mes "The process was a success!";
+				getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],0,0;
+				close;
+			}
+			
+			specialeffect2 EF_REFINEFAIL;
+			delequip .@slot;
+			mes .@npc$;
+			mes "I'm sorry, but it seems I didn't put much effort into the process...";
+		close;
+	}
+	end;
+OnInit:
+	.costStones = 5;
+	setarray .MeleeWeaponIds,	28762,1846,28745,13337,13469,28022,
+								16065,16063,28725,32005,28023,26007,
+								21050,1326,13338,610012;
+								
+	setarray .RangeWeaponIds,	18149,28254,28244,18174;
+								
+	setarray .MagicWeaponIds,	28612,26109,2051,28626,2039;
+	setarray .AccessoryIds,		28508,28509;
+	setarray .ArmorIds,			15348,22192,15195,22133,20840,
+								19210,20838,19209,28922,20847,
+								19223,22190,19344;
+	
+	setarray .AccessoryEnchants,4795,4796,4797,4798,	//HP 100~400
+								4928,4870,4800,4871,	//SP 10~75
+								4700,4701,4702,4703,	//STR 1~4
+								4730,4731,4732,4733,	//AGI 1~4
+								4740,4741,4742,4743,	//VIT 1~4
+								4710,4711,4712,4713,	//INT 1~4
+								4720,4721,4722,4723,	//DEX 1~4
+								4750,4751,4752,4753;	//LUK 1~4
+	
+	setarray .ArmorEnchants,	4861,4862,4863,4864,	//Max HP 1~4%
+								4993,29208,4992,29210,	//HP/SP Absorption  1~2%
+								4994,4995,4997,4998,	//strength/agility Lv 1~2
+								29009,29010,29000,29001,//Vitality/Intellect Lv 1~2
+								29003,29004,29006,29007,//Dexterity/Luck Lv 1~2
+								4700,4701,4702,4703,	//STR 1~4
+								4730,4731,4732,4733,	//AGI 1~4
+								4740,4741,4742,4743,	//VIT 1~4
+								4710,4711,4712,4713,	//INT 1~4
+								4720,4721,4722,4723,	//DEX 1~4
+								4750,4751,4752,4753;	//LUK 1~4
+								
+	setarray .MeleeWeaponEn,	4811,4810,4809,4808,4820,		//Fighting Spirit 1~5
+								29081,29082,29083,29084,29085,	//Acute Lv 1~5
+								29061,29062,29063,29064,29065,	//Mettle Lv 1~5
+								4807,4842,						//ASPD 1 2
+								4700,4701,4702,4703,			//STR 1~4
+								4720,4721,4722,4723,			//DEX 1~4
+								4750,4751,4752,4753;			//LUK 1~4
+	
+	setarray .RangeWeaponEn,	4832,4833,4834,4835,4836,		// Expert Archer 1~5
+								29091,29092,29093,29094,29095,	//Master Archer Lv 1~5
+								29071,29072,29073,29074,29075,	//Magic Essence Lv 1~5
+								4807,4842,						//ASPD 1 2
+								4730,4731,4732,4733,			//AGI 1~4
+								4720,4721,4722,4723,			//DEX 1~4
+								4750,4751,4752,4753;			//LUK 1~4
+								
+	setarray .MagicWeaponEn,	4815,4814,4813,4812,4826,	//Spell 1~5
+								4805,4850,					// Archbishop Lv 1~2
+								4710,4711,4712,4713,		//INT 1~4
+								4720,4721,4722,4723,		//DEX 1~4
+								4750,4751,4752,4753;		//LUK 1~4
+	end;
+}
